@@ -13,10 +13,10 @@ public class Message
 [Serializable]
 public class EntrarSessao : Message
 {
-    public string user;
+    public User user;
     public string secret;
 
-    public EntrarSessao( string messageType, string user, string secret){
+    public EntrarSessao( string messageType, User user, string secret){
         this.user = user;
         this.secret = secret;
         this.messageType = messageType;
@@ -33,45 +33,24 @@ public class CadastraSessao : Message
     public int nrPlayers;
     public int nrHelp5050;
     public int timeQuestion;
-    public string moderator;
+    public int[] totalQuestion;
+    public int[] questionAmount;
+    public User user;
+    public int gameId;
 
-    public CadastraSessao(string messageType, int nrTeams, int nrPlayers, int nrHelp5050, int timeQuestion, string moderator)
+    public CadastraSessao(string messageType, int nrTeams, int nrPlayers, int nrHelp5050, int timeQuestion, int[] totalQuestion, int[] questionAmount, User user, int gameId)
     {
         this.nrTeams = nrTeams;
         this.nrPlayers = nrPlayers;
         this.nrHelp5050 = nrHelp5050;
         this.timeQuestion = timeQuestion;
-        this.moderator = moderator;
+        this.totalQuestion = totalQuestion;
+        this.questionAmount = questionAmount;
+        this.user = user;
         this.messageType = messageType;
+        this.gameId = gameId;
     }
-
 }
-
-// [Serializable]
-// public class CadastraSessao : Message
-// {
-//     public int nrTeams;
-//     public int nrPlayers;
-//     public int nrHelp5050;
-//     public int timeQuestion;
-//     public int[] totalQuestion;
-//     public int[] questionAmount;
-//     public string moderator;
-//     public int gameId;
-
-//     public CadastraSessao(string messageType, int nrTeams, int nrPlayers, int nrHelp5050, int timeQuestion, int[] totalQuestion, int[] questionAmount, string moderator, int gameId)
-//     {
-//         this.nrTeams = nrTeams;
-//         this.nrPlayers = nrPlayers;
-//         this.nrHelp5050 = nrHelp5050;
-//         this.timeQuestion = timeQuestion;
-//         this.totalQuestion = totalQuestion;
-//         this.questionAmount = questionAmount;
-//         this.moderator = moderator;
-//         this.messageType = messageType;
-//         this.gameId = gameId;
-//     }
-// }
 
 [Serializable]
 public class ComecarJogo : Message
@@ -103,57 +82,75 @@ public class ComecarJogo : Message
 //     }
 // }
 
+[Serializable]
+public class PedirAjuda : Message
+{
+    public User user;
+    public int teamId;
+    public int sessionId;
+    public int gameId;
+    public string help;
 
+    public PedirAjuda(string messageType, User user, int teamId, int sessionId, int gameId, string help)
+    {
+        this.user = user;
+        this.teamId = teamId;
+        this.sessionId = sessionId;
+        this.gameId = gameId;
+        this.help = help;
+        this.messageType = messageType;
 
-// [Serializable]
-// public class RespostaIndividual
-// {
-//     public string message_type;
-//     public User user;
-//     public int teamId;
-//     public int sessionId;
-//     public int gameId;
-//     public string answer;
-//     public int level;
-//     public int nrQuestion;
+    }
+}
 
-//     public RespostaIndividual(string messageType, User user, int teamId, int sessionId, 
-//                              int gameId, string answer, int level, int nrQuestion)
-//     {
-//         this.user = user;
-//         this.teamId = teamId;
-//         this.sessionId = sessionId;
-//         this.gameId = gameId;
-//         this.answer = answer;
-//         this.messageType = messageType;
-//         this.level = level;
-//         this.nrQuestion = nrQuestion;
+[Serializable]
+public class RespostaIndividual : Message
+{
+    public User user;
+    public int teamId;
+    public int sessionId;
+    public int gameId;
+    public string answer;
+    public int level;
+    public int nrQuestion;
 
-//     }
-// }
+    public RespostaIndividual(string messageType, User user, int teamId, int sessionId, 
+                             int gameId, string answer, int level, int nrQuestion)
+    {
+        this.user = user;
+        this.teamId = teamId;
+        this.sessionId = sessionId;
+        this.gameId = gameId;
+        this.answer = answer;
+        this.messageType = messageType;
+        this.level = level;
+        this.nrQuestion = nrQuestion;
 
-// [Serializable]
-// public class RespostaFinal
-// {
-//     public string message_type
-//     public User user;
-//     public int teamId;
-//     public int sessionId;
-//     public int gameId;
-//     public string finalAnswer;
-//     public int correct; 
+    }
+}
 
-//     public RespostaFinal(string messageType, User user, int teamId, int sessionId, int gameId, string finalAnswer, int correct)
-//     {
-//         this.user = user;
-//         this.teamId = teamId;
-//         this.sessionId = sessionId;
-//         this.gameId = gameId;
-//         this.answer = answer;
-//         this.messageType = messageType;
+[Serializable]
+public class RespostaFinal : Message
+{
+    public User user;
+    public int teamId;
+    public int sessionId;
+    public int gameId;
+    public string finalAnswer;
+    public int correct; 
 
-//     }
-// }
+    public RespostaFinal(string messageType, User user, int teamId, int sessionId, int gameId, string finalAnswer, int correct)
+    {
+        this.messageType = messageType;
+        this.user = user;
+        this.teamId = teamId;
+        this.sessionId = sessionId;
+        this.gameId = gameId;
+        this.finalAnswer = finalAnswer;
+        this.correct = correct;
+
+    }
+}
 
 [Serializable]
 public class ClientMessage : Message

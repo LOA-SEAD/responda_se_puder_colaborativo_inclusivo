@@ -19,6 +19,9 @@ public static class Manager
     public static int nrMedium;
     public static int nrHard;
 
+    public static int indScore = 0;
+    public static int grpScore = 0;
+    
 
     //GERAIS
     public static int nrTeam;
@@ -29,13 +32,16 @@ public static class Manager
     public static int nrHelp5050;
     public static int time;
     public static int teamId;
-    // public static int[] qEasy;
-    // public static int[] qMedium;
-    // public static int[] qHard;
+    public static int[] qEasy;
+    public static int[] qMedium;
+    public static int[] qHard;
+    public static string MOMENTO = "INDIVIDUAL";
 
-    public static int[] qEasy = {0, 4, 1};
-    public static int[] qMedium = {3, 2, 4};
-    public static int[] qHard = {2, 0};
+    public static string FASE = "Nível Fácil";
+
+    // public static int[] qEasy = {0, 4, 1};
+    // public static int[] qMedium = {3, 2, 4};
+    // public static int[] qHard = {2, 0};
     
 
     //MODERADOR

@@ -9,6 +9,8 @@ using TMPro;
 public class alunoEspera : MonoBehaviour, IClient
 {
 
+    private ConnectionManager cm = ConnectionManager.getInstance();
+
     public TMP_Text textoIniciar; 
     public float timer = 100f;
 
@@ -30,20 +32,41 @@ public class alunoEspera : MonoBehaviour, IClient
 
         timer = 10f;
 
-        while (timer > 0f)
-        {
-            timer -= Time.deltaTime;
-            
-            int min = Mathf.FloorToInt(timer / 60f);
-            int sec = Mathf.FloorToInt(timer % 60f);
+        // while (timer > 0f)
+        // {
+        //     atualizaTimer();
+        // }
+
+        SceneManager.LoadScene("Fase");
+    }
+    
+    public void atualizaTimer()
+    {
+        timer -= Time.deltaTime;
+
+        int min = Mathf.FloorToInt(timer / 60f);
+        int sec = Mathf.FloorToInt(timer % 60f);
 
 
-            string timeString = string.Format("{0:00}:{1:00}", min, sec);
+        string timeString = string.Format("{0:00}:{1:00}", min, sec);
 
-            textoIniciar.text = "O jogo iniciará em " + timeString + " segundos...";
-        }
+        textoIniciar.text = "O jogo iniciará em " + timeString + " segundos...";
+    }
 
-        //SceneManager.LoadScene(sceneName);
+    public void MSG_ENTROU_SESSAO(string msgJSON) 
+    {
+        msgENTROU_SESSAO_ALUNO message = JsonUtility.FromJson<msgENTROU_SESSAO_ALUNO>(msgJSON);
+
+        Debug.Log(message.teamId);
+        
+        // dadosTimes.player.name = message.user.name;
+        // dadosTimes.player.id = message.user.id;
+        dadosTimes.player = message.user;
+        Manager.teamId = message.teamId;
+
+        Debug.Log(dadosTimes.player.name);
+        Debug.Log(dadosTimes.player.id);
+
     }
 
     public void handle(string ms){
@@ -60,6 +83,10 @@ public class alunoEspera : MonoBehaviour, IClient
         {
             MSG_INICIA_JOGO(ms);
         }
+        if (messageType == "ENTROU_SESSAO") 
+        {
+            MSG_ENTROU_SESSAO(ms);
+        }
 
     }
     // Start is called before the first frame update
@@ -71,8 +98,22 @@ public class alunoEspera : MonoBehaviour, IClient
     // Update is called once per frame
     void Update()
     {
+        cm.retrieveMessages(this);
+
+        
         
     }
+}
+
+
+[System.Serializable] 
+public class msgENTROU_SESSAO_ALUNO
+{
+    public string messageType;
+    public User user;
+    public int teamId;
+    public int sessionId;
+    public int gameId;
 }
 
 [System.Serializable]

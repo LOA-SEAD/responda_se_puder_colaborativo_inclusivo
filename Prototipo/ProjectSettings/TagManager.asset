@@ -7,6 +7,10 @@ TagManager:
   - txt_equipe
   - txt_players
   - txt_codigo
+  - A
+  - B
+  - C
+  - D
   layers:
   - Default
   - TransparentFX

@@ -26,11 +26,14 @@ public class profConfig : MonoBehaviour, IClient
     public InputField inputModerator;
     public Button btnCadastrar;
 
+    public User mod;
+
     
 
     //Leitura dos inputs
     public void readName(string name){
         moderatorName = name;
+        mod.name = name;
         Manager.moderatorName = this.moderatorName;
 
         Debug.Log(moderatorName);
@@ -87,30 +90,30 @@ public class profConfig : MonoBehaviour, IClient
 
 
     // //message_type: CADASTRAR_SESSAO
-    // public void btnCadastraSessao(){
-
-    //     int[] vetorQuestions = new int[3] {Manager.totalQuestoes, Manager.totalQuestoes, Manager.totalQuestoes};
-    //     int[] questionAmount = new int[3] {this.nrEasy, this.nrMedium, this.nrHard};
-
-    //     var msg = new CadastraSessao("CADASTRAR_SESSAO", this.nrTeam, this.nrPlayerTeam, this.nrHelp5050, this.time,
-    //                                     vetorQuestions, questionAmount, this.moderatorName, Manager.gameId);
-
-    //     cm.send(msg);
-
-    //     SceneManager.LoadScene("profEspera");
-    // }
-
-    //Utilizado para tester com o server antigo
     public void btnCadastraSessao(){
 
-        var msg = new CadastraSessao("CADASTRAR_SESSAO", this.nrTeam, this.nrPlayerTeam,
-                                    this.nrHelp5050, this.time,
-                                    this.moderatorName);
+        int[] vetorQuestions = new int[3] {Manager.totalFacil, Manager.totalMedio, Manager.totalDificil};
+        int[] questionAmount = new int[3] {this.nrEasy, this.nrMedium, this.nrHard};
+
+        var msg = new CadastraSessao("CADASTRAR_SESSAO", this.nrTeam, this.nrPlayerTeam, this.nrHelp5050, this.time,
+                                        vetorQuestions, questionAmount, this.mod, Manager.gameId);
 
         cm.send(msg);
 
         SceneManager.LoadScene("profEspera");
     }
+
+    //Utilizado para tester com o server antigo
+    // public void btnCadastraSessao(){
+
+    //     var msg = new CadastraSessao("CADASTRAR_SESSAO", this.nrTeam, this.nrPlayerTeam,
+    //                                 this.nrHelp5050, this.time,
+    //                                 this.moderatorName);
+
+    //     cm.send(msg);
+
+    //     SceneManager.LoadScene("profEspera");
+    // }
 
 
     public void handle(string ms){
@@ -134,6 +137,8 @@ public class profConfig : MonoBehaviour, IClient
         e o listaBase, usada para manutenção das questões
         */
         carregaDados.Load();
+        // btnCadastrar.SetActive(false);
+
 
     }
 
@@ -143,9 +148,8 @@ public class profConfig : MonoBehaviour, IClient
 
 
         // bool isFieldEmpty = string.IsNullOrEmpty(inputModerator.text);
-        // btnCadastrar.interactable = !isFieldEmpty;
 
-        // cm.retrieveMessages(this);
+        //cm.retrieveMessages(this);
 
         
     }

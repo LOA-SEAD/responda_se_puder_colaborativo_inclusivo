@@ -32,11 +32,13 @@ public class ConnectionManager
 
     public void retrieveMessages(IClient client)
     {
-        #if !UNITY_WEBGL || UNITY_EDITOR
+        //#if !UNITY_WEBGL || UNITY_EDITOR
             this.ws.DispatchMessageQueue();
-        #endif
+        //#endif
         
         // process all queued server messages
+
+        // Debug.Log("Count " + this.gameServerMessageQueue.Count);
         while (this.gameServerMessageQueue.Count > 0)
         {
             this.HandleServerMessage(client, this.gameServerMessageQueue.Dequeue());

@@ -16,10 +16,20 @@ public class dadosTimes : MonoBehaviour
     {
         Team team = listaTimes.Find(t => t.id == teamId);
 
+        // Debug.Log("Time ID encontrado: " + team.id);
+
         if (team != null)
         {
             team.users.Add(user);
         }
+    }
+
+    public static string GetUser(int userId)
+    {
+        User user = meuTime.Find(u => u.id == userId);
+
+        return user.name;
+
     }
 
 

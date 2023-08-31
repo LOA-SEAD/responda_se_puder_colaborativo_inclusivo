@@ -55,6 +55,11 @@ public class profEspera : MonoBehaviour, IClient
 
             GameObject quadroEquipe = quadrosEquipe[i].obj;
             quadrosEquipe[i].id = dadosTimes.listaTimes[i].id;
+
+            // Debug.Log("Quadro ID: " + quadrosEquipe[i].id);
+            // Debug.Log("Time ID: " + dadosTimes.listaTimes[i].id);
+            
+
             TextMeshProUGUI[] textFieldsQ = quadroEquipe.GetComponentsInChildren<TextMeshProUGUI>();
 
             GameObject quadroCodigo = quadrosCodigo[i];
@@ -90,25 +95,94 @@ public class profEspera : MonoBehaviour, IClient
     }
 
 
+    // public void MSG_ENTROU_SESSAO(string msgJSON) 
+    // {
+
+    //     msgENTROU_SESSAO message = JsonUtility.FromJson<msgENTROU_SESSAO>(msgJSON);
+
+    //     dadosTimes.addPlayer(message.user, message.teamId);
+
+    //     for (int i = 0; i < quadrosEquipe.Count; i++)
+    //     {
+    //         if (quadrosEquipe[i].id == message.teamId)
+    //         {
+    //             // Debug.Log("ID Quadro: " + quadrosEquipe[i].id + " / ID Time: " + message.teamId);
+    //             GameObject quadroEquipe = quadrosEquipe[i].obj;
+    //             TextMeshProUGUI[] textFieldsQ = quadroEquipe.GetComponentsInChildren<TextMeshProUGUI>();
+
+    //             foreach (TextMeshProUGUI textFieldQ in textFieldsQ)
+    //             {
+    //                 if (textFieldQ.CompareTag("txt_players"))
+    //                 {
+    //                     if (dadosTimes.listaTimes.Count > i)
+    //                     {
+    //                         if (textFieldQ.text != "")
+    //                         {
+    //                             textFieldQ.text += "\n";
+    //                         }
+    //                         textFieldQ.text += message.user.name;
+    //                     }
+    //                     break;
+    //                 }
+    //             }
+    //         }
+    //     }
+
+    // }
+
+    // public void MSG_ENTROU_SESSAO(string msgJSON) 
+    // {
+    //     msgENTROU_SESSAO message = JsonUtility.FromJson<msgENTROU_SESSAO>(msgJSON);
+    //     dadosTimes.addPlayer(message.user, message.teamId);
+        
+    //     foreach (var quadroEquipe in quadrosEquipe)
+    //     {
+    //         if (quadroEquipe.id == message.teamId)
+    //         {
+    //             GameObject quadroObj = quadroEquipe.obj;
+    //             TextMeshProUGUI[] textFieldsQ = quadroObj.GetComponentsInChildren<TextMeshProUGUI>();
+
+    //             foreach (TextMeshProUGUI textFieldQ in textFieldsQ)
+    //             {
+    //                 if (textFieldQ.CompareTag("txt_players"))
+    //                 {
+    //                     int teamIndex = dadosTimes.listaTimes.FindIndex(time => time.teamId == message.teamId);
+    //                     if (teamIndex >= 0 && teamIndex < dadosTimes.listaTimes.Count)
+    //                     {
+    //                         if (textFieldQ.text != "")
+    //                         {
+    //                             textFieldQ.text += "\n";
+    //                         }
+    //                         textFieldQ.text += message.user.name;
+    //                     }
+    //                     break;
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+
     public void MSG_ENTROU_SESSAO(string msgJSON) 
     {
-
         msgENTROU_SESSAO message = JsonUtility.FromJson<msgENTROU_SESSAO>(msgJSON);
 
+        Debug.Log(message.teamId);
+        
         dadosTimes.addPlayer(message.user, message.teamId);
-
-        for (int i = 0; i < quadrosEquipe.Count; i++)
+        
+        foreach (var quadroEquipe in quadrosEquipe)
         {
-            if (quadrosEquipe[i].id == message.teamId)
+            if (quadroEquipe.id == message.teamId)
             {
-                GameObject quadroEquipe = quadrosEquipe[i].obj;
-                TextMeshProUGUI[] textFieldsQ = quadroEquipe.GetComponentsInChildren<TextMeshProUGUI>();
+                GameObject quadroObj = quadroEquipe.obj;
+                TextMeshProUGUI[] textFieldsQ = quadroObj.GetComponentsInChildren<TextMeshProUGUI>();
 
                 foreach (TextMeshProUGUI textFieldQ in textFieldsQ)
                 {
                     if (textFieldQ.CompareTag("txt_players"))
                     {
-                        if (dadosTimes.listaTimes.Count > i)
+                        int teamIndex = quadrosEquipe.FindIndex(quadro => quadro.id == message.teamId);
+                        if (teamIndex >= 0 && teamIndex < dadosTimes.listaTimes.Count)
                         {
                             if (textFieldQ.text != "")
                             {
@@ -121,7 +195,6 @@ public class profEspera : MonoBehaviour, IClient
                 }
             }
         }
-
     }
 
     public void btnComecarJogo(){
@@ -141,6 +214,7 @@ public class profEspera : MonoBehaviour, IClient
 
         //executa JSON->messageType dentro do handle
         string messageType = JsonUtility.FromJson<ServerMessage>(ms).messageType;
+        Debug.Log(messageType);
 
 
         // route message to handler based on message type
@@ -188,6 +262,7 @@ public class profEspera : MonoBehaviour, IClient
         bool isFieldEmpty = string.IsNullOrEmpty(inputModerator.text);
         btnCadastrar.interactable = !isFieldEmpty;
 */
+        
         cm.retrieveMessages(this);
 
         

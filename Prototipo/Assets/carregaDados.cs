@@ -137,6 +137,30 @@ public class carregaDados : MonoBehaviour
                 }
             }
     }
+
+    public static void Shuffle(ref DadosJogo dados, int[] p)
+    {
+        string[] alt = {dados.resposta, dados.r2, dados.r3, dados.r4};
+        List<string> novaOrdem = new List<string>();
+
+        foreach (int i in p)
+        {
+            if (i >= 0 && i < alt.Length)
+            {
+                novaOrdem.Add(alt[i]);
+            }
+        }
+
+        if (novaOrdem.Count == alt.Length)
+        {
+            dados.resposta = novaOrdem[0];
+            dados.r2 = novaOrdem[1];
+            dados.r3 = novaOrdem[2];
+            dados.r4 = novaOrdem[3];
+        }
+
+        
+    }
 }
 
 [System.Serializable]
