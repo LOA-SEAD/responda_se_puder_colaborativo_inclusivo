@@ -8,8 +8,8 @@ public class ConnectionManager
 {
 
     private WebSocket ws;
-    private string gameServerUrl = "ws://localhost:5000";
-    //private string gameServerUrl = "ws://0.tcp.ngrok.io:16554"; // example ngrok URL
+    // private string gameServerURL;
+    private string gameServerURL; // = "ws://localhost:5000";
 
     private Queue<string> gameServerMessageQueue = new Queue<string>();
 
@@ -17,11 +17,16 @@ public class ConnectionManager
 
     public static ConnectionManager getInstance() {
         if (instance == null) {
-            instance = new ConnectionManager();
+            instance = new ConnectionManager(Manager.serverURL);
         }
         return instance;
     }
-    private ConnectionManager() {
+    private ConnectionManager(string url) {
+
+        this.gameServerURL = url;
+
+        Debug.Log("gameServerURL = " + this.gameServerURL);
+
         this.InitWebSocketClient();
     }
     
@@ -66,7 +71,7 @@ public class ConnectionManager
     private void InitWebSocketClient()
     {
         // create websocket connection
-        this.ws = new WebSocket(this.gameServerUrl);
+        this.ws = new WebSocket(this.gameServerURL);
 
         this.ws.OnOpen += () =>  {
             Debug.Log("Connection open!");

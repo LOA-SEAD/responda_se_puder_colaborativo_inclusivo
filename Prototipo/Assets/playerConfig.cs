@@ -9,7 +9,7 @@ using TMPro;
 
 public class playerConfig : MonoBehaviour, IClient
 {
-    private ConnectionManager cm = ConnectionManager.getInstance();
+    private ConnectionManager cm;
 
     private string namePlayer;
     private string secret;
@@ -111,7 +111,9 @@ public class playerConfig : MonoBehaviour, IClient
         btnEntrar.interactable = true;
         // txt_erro.SetActive(false);
         txt_erro.enabled = false;
-        
+
+        carregaDados.Load();
+        cm = ConnectionManager.getInstance();        
     }
 
     // Update is called once per frame

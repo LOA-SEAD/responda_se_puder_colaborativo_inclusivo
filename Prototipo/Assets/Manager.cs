@@ -47,6 +47,7 @@ public static class Manager
     //MODERADOR
     public static string moderatorName;
 
+    public static string serverURL;
 
     public static void SetNrTeam(int nrTeam)
     {

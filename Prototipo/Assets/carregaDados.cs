@@ -104,6 +104,8 @@ public class carregaDados : MonoBehaviour
             // listaDados.Add(dados);
             // listaBase.Add(dados);
         }
+
+        Manager.serverURL = BetterStreamingAssets.ReadAllLines("url.txt")[0];
     }
 
 
