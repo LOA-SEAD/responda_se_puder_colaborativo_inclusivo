@@ -6,6 +6,9 @@ using UnityEngine;
 public static class Manager
 {
 
+
+    public static string serverURL;
+
     //SESSIONS
     public static int gameId = 0;
     public static int sessionId;
@@ -46,6 +49,8 @@ public static class Manager
 
     //MODERADOR
     public static string moderatorName;
+
+
 
 
     public static void SetNrTeam(int nrTeam)

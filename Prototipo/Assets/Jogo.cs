@@ -948,6 +948,8 @@ public class Jogo : MonoBehaviour, IClient
 
     private ConnectionManager cm = ConnectionManager.getInstance();
 
+    // private ConnectionManager cm;
+
     public TMP_Text pergunta;
     public TMP_Text dica;
     public TMP_Text[] alternativas; 
@@ -965,6 +967,7 @@ public class Jogo : MonoBehaviour, IClient
     public GameObject CanvasJogo;
     public GameObject CanvasRCerta;
     public GameObject CanvasRErrada;
+    public GameObject CanvasFase;
 
 
     public GameObject[] qntAlternatives;
@@ -996,6 +999,40 @@ public class Jogo : MonoBehaviour, IClient
     private RespostasGrupo ansGroup;
     private int correct;
 
+
+    //TELA FASE
+    public float sec;
+    public TMP_Text txt_nivel;
+    public TMP_Text txt_lider; 
+
+    // private void Start()
+    // {
+    //     SetLevelText();
+    //     SetLeaderText();
+    //     Invoke("NextQ", sec);
+    // }
+
+    void NextQ()
+    {
+        CanvasJogo.SetActive(true);
+        CanvasFase.SetActive(false);
+    }
+
+
+
+    public void SetLevelText()
+    {
+        txt_nivel.text = Manager.FASE;
+    }
+
+    public void SetLeaderText()
+    {
+        string t = dadosTimes.GetUser(Manager.leaderId);
+
+        txt_lider.text = "Líder da fase: " + t;
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -1018,6 +1055,15 @@ public class Jogo : MonoBehaviour, IClient
 
         carregaDados.Load();
         carregaDados.Select();
+        totalQuestoes = carregaDados.listaDados.Count;
+
+        CanvasJogo.SetActive(false);
+        CanvasFase.SetActive(true);
+        SetLevelText();
+        SetLeaderText();
+        Invoke("NextQ", sec);
+
+
         
         
         // CarregarPerguntas();
@@ -1029,16 +1075,13 @@ public class Jogo : MonoBehaviour, IClient
         // Debug.Log(Manager.totalQuestoes);
     }
 
-    void CarregarPerguntas()
-    {
-  
-        totalQuestoes = carregaDados.listaDados.Count;
-
-        // numeroQuestao = 1;
-        CarregarPergunta();
-        // SetIndividual();
-        // ProximaQuestao();
-    }
+    // void CarregarPerguntas()
+    // {
+    //     // numeroQuestao = 1;
+    //     CarregarPergunta();
+    //     // SetIndividual();
+    //     // ProximaQuestao();
+    // }
 
     // Carrega uma nova pergunta
     void CarregarPergunta()
@@ -1335,7 +1378,6 @@ public class Jogo : MonoBehaviour, IClient
 
         generalCommands.EnableAllObjectsInteractions();
         
-        Debug.Log("ENTROU NO SET INDIVIDUAL");
         SetQntAlternatives(0);
 
         quadroChat.SetActive(false);
@@ -1349,6 +1391,11 @@ public class Jogo : MonoBehaviour, IClient
         SetQntAlternatives(1);
 
         quadroChat.SetActive(true);
+
+
+        Debug.Log("ID JOGADOR: " + dadosTimes.player.id);
+
+        Debug.Log("ID Lider: " + Manager.leaderId);
 
         if (dadosTimes.player.id != Manager.leaderId)
         {
@@ -1446,18 +1493,15 @@ public class Jogo : MonoBehaviour, IClient
     public void handle(string ms)
     {
 
-        Debug.Log("ENTRA NO HANDLE??????");
         //string messageType = ms.messageType;
 
         //executa JSON->messageType dentro do handle
         string messageType = JsonUtility.FromJson<ServerMessage>(ms).messageType;
 
         // route message to handler based on message type
-        Debug.Log(ms);
 
         if (messageType == "NOVA_QUESTAO") 
         {
-            Debug.Log("ENTROU HANDLE");
             MSG_NOVA_QUESTAO(ms);
 
         }

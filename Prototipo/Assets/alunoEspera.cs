@@ -37,7 +37,7 @@ public class alunoEspera : MonoBehaviour, IClient
         //     atualizaTimer();
         // }
 
-        SceneManager.LoadScene("Fase");
+        SceneManager.LoadScene("Jogo");
     }
     
     public void atualizaTimer()
@@ -77,7 +77,7 @@ public class alunoEspera : MonoBehaviour, IClient
 
 
         // route message to handler based on message type
-        Debug.Log(ms);
+        Debug.Log("CENA ALUNOESPERA: " + ms);
 
         if (messageType == "INICIA_JOGO") 
         {
@@ -92,6 +92,7 @@ public class alunoEspera : MonoBehaviour, IClient
     // Start is called before the first frame update
     void Start()
     {
+
         
     }
 
