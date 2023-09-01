@@ -1063,6 +1063,8 @@ public class Jogo : MonoBehaviour, IClient
         SetLeaderText();
         Invoke("NextQ", sec);
 
+        PrimeiraQuestao();
+
 
         
         
@@ -1075,6 +1077,12 @@ public class Jogo : MonoBehaviour, IClient
         // Debug.Log(Manager.totalQuestoes);
     }
 
+
+
+    void PrimeiraQuestao()
+    {
+        MSG_NOVA_QUESTAO(Manager.msgPrimeiraQuestao);
+    }
     // void CarregarPerguntas()
     // {
     //     // numeroQuestao = 1;
@@ -1498,6 +1506,8 @@ public class Jogo : MonoBehaviour, IClient
         //executa JSON->messageType dentro do handle
         string messageType = JsonUtility.FromJson<ServerMessage>(ms).messageType;
 
+
+        // Debug.Log("CENA JOGO: " + ms);
         // route message to handler based on message type
 
         if (messageType == "NOVA_QUESTAO") 

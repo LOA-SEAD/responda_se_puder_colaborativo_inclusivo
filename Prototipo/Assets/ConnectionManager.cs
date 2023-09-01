@@ -132,6 +132,8 @@ public class ConnectionManager
     // private string gameServerURL;
     private string gameServerURL; // = "ws://localhost:5000";
 
+
+
     private Queue<string> gameServerMessageQueue = new Queue<string>();
 
     private static ConnectionManager instance;

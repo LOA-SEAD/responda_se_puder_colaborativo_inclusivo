@@ -87,6 +87,9 @@ public class alunoEspera : MonoBehaviour, IClient
         {
             MSG_ENTROU_SESSAO(ms);
         }
+        if (messageType == "NOVA_QUESTAO"){
+            Manager.msgPrimeiraQuestao = ms;
+        }
 
     }
     // Start is called before the first frame update

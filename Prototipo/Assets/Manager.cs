@@ -7,8 +7,6 @@ public static class Manager
 {
 
 
-    public static string serverURL;
-
     //SESSIONS
     public static int gameId = 0;
     public static int sessionId;
@@ -52,6 +50,9 @@ public static class Manager
 
     public static string serverURL;
 
+
+    
+    public static string msgPrimeiraQuestao;
 
 
     public static void SetNrTeam(int nrTeam)
