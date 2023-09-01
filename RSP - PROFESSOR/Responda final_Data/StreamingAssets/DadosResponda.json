@@ -1,0 +1,14 @@
+{"pergunta": "Qual é a capital do Distrito Federal?", "resposta": "Brasília", "r2": "São Paulo", "r3": "Teresina", "r4": "Goiânia", "dica": "É onde trabalham os deputados brasileiros.", "nivel": "facil"}
+{"pergunta": "Qual é a capital da Bahia?", "resposta": "Salvador", "r2": "Teresina", "r3": "Campo Grande", "r4": "Porto Velho", "dica": "É uma cidade litorânea.", "nivel": "facil"}
+{"pergunta": "Qual é a capital de Minas Gerais?", "resposta": "Belo Horizonte", "r2": "Campo Grande", "r3": "Cuiabá", "r4": "Salvador", "dica": "É conhecido pela culinária com derivados de leite.", "nivel": "facil"}
+{"pergunta": "Qual é a capital do Rio Grande do Norte?", "resposta": "Natal", "r2": "Teresina", "r3": "Porto Alegre", "r4": "Curitiba", "dica": "Fica no Nordeste, embora o nome engane.", "nivel": "facil"}
+{"pergunta": "Qual é a capital de Goiás?", "resposta": "Goiânia", "r2": "São Paulo", "r3": "Rio de Janeiro", "r4": "Cuiabá", "dica": "É parecido com o nome do estado.", "nivel": "facil"}
+{"pergunta": "Qual é a capital do Ceará?", "resposta": "Fortaleza", "r2": "Recife", "r3": "São Luís", "r4": "Teresina", "dica": "Tem praia.", "nivel": "facil"}
+{"pergunta": "Quanto é 9x9?", "resposta": "81", "r2": "91", "r3": "61", "r4": "71", "dica": "10x9-9", "nivel": "medio"}
+{"pergunta": "Quanto é 8x7?", "resposta": "56", "r2": "54", "r3": "58", "r4": "52", "dica": "8+8+8+8+8+8+8", "nivel": "medio"}
+{"pergunta": "Quanto é 5x5?", "resposta": "25", "r2": "30", "r3": "20", "r4": "35", "dica": "É um múltiplo de 5.", "nivel": "medio"}
+{"pergunta": "Quanto é 9x10?", "resposta": "90", "r2": "89", "r3": "92", "r4": "91", "dica": "Termina com 0.", "nivel": "medio"}
+{"pergunta": "Quanto é 10x10?", "resposta": "100", "r2": "89", "r3": "92", "r4": "91", "dica": "Termina com 0.", "nivel": "medio"}
+{"pergunta": "Como se fala \"obrigado\" em inglês?", "resposta": "Thanks.", "r2": "You're welcome.", "r3": "Nice to meet you.", "r4": "Good morning.", "dica": "É mais simples do que parece.", "nivel": "dificil"}
+{"pergunta": "Quais dessas palavras são frutas em inglês?", "resposta": "Orange, apple", "r2": "Monkey, mouse", "r3": "Shirt, pants", "r4": "Pencil, pen", "dica": "Lembre-se das aulas de inglês.", "nivel": "dificil"}
+{"pergunta": "Quais dessas palavras são animais em inglês?", "resposta": "Monkey, mouse", "r2": "Orange, apple", "r3": "Shirt, pants", "r4": "Pencil, pen", "dica": "Lembre-se do Homem Aranha.", "nivel": "dificil"}
