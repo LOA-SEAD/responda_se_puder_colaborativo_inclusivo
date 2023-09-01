@@ -50,6 +50,7 @@ public static class Manager
     //MODERADOR
     public static string moderatorName;
 
+    public static string serverURL;
 
 
 

@@ -8,9 +8,7 @@ using NativeWebSocket;
 public class profConfig : MonoBehaviour, IClient
 {
 
-    // private ConnectionManager cm = ConnectionManager.getInstance();
-
-    private ConnectionManager cm;
+    private ConnectionManager cm; // = ConnectionManager.getInstance();
 
     //Declaração variáveis
     private int nrTeam;
@@ -142,7 +140,6 @@ public class profConfig : MonoBehaviour, IClient
         // btnCadastrar.SetActive(false);
 
         cm = ConnectionManager.getInstance();
-
 
     }
 
