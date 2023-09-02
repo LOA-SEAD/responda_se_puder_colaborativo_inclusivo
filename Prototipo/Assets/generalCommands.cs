@@ -78,7 +78,7 @@ public class generalCommands : MonoBehaviour
     void Start()
     {
 
-        carregaDados.Load();
+        carregaDados.Load(this);
         
     }
 

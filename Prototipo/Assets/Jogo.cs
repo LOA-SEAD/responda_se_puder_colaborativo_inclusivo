@@ -1053,7 +1053,7 @@ public class Jogo : MonoBehaviour, IClient
         Manager.totalDificil = 0;
 
 
-        carregaDados.Load();
+        carregaDados.Load(this);
         carregaDados.Select();
         totalQuestoes = carregaDados.listaDados.Count;
 

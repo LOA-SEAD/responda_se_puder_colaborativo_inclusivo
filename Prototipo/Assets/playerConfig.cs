@@ -112,7 +112,7 @@ public class playerConfig : MonoBehaviour, IClient
         // txt_erro.SetActive(false);
         txt_erro.enabled = false;
 
-        carregaDados.Load();
+        carregaDados.Load(this);
         cm = ConnectionManager.getInstance();        
     }
 

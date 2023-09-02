@@ -136,7 +136,7 @@ public class profConfig : MonoBehaviour, IClient
         Possui o listaDados que será usado para apresentar as questões
         e o listaBase, usada para manutenção das questões
         */
-        carregaDados.Load();
+        carregaDados.Load(this);
         // btnCadastrar.SetActive(false);
 
         cm = ConnectionManager.getInstance();
