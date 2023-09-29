@@ -1055,7 +1055,7 @@ public class Jogo : MonoBehaviour, IClient
         qst = 0;
 
 
-        carregaDados.Load();
+        carregaDados.Load(this);
         carregaDados.Select();
         totalQuestoes = carregaDados.listaDados.Count;
 
