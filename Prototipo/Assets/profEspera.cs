@@ -13,7 +13,7 @@ public class profEspera : MonoBehaviour, IClient
 
     private ConnectionManager cm = ConnectionManager.getInstance();
 
-    //Botões
+    //BTN
     public Button btnIniciarSessao;
 
 
@@ -31,6 +31,7 @@ public class profEspera : MonoBehaviour, IClient
 
 
     //messagetype: SESSAO_CRIADA
+    //cria os quadros que serão apresentados em tela com o nome dos jogadores
     public void MSG_SESSAO_CRIADA(string msgJSON)
     {
         //Classe para tratar a mensagem
@@ -94,74 +95,8 @@ public class profEspera : MonoBehaviour, IClient
         }
     }
 
-
-    // public void MSG_ENTROU_SESSAO(string msgJSON) 
-    // {
-
-    //     msgENTROU_SESSAO message = JsonUtility.FromJson<msgENTROU_SESSAO>(msgJSON);
-
-    //     dadosTimes.addPlayer(message.user, message.teamId);
-
-    //     for (int i = 0; i < quadrosEquipe.Count; i++)
-    //     {
-    //         if (quadrosEquipe[i].id == message.teamId)
-    //         {
-    //             // Debug.Log("ID Quadro: " + quadrosEquipe[i].id + " / ID Time: " + message.teamId);
-    //             GameObject quadroEquipe = quadrosEquipe[i].obj;
-    //             TextMeshProUGUI[] textFieldsQ = quadroEquipe.GetComponentsInChildren<TextMeshProUGUI>();
-
-    //             foreach (TextMeshProUGUI textFieldQ in textFieldsQ)
-    //             {
-    //                 if (textFieldQ.CompareTag("txt_players"))
-    //                 {
-    //                     if (dadosTimes.listaTimes.Count > i)
-    //                     {
-    //                         if (textFieldQ.text != "")
-    //                         {
-    //                             textFieldQ.text += "\n";
-    //                         }
-    //                         textFieldQ.text += message.user.name;
-    //                     }
-    //                     break;
-    //                 }
-    //             }
-    //         }
-    //     }
-
-    // }
-
-    // public void MSG_ENTROU_SESSAO(string msgJSON) 
-    // {
-    //     msgENTROU_SESSAO message = JsonUtility.FromJson<msgENTROU_SESSAO>(msgJSON);
-    //     dadosTimes.addPlayer(message.user, message.teamId);
-        
-    //     foreach (var quadroEquipe in quadrosEquipe)
-    //     {
-    //         if (quadroEquipe.id == message.teamId)
-    //         {
-    //             GameObject quadroObj = quadroEquipe.obj;
-    //             TextMeshProUGUI[] textFieldsQ = quadroObj.GetComponentsInChildren<TextMeshProUGUI>();
-
-    //             foreach (TextMeshProUGUI textFieldQ in textFieldsQ)
-    //             {
-    //                 if (textFieldQ.CompareTag("txt_players"))
-    //                 {
-    //                     int teamIndex = dadosTimes.listaTimes.FindIndex(time => time.teamId == message.teamId);
-    //                     if (teamIndex >= 0 && teamIndex < dadosTimes.listaTimes.Count)
-    //                     {
-    //                         if (textFieldQ.text != "")
-    //                         {
-    //                             textFieldQ.text += "\n";
-    //                         }
-    //                         textFieldQ.text += message.user.name;
-    //                     }
-    //                     break;
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
-
+    //messageType: ENTROU_SESSAO
+    //coloca no quadro da equipe correta o nome do aluno que acessou o jogo e adiciona o aluno no time correto na base de dadosTimes
     public void MSG_ENTROU_SESSAO(string msgJSON) 
     {
         msgENTROU_SESSAO message = JsonUtility.FromJson<msgENTROU_SESSAO>(msgJSON);
@@ -203,7 +138,6 @@ public class profEspera : MonoBehaviour, IClient
 
         cm.send(msg);
 
-        // SceneManager.LoadScene("");
     }
 
 
@@ -257,14 +191,8 @@ public class profEspera : MonoBehaviour, IClient
     // Update is called once per frame
     void Update()
     {
-
-/*
-        bool isFieldEmpty = string.IsNullOrEmpty(inputModerator.text);
-        btnCadastrar.interactable = !isFieldEmpty;
-*/
-        
+       
         cm.retrieveMessages(this);
-
         
     }
         

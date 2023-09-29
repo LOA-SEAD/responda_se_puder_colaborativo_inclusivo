@@ -104,6 +104,25 @@ public class PedirAjuda : Message
 }
 
 [Serializable]
+public class ProxQuestao : Message
+{
+    public User user;
+    public int teamId;
+    public int sessionId;
+    public int gameId;
+
+    public ProxQuestao(string messageType, User user, int teamId, int sessionId, int gameId)
+    {
+        this.user = user;
+        this.teamId = teamId;
+        this.sessionId = sessionId;
+        this.gameId = gameId;
+        this.messageType = messageType;
+
+    }
+}
+
+[Serializable]
 public class RespostaIndividual : Message
 {
     public User user;

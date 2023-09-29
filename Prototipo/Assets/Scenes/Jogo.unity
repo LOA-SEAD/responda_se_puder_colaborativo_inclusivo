@@ -465,7 +465,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 3ce7f7975b80be14e86afc10fab6a3b9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2406,7 +2406,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1366, y: 768}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -2935,7 +2935,7 @@ GameObject:
   - component: {fileID: 870854825}
   m_Layer: 5
   m_Name: txtPlayers
-  m_TagString: Untagged
+  m_TagString: txt_team
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3342,7 +3342,7 @@ GameObject:
   - component: {fileID: 985966197}
   m_Layer: 5
   m_Name: txtEquipe
-  m_TagString: Untagged
+  m_TagString: txt_nrEquipe
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3796,7 +3796,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2025203444}
   m_HandleRect: {fileID: 2025203443}
   m_Direction: 2
-  m_Value: 0.99999976
+  m_Value: 1
   m_Size: 0.5164
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4273,7 +4273,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1366, y: 768}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -4289,7 +4289,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 1975215644}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -4766,7 +4766,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.0349121, y: 154.33}
+  m_AnchoredPosition: {x: 1.0349121, y: 154.33002}
   m_SizeDelta: {x: -138.95, y: -658.48}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1321283249
@@ -5468,6 +5468,11 @@ MonoBehaviour:
   txt_correto_resposta: {fileID: 356280232}
   txt_errado_resposta: {fileID: 0}
   txt_errado_resposta_dada: {fileID: 0}
+  numeroQuestaoText: {fileID: 1860898305}
+  nivel: {fileID: 1613068503}
+  pontuacao: {fileID: 1114134267}
+  tempoQuestao: {fileID: 1673195052}
+  timer: 100
   CanvasJogo: {fileID: 779118917}
   CanvasRCerta: {fileID: 1819104216}
   CanvasRErrada: {fileID: 1164184787}
@@ -5481,11 +5486,6 @@ MonoBehaviour:
   painelDica: {fileID: 1874705306}
   painelConfirma: {fileID: 1348795845}
   quadroChat: {fileID: 1136874205}
-  numeroQuestaoText: {fileID: 1860898305}
-  nivel: {fileID: 1613068503}
-  tempoQuestao: {fileID: 1673195052}
-  timer: 100
-  pontuacao: {fileID: 1114134267}
   btnDica: {fileID: 2017551445}
   confirmaDica: {fileID: 311063478}
   alt: 00000000010000000200000003000000
@@ -5497,6 +5497,7 @@ MonoBehaviour:
   sec: 5
   txt_nivel: {fileID: 1514198313}
   txt_lider: {fileID: 143986071}
+  txt_nrEquipe: {fileID: 0}
 --- !u!1 &1394197324
 GameObject:
   m_ObjectHideFlags: 0
@@ -5550,7 +5551,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1366, y: 768}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -5566,7 +5567,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 1975215644}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -5971,7 +5972,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1565972713
 Transform:
   m_ObjectHideFlags: 0
@@ -7273,7 +7274,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1366, y: 768}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -7289,7 +7290,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 1975215644}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -7599,7 +7600,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1858918571
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9011,7 +9012,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2052199118
 RectTransform:
   m_ObjectHideFlags: 0

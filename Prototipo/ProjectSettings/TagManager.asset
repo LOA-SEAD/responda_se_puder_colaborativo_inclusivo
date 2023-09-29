@@ -11,6 +11,8 @@ TagManager:
   - B
   - C
   - D
+  - txt_team
+  - txt_nrEquipe
   layers:
   - Default
   - TransparentFX

@@ -17,17 +17,17 @@ public class playerConfig : MonoBehaviour, IClient
     public User user;
 
     public TMP_Text txt_erro;
+    public TMP_InputField[] inputFields;
 
 
     //public InputField inputName;
 
     public Button btnEntrar;
+    private int interact = 1;
     
     public void readName(string name){
-        //this.playerName = inputName.GetComponent<Text>().text;
         namePlayer = name;
         user.name = name;
-        // dadosTimes.player.name = name;
         Debug.Log(namePlayer);
     }
 
@@ -37,7 +37,7 @@ public class playerConfig : MonoBehaviour, IClient
     }
 
 //Envio da mensagem para servidor quando clicar no botao
-    public void btnEntrarJogo(string sceneName){
+    public void btnEntrarJogo(){
 
         //PASSAR sessionID@secret
  
@@ -47,7 +47,8 @@ public class playerConfig : MonoBehaviour, IClient
  
 
         cm.send(msg);
-        SceneManager.LoadScene(sceneName);
+        btnEntrar.interactable = false;
+        interact = 0;
     }
     
 
@@ -59,12 +60,36 @@ public class playerConfig : MonoBehaviour, IClient
         //string messageType = JsonUtility.FromJson<ServerMessage>(messageJSON).messageType;
         if (messageType == "ACESSO_INVALIDO") 
         {
+            interact = 1;
+            btnEntrar.interactable = true;
             MSG_ACESSO(ms);
+        }
+        
+        if (messageType == "ENTROU_SESSAO") 
+        {
+            MSG_ENTROU_SESSAO(ms);
         }
 
         // route message to handler based on message type
         Debug.Log(ms);
      }
+
+    public void MSG_ENTROU_SESSAO(string msgJSON) 
+    {
+        msgENTROU_SESSAO_ALUNO message = JsonUtility.FromJson<msgENTROU_SESSAO_ALUNO>(msgJSON);
+
+        Debug.Log(message.teamId);
+        
+        dadosTimes.player = message.user;
+        Manager.teamId = message.teamId;
+
+        Debug.Log(dadosTimes.player.name);
+        Debug.Log(dadosTimes.player.id);
+
+        SceneManager.LoadScene("alunoEspera");
+
+    }
+
 
     public void MSG_ACESSO(string msgJSON){
 
@@ -107,12 +132,13 @@ public class playerConfig : MonoBehaviour, IClient
     // Start is called before the first frame update
     void Start()
     {
-
+        interact = 1;
         btnEntrar.interactable = true;
         // txt_erro.SetActive(false);
         txt_erro.enabled = false;
 
         carregaDados.Load();
+        
         cm = ConnectionManager.getInstance();        
     }
 
@@ -120,19 +146,42 @@ public class playerConfig : MonoBehaviour, IClient
     void Update()
     {
     
-        //cm.retrieveMessages(this);
-        //retriveMessages aqui dentro ->
-        /*
-        if ((!string.IsNullOrEmpty(playerName)) && (!string.IsNullOrEmpty(teamId)))
+        cm.retrieveMessages(this);
+        if (interact == 1)
         {
-            //btnEntrar = GameObject.GetComponent<Button>();
-            btnEntrar.interactable = true;
-        }*/
+                bool allInputs = true;
 
+                if (inputFields != null)
+                {
+                    foreach (TMP_InputField inputField in inputFields)
+                    {
+                        if (inputField != null && string.IsNullOrEmpty(inputField.text))
+                        {
+                            allInputs = false;
+                            break;
+                        }
+                    }
+                }
+            
 
+                if (btnEntrar != null)
+                {
+                    btnEntrar.interactable = allInputs;
+                }
+        }
     }
+
 }
 
+[System.Serializable] 
+public class msgENTROU_SESSAO_ALUNO
+{
+    public string messageType;
+    public User user;
+    public int teamId;
+    public int sessionId;
+    public int gameId;
+}
 
 [System.Serializable] 
 public class msgACESSO

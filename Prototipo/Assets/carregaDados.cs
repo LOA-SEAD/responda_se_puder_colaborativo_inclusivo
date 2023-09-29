@@ -67,6 +67,15 @@ public class carregaDados : MonoBehaviour
 //     }
 // }
 
+    public static void LoadURL()
+    {
+        BetterStreamingAssets.Initialize();
+
+        Manager.serverURL = BetterStreamingAssets.ReadAllLines("url.txt")[0];
+
+
+    }
+
     public static void Load()
     { 
         BetterStreamingAssets.Initialize();
@@ -105,7 +114,7 @@ public class carregaDados : MonoBehaviour
             // listaBase.Add(dados);
         }
 
-        Manager.serverURL = BetterStreamingAssets.ReadAllLines("url.txt")[0];
+
     }
 
 

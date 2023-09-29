@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using NativeWebSocket;
+using TMPro;
 
 public class profConfig : MonoBehaviour, IClient
 {
@@ -20,12 +21,18 @@ public class profConfig : MonoBehaviour, IClient
     private int nrHard;
     private string moderatorName;
 
+    //Declaração texto em tela
+    public TMP_Text txt_MaxFacil;
+    public TMP_Text txt_MaxMedio;
+    public TMP_Text txt_MaxDificil;
+
+
 
     //Declaração de botões
-    public Button btnIniciarSessao;
-    public InputField inputModerator;
+    public TMP_InputField[] inputFields;
     public Button btnCadastrar;
 
+    //Declaração do user do moderador
     public User mod;
 
     
@@ -103,27 +110,8 @@ public class profConfig : MonoBehaviour, IClient
         SceneManager.LoadScene("profEspera");
     }
 
-    //Utilizado para tester com o server antigo
-    // public void btnCadastraSessao(){
-
-    //     var msg = new CadastraSessao("CADASTRAR_SESSAO", this.nrTeam, this.nrPlayerTeam,
-    //                                 this.nrHelp5050, this.time,
-    //                                 this.moderatorName);
-
-    //     cm.send(msg);
-
-    //     SceneManager.LoadScene("profEspera");
-    // }
-
 
     public void handle(string ms){
-        //string messageType = ms.messageType;
-
-        //executa JSON->messageType dentro do handle
-        // string messageType = JsonUtility.FromJson<ServerMessage>(ms).messageType;
-
-
-        // route message to handler based on message type
         Debug.Log(ms);
     }
     
@@ -137,7 +125,13 @@ public class profConfig : MonoBehaviour, IClient
         e o listaBase, usada para manutenção das questões
         */
         carregaDados.Load();
-        // btnCadastrar.SetActive(false);
+
+
+        //Apresenta como máximo uma questão a mesma dado que precisa de uma questão extra para PULAR
+        txt_MaxFacil.text = "(Máx: " + (Manager.totalFacil-1) + ")";
+        txt_MaxMedio.text = "(Máx: " + (Manager.totalMedio-1) + ")";
+        txt_MaxDificil.text = "(Máx: " + (Manager.totalDificil-1) + ")";
+
 
         cm = ConnectionManager.getInstance();
 
@@ -147,12 +141,25 @@ public class profConfig : MonoBehaviour, IClient
     void Update()
     {
 
+        bool allInputs = true;
 
-        // bool isFieldEmpty = string.IsNullOrEmpty(inputModerator.text);
+        if (inputFields != null)
+        {
+            foreach (TMP_InputField inputField in inputFields)
+            {
+                if (inputField != null && string.IsNullOrEmpty(inputField.text))
+                {
+                    allInputs = false;
+                    break;
+                }
+            }
+        }
+    
 
-        //cm.retrieveMessages(this);
-
-        
+        if (btnCadastrar != null)
+        {
+            btnCadastrar.interactable = allInputs;
+        }
     }
         
 }

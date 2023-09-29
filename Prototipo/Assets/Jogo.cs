@@ -948,8 +948,6 @@ public class Jogo : MonoBehaviour, IClient
 
     private ConnectionManager cm = ConnectionManager.getInstance();
 
-    // private ConnectionManager cm;
-
     public TMP_Text pergunta;
     public TMP_Text dica;
     public TMP_Text[] alternativas; 
@@ -963,6 +961,12 @@ public class Jogo : MonoBehaviour, IClient
     public TMP_Text txt_errado_resposta;
     public TMP_Text txt_errado_resposta_dada;
     
+    public TMP_Text numeroQuestaoText;
+    public TMP_Text nivel;
+    public TMP_Text pontuacao; 
+
+    public TMP_Text tempoQuestao; 
+    public float timer = 20f;
 
     public GameObject CanvasJogo;
     public GameObject CanvasRCerta;
@@ -976,20 +980,13 @@ public class Jogo : MonoBehaviour, IClient
     public GameObject painelDica;
     public GameObject painelConfirma;
     public GameObject quadroChat;
-    public TMP_Text numeroQuestaoText;
-    public TMP_Text nivel;
-
-    public TMP_Text tempoQuestao; 
-    public float timer = 0f;
-
-    public TMP_Text pontuacao; 
 
     public Button btnDica;
     public Button confirmaDica;
 
     public int[] alt;
     private DadosJogo perguntaAtual;
-    private int numeroQuestao = 1;
+    private int numeroQuestao = 0;
     private int totalQuestoes;
 
     private string correctAnswer;
@@ -999,11 +996,15 @@ public class Jogo : MonoBehaviour, IClient
     private RespostasGrupo ansGroup;
     private int correct;
 
+    private int qst;
+
 
     //TELA FASE
     public float sec;
     public TMP_Text txt_nivel;
     public TMP_Text txt_lider; 
+
+    public TMP_Text txt_nrEquipe;
 
     // private void Start()
     // {
@@ -1012,13 +1013,12 @@ public class Jogo : MonoBehaviour, IClient
     //     Invoke("NextQ", sec);
     // }
 
+
     void NextQ()
     {
         CanvasJogo.SetActive(true);
         CanvasFase.SetActive(false);
     }
-
-
 
     public void SetLevelText()
     {
@@ -1041,6 +1041,7 @@ public class Jogo : MonoBehaviour, IClient
         pontuacao.text = "Pontuação: ";
         pontuacao.text = pontuacao.text + "0";
 
+        // txt_nrEquipe.text = "Equipe " + Manager.teamId;
         SetQntAlternatives(0);
 
 
@@ -1051,11 +1052,14 @@ public class Jogo : MonoBehaviour, IClient
         Manager.totalFacil = 0;
         Manager.totalMedio = 0;
         Manager.totalDificil = 0;
+        qst = 0;
 
 
         carregaDados.Load();
         carregaDados.Select();
         totalQuestoes = carregaDados.listaDados.Count;
+
+        Manager.countQuestoesJogo();
 
         CanvasJogo.SetActive(false);
         CanvasFase.SetActive(true);
@@ -1075,9 +1079,8 @@ public class Jogo : MonoBehaviour, IClient
         // quadroChat.SetActive(true);
         // generalCommands.EnableInteraction(quadroChat);
         // Debug.Log(Manager.totalQuestoes);
+        // Debug.Log(totalQuestoes);
     }
-
-
 
     void PrimeiraQuestao()
     {
@@ -1102,10 +1105,11 @@ public class Jogo : MonoBehaviour, IClient
         else
         {
             perguntaAtual = null;
+            //fim de jogo
         }
 
         // Placar de questões e tempo
-        numeroQuestaoText.text = "Questão " + numeroQuestao + " de " + totalQuestoes;
+        numeroQuestaoText.text = "Questão " + numeroQuestao + " de " + Manager.nQ_total;
         nivel.text = "Nível " + perguntaAtual.nivel;
         
         if (perguntaAtual.nivel == "facil")
@@ -1128,10 +1132,10 @@ public class Jogo : MonoBehaviour, IClient
             correctAnswer = perguntaAtual.resposta; 
             pergunta.text = perguntaAtual.pergunta;
             dica.text = perguntaAtual.dica;
-            answer.nrQ = Manager.qEasy[0];
+            answer.nrQ = Manager.numQ[qst];
 
 
-            // carregaDados.Shuffle(ref perguntaAtual, alt);
+            carregaDados.Shuffle(ref perguntaAtual, alt);
             
             // string[] alt_string = {perguntaAtual.resposta, perguntaAtual.r2, perguntaAtual.r3, perguntaAtual.r4};
             // List<string> novaOrdem = new List<string>();
@@ -1177,44 +1181,8 @@ public class Jogo : MonoBehaviour, IClient
         }
     }
 
-    string ObterAlternativa(int index)
-    {
-        switch (index)
-        {
-            case 0:
-                return perguntaAtual.resposta;
-            case 1:
-                return perguntaAtual.r2;
-            case 2:
-                return perguntaAtual.r3;
-            case 3:
-                return perguntaAtual.r4;
-            default:
-                return "";
-        }
-    }
 
-    public void ProximaQuestao()
-    {
-        numeroQuestao++;
-
-        if (numeroQuestao <= totalQuestoes)
-        {
-            CarregarPergunta();
-        }
-        zeraTimer();
-
-    }
-
-    public void ajudaDica()
-    {
-        painelDica.SetActive(true);
-    }
-
-    public void confirmarDica()
-    {
-        painelDica.SetActive(false);
-    }
+    
 
     public void SelecionaAlternativa(string tag)
     {
@@ -1253,24 +1221,36 @@ public class Jogo : MonoBehaviour, IClient
 
     }
 
-    public void ajudaPula()
+    string ObterAlternativa(int index)
     {
-        if (Manager.MOMENTO == "GRUPO"){
-            var msg = new PedirAjuda("PEDIR_AJUDA", dadosTimes.player, Manager.teamId, Manager.sessionId,
-                                    Manager.gameId, "pular");
-
-            cm.send(msg);
+        switch (index)
+        {
+            case 0:
+                return perguntaAtual.resposta;
+            case 1:
+                return perguntaAtual.r2;
+            case 2:
+                return perguntaAtual.r3;
+            case 3:
+                return perguntaAtual.r4;
+            default:
+                return "";
         }
     }
 
-    public void ajuda5050()
+    public void ProximaQuestao()
     {
-        if (Manager.MOMENTO == "GRUPO"){
-            var msg = new PedirAjuda("PEDIR_AJUDA", dadosTimes.player, Manager.teamId, Manager.sessionId,
-                                    Manager.gameId, "5050");
+        numeroQuestao++;
 
-            cm.send(msg);
+        if (numeroQuestao <= Manager.nQ_total)
+        {
+            CarregarPergunta();
         }
+        else {
+            SceneManager.LoadScene("Fim");
+        }
+        zeraTimer();
+
     }
 
     public int VerificaResposta()
@@ -1327,7 +1307,43 @@ public class Jogo : MonoBehaviour, IClient
 
         cm.send(msg);
 
+        // qst++;
+
      }
+
+    public void ajudaDica()
+    {
+        painelDica.SetActive(true);
+    }
+
+    public void confirmarDica()
+    {
+        painelDica.SetActive(false);
+    }
+
+
+
+    public void ajudaPula()
+    {
+        if (Manager.MOMENTO == "GRUPO"){
+            var msg = new PedirAjuda("PEDIR_AJUDA", dadosTimes.player, Manager.teamId, Manager.sessionId,
+                                    Manager.gameId, "pular");
+
+            cm.send(msg);
+        }
+    }
+
+    public void ajuda5050()
+    {
+        if (Manager.MOMENTO == "GRUPO"){
+            var msg = new PedirAjuda("PEDIR_AJUDA", dadosTimes.player, Manager.teamId, Manager.sessionId,
+                                    Manager.gameId, "5050");
+
+            cm.send(msg);
+        }
+    }
+
+
 
     void Update()
     {
@@ -1362,7 +1378,14 @@ public class Jogo : MonoBehaviour, IClient
         
         if (timer <= 0f)
         {
-           //MOMENTO EM GRUPO
+        //    if (Manager.MOMENTO = "INDIVIDUAL") 
+        //    {
+
+        //    }
+        //    else 
+        //    {
+
+        //    }
         }
 
         int min = Mathf.FloorToInt(timer / 60f);
@@ -1376,8 +1399,9 @@ public class Jogo : MonoBehaviour, IClient
 
     public void zeraTimer()
     {
-        //timer = Manager.auxoTotal;
-        timer = 100f;
+
+        timer = Manager.time;
+        // timer = 100f;
     }
 
     public void SetIndividual()
@@ -1432,7 +1456,14 @@ public class Jogo : MonoBehaviour, IClient
             // txt_errado_resposta_dada.text = "A resposta correta é " + perguntaAtual.resposta;
         }
 
+
+
+
+
+
             Invoke("AtivarTelaJogo", 10f);
+
+
     }
 
     public void AtivarTelaJogo() 
@@ -1440,11 +1471,19 @@ public class Jogo : MonoBehaviour, IClient
         CanvasJogo.SetActive(true);
         CanvasRCerta.SetActive(false);
         CanvasRErrada.SetActive(false);
+
+        SetIndividual();
+        ProximaQuestao();
+        // var msg = new ProxQuestao("PROXIMA_QUESTAO", dadosTimes.player, Manager.teamId, Manager.sessionId,
+        //                             Manager.gameId);
+
+        // cm.send(msg);
+
     }
 
 
 
-    public void MSG_NOVA_QUESTAO(string msgJSON) 
+    public void     (string msgJSON) 
     {
         msgNOVA_QUESTAO message = JsonUtility.FromJson<msgNOVA_QUESTAO>(msgJSON);
         
@@ -1462,7 +1501,7 @@ public class Jogo : MonoBehaviour, IClient
 
 
 
-        Manager.leaderId = message.leaderId;
+        // Manager.leaderId = message.leaderId;
         altA.text = "" + message.answer.A;
         altB.text = "" + message.answer.B;
         altC.text = "" + message.answer.C;
@@ -1474,12 +1513,16 @@ public class Jogo : MonoBehaviour, IClient
 
     public void MSG_FINAL_QUESTAO(string msgJSON)
     {
+
         msgFINAL_QUESTAO message = JsonUtility.FromJson<msgFINAL_QUESTAO>(msgJSON);
         
         answer.s = message.finalAnswer;
         correct = message.correct;
 
         EncerraQuestao(answer.alternativa, correct);
+
+        qst++;
+
 
     }
 
