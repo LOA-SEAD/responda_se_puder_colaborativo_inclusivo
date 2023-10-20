@@ -77,7 +77,7 @@ public class Jogo : MonoBehaviour, IClient
     private int qst;
     private int qst_respondidas = 0;
 
-
+    public TMP_Text txt_lider_jogo;
 
     //TELA FASE
     public float sec;
@@ -85,6 +85,10 @@ public class Jogo : MonoBehaviour, IClient
     public TMP_Text txt_lider; 
 
     public TMP_Text txt_nrEquipe;
+
+
+    public TMP_Text txt_pontuacao_correto;
+    public TMP_Text txt_pontuacao_errada;
 
     // private void Start()
     // {
@@ -106,8 +110,13 @@ public class Jogo : MonoBehaviour, IClient
 
     void NextQ()
     {
-        CanvasJogo.SetActive(true);
+
+
+        CanvasRCerta.SetActive(false);
+        CanvasRErrada.SetActive(false);
         CanvasFase.SetActive(false);
+        CanvasJogo.SetActive(true);
+
     }
 
     public void SetLevelText()
@@ -120,6 +129,7 @@ public class Jogo : MonoBehaviour, IClient
         string t = dadosTimes.GetUser(Manager.leaderId);
 
         txt_lider.text = "Líder da fase: " + t;
+        txt_lider_jogo.text = "Líder da fase: " + t;
     }
 
 
@@ -393,6 +403,7 @@ public class Jogo : MonoBehaviour, IClient
 
         cm.send(msg);
 
+
         txt_geral.enabled = true;
         txt_geral.text = "Aguarde até que todos enviem suas respostas.";
 
@@ -575,13 +586,41 @@ public class Jogo : MonoBehaviour, IClient
             CanvasJogo.SetActive(false);
             CanvasRCerta.SetActive(true);
             txt_correto_resposta.text = "A resposta correta é " + answer.s;
+            txt_pontuacao_correto.text = "Sua equipe ganhou 10 pontos\nLembre-se de conversar com os colegas de equipe";
+
             Manager.grpScore += 10;
         }
         else {
             CanvasJogo.SetActive(false);
             CanvasRErrada.SetActive(true);
             txt_errado_resposta.text = "Sua equipe respondeu " + answer.s + "\nA resposta correta é " + perguntaAtual.resposta;
+            txt_pontuacao_errada.text = "Sua equipe ganhou 0 pontos\nLembre-se de conversar com os colegas de equipe";
             // txt_errado_resposta_dada.text = "A resposta correta é " + perguntaAtual.resposta;
+        }
+
+        if (Manager.leaderId == dadosTimes.player.id)
+        {
+
+            if (qst_respondidas == Manager.nQ_easy)
+            {
+                var msg = new ProxFase("PROXIMA_FASE", dadosTimes.player, Manager.teamId, Manager.sessionId,
+                                                            Manager.gameId);
+
+                 cm.send(msg);
+
+            } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium)
+            {
+                var msg = new ProxFase("PROXIMA_FASE", dadosTimes.player, Manager.teamId, Manager.sessionId,
+                                                            Manager.gameId);
+
+                cm.send(msg);
+
+            } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
+            {
+            
+            }
+        
+
         }
 
         Invoke("AtivarTelaJogo", 5f);
@@ -597,46 +636,70 @@ public class Jogo : MonoBehaviour, IClient
         CanvasRCerta.SetActive(false);
         CanvasRErrada.SetActive(false);
         
-        if (qst_respondidas == Manager.nQ_easy)
-        {
+        // if (qst_respondidas == Manager.nQ_easy)
+        // {
 
-            if (pulou == 0)
-            {
-                SetIndividual();
-                CarregarPergunta();
-            }
+        //     if (pulou == 0)
+        //     {
+        //         SetIndividual();
+        //         CarregarPergunta();
+        //     }
 
-            qst = Manager.nQ_easy + 1;
-            Manager.FASE = "Nível Médio";
-            CanvasJogo.SetActive(false);
-            CanvasFase.SetActive(true);
-            SetLevelText();
-            SetLeaderText();
-            Invoke("NextQ", 5f);
+        //     qst = Manager.nQ_easy + 1;
+        //     Manager.FASE = "Nível Médio";
+        //     CanvasJogo.SetActive(false);
+        //     CanvasFase.SetActive(true);
+        //     SetLevelText();
+        //     SetLeaderText();
+        //     Invoke("NextQ", 5f);
 
-        } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium)
-        {
+        // } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium)
+        // {
 
-            if (pulou == 0)
-            {
-                SetIndividual();
-                CarregarPergunta();
-            }
+        //     if (pulou == 0)
+        //     {
+        //         SetIndividual();
+        //         CarregarPergunta();
+        //     }
 
-            qst = Manager.nQ_easy + Manager.nQ_medium + 2;
-            Manager.FASE = "Nível Difícil";
+        //     qst = Manager.nQ_easy + Manager.nQ_medium + 2;
+        //     Manager.FASE = "Nível Difícil";
 
-            CanvasJogo.SetActive(false);
-            CanvasFase.SetActive(true);
-            SetLevelText();
-            SetLeaderText();
-            Invoke("NextQ", 5f);
+        //     CanvasJogo.SetActive(false);
+        //     CanvasFase.SetActive(true);
+        //     SetLevelText();
+        //     SetLeaderText();
+        //     Invoke("NextQ", 5f);
 
-        } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
-        {
+        // } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
+        // {
         
-        }
+        // }
+        
+        // if (Manager.leaderId != dadosTimes.player.id)
+        // {
 
+        //     if (qst_respondidas == Manager.nQ_easy)
+        //     {
+        //         var msg = new ProxFase("PROXIMA_FASE", dadosTimes.player, Manager.teamId, Manager.sessionId,
+        //                                                     Manager.gameId);
+
+        //          cm.send(msg);
+
+        //     } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium)
+        //     {
+        //         var msg = new ProxFase("PROXIMA_FASE", dadosTimes.player, Manager.teamId, Manager.sessionId,
+        //                                                     Manager.gameId);
+
+        //         cm.send(msg);
+
+        //     } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
+        //     {
+            
+        //     }
+        
+
+        // }
 
 
         SetIndividual();
@@ -723,6 +786,59 @@ public class Jogo : MonoBehaviour, IClient
 
     }
 
+    public void MSG_NOVA_FASE(string msgJSON)
+    {
+
+
+        msgPROX_FASE message = JsonUtility.FromJson<msgPROX_FASE>(msgJSON);
+
+        Manager.leaderId = message.leaderId;
+
+        if (qst_respondidas == Manager.nQ_easy)
+        {
+
+            if (pulou == 0)
+            {
+                SetIndividual();
+                CarregarPergunta();
+            }
+
+            qst = Manager.nQ_easy + 1;
+            Manager.FASE = "Nível Médio";
+            CanvasRCerta.SetActive(false);
+            CanvasRErrada.SetActive(false);
+            CanvasJogo.SetActive(false);
+            CanvasFase.SetActive(true);
+            SetLevelText();
+            SetLeaderText();
+            Invoke("NextQ", 5f);
+
+        } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium)
+        {
+
+            if (pulou == 0)
+            {
+                SetIndividual();
+                CarregarPergunta();
+            }
+
+            qst = Manager.nQ_easy + Manager.nQ_medium + 2;
+            Manager.FASE = "Nível Difícil";
+            CanvasRCerta.SetActive(false);
+            CanvasRErrada.SetActive(false);
+            CanvasJogo.SetActive(false);
+            CanvasFase.SetActive(true);
+            SetLevelText();
+            SetLeaderText();
+            Invoke("NextQ", 5f);
+
+        } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
+        {
+        
+        }
+
+    }
+
 
     public void handle(string ms)
     {
@@ -751,6 +867,9 @@ public class Jogo : MonoBehaviour, IClient
         else if (messageType == "AJUDA_EQUIPE"){
             MSG_AJUDA(ms);
         }
+        else if (messageType == "INICIA_NOVA_FASE"){
+            MSG_NOVA_FASE(ms);
+        }
     }
 
 }
@@ -774,6 +893,16 @@ public class msgAJUDA_PULAR
     public int sessionId;
     public int gameId;
     public string help;
+}
+
+[System.Serializable]
+public class msgPROX_FASE
+{
+    public string message_type;
+    public int teamId;
+    public int leaderId;
+    public int sessionId;
+    public int gameId;
 }
 
 [System.Serializable]
