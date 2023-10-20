@@ -32,6 +32,18 @@ public class dadosTimes : MonoBehaviour
 
     }
 
+    public static void SetEquipe()
+    {
+        for (int i = meuTime.Count - 1; i >= 0; i--)
+        {
+            User user = meuTime[i];
+            if (user.id == 1)
+            {
+                meuTime.RemoveAt(i);
+            }
+        }
+    }
+
 
 }
 

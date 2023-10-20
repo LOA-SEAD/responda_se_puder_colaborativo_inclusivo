@@ -1756,6 +1756,9 @@ MonoBehaviour:
   - {fileID: 55723663}
   - {fileID: 1149615031}
   btnEntrar: {fileID: 2116796785}
+  inputs:
+  - {fileID: 55723663}
+  - {fileID: 1149615031}
 --- !u!1 &1502128585
 GameObject:
   m_ObjectHideFlags: 0

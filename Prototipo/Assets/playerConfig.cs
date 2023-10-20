@@ -7,6 +7,7 @@ using NativeWebSocket;
 using TMPro;
 
 
+
 public class playerConfig : MonoBehaviour, IClient
 {
     private ConnectionManager cm;
@@ -44,7 +45,9 @@ public class playerConfig : MonoBehaviour, IClient
 
         var msg = new EntrarSessao("ENTRAR_SESSAO", this.user, this.secret);
 
- 
+        txt_erro.enabled = true;
+
+        txt_erro.text = "Aguarde a autorização de sua entrada no grupo.";
 
         cm.send(msg);
         btnEntrar.interactable = false;
@@ -53,11 +56,10 @@ public class playerConfig : MonoBehaviour, IClient
     
 
      public void handle(string ms) {
-        //string messageType = ms.messageType;
+
         string messageType = JsonUtility.FromJson<ServerMessage>(ms).messageType;
         Debug.Log(messageType);
-        //executa JSON->messageType dentro do handle
-        //string messageType = JsonUtility.FromJson<ServerMessage>(messageJSON).messageType;
+
         if (messageType == "ACESSO_INVALIDO") 
         {
             interact = 1;
