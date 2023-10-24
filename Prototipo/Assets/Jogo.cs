@@ -217,7 +217,10 @@ public class Jogo : MonoBehaviour, IClient
         }
 
         // Placar de questões e tempo
-        numeroQuestaoText.text = "Questão " + numeroQuestao + " de " + Manager.nQ_total;
+        numeroQuestaoText.text = "Questão " + (qst_respondidas+1) + " de " + Manager.nQ_total;
+        
+        //numeroQuestaoText.text = "Questão " + numeroQuestao + " de " + Manager.nQ_total;
+        
         nivel.text = "Nível " + perguntaAtual.nivel;
         
         if (perguntaAtual.nivel == "facil")
@@ -447,7 +450,7 @@ public class Jogo : MonoBehaviour, IClient
     {
         if (Manager.MOMENTO == "GRUPO"){
             var msg = new PedirAjuda("PEDIR_AJUDA", dadosTimes.player, Manager.teamId, Manager.sessionId,
-                                    Manager.gameId, "pular");
+                                    Manager.gameId, answer.level, answer.nrQ, "pular");
 
             cm.send(msg);
         }
@@ -457,7 +460,7 @@ public class Jogo : MonoBehaviour, IClient
     {
         if (Manager.MOMENTO == "GRUPO"){
             var msg = new PedirAjuda("PEDIR_AJUDA", dadosTimes.player, Manager.teamId, Manager.sessionId,
-                                    Manager.gameId, "5050");
+                                    Manager.gameId, answer.level, answer.nrQ, "5050");
 
             cm.send(msg);
         }
@@ -559,8 +562,9 @@ public class Jogo : MonoBehaviour, IClient
         SetQntAlternatives(1);
         quadroChat.SetActive(true);
 
-        if (Manager.leaderId != dadosTimes.player.id)
+        if (Manager.leaderId == dadosTimes.player.id)
         {
+            generalCommands.EnableAllObjectsInteractions();
         
             foreach (Button btn in btnAlternativas)        
             {
@@ -619,10 +623,14 @@ public class Jogo : MonoBehaviour, IClient
             {
             
             }
-        
 
         }
 
+        alternativas[0].enabled = true;
+        alternativas[1].enabled = true;
+        alternativas[2].enabled = true;
+        alternativas[3].enabled = true;
+ 
         Invoke("AtivarTelaJogo", 5f);
 
 
@@ -733,7 +741,7 @@ public class Jogo : MonoBehaviour, IClient
 
 
 
-        // Manager.leaderId = message.leaderId;
+        Manager.leaderId = message.leaderId;
         altA.text = "" + message.answer.A;
         altB.text = "" + message.answer.B;
         altC.text = "" + message.answer.C;
@@ -770,6 +778,8 @@ public class Jogo : MonoBehaviour, IClient
 
             pulou = 1;
             qst++;
+
+            SetIndividual();
 
             Invoke("DesativaTXT", 5f);
         }

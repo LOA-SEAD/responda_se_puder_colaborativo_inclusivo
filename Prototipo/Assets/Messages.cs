@@ -90,14 +90,19 @@ public class PedirAjuda : Message
     public int sessionId;
     public int gameId;
     public string help;
+    public int level;
+    public int nrQuestion;
 
-    public PedirAjuda(string messageType, User user, int teamId, int sessionId, int gameId, string help)
+    public PedirAjuda(string messageType, User user, int teamId, int sessionId, int gameId,
+                      int level, int nrQuestion, string help)
     {
         this.user = user;
         this.teamId = teamId;
         this.sessionId = sessionId;
         this.gameId = gameId;
         this.help = help;
+        this.level = level;
+        this.nrQuestion = nrQuestion;
         this.messageType = messageType;
 
     }
