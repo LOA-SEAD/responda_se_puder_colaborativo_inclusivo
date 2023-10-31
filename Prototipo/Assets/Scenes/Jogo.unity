@@ -5991,6 +5991,7 @@ MonoBehaviour:
   quadroChat: {fileID: 1136874205}
   btnDica: {fileID: 2017551445}
   confirmaDica: {fileID: 311063478}
+  btnOK: {fileID: 2080299529}
   btnPular: {fileID: 707079071}
   btn5050: {fileID: 1363403326}
   alt: 00000000010000000200000003000000
@@ -10276,7 +10277,7 @@ GameObject:
   - component: {fileID: 2080299530}
   - component: {fileID: 2080299529}
   m_Layer: 5
-  m_Name: btnCancelar
+  m_Name: btnOK
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

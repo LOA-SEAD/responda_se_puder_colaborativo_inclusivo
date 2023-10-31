@@ -57,6 +57,7 @@ public class Jogo : MonoBehaviour, IClient
 
     public Button btnDica;
     public Button confirmaDica;
+    public Button btnOK;
 
     public Button btnPular;
     public Button btn5050;
@@ -369,6 +370,7 @@ public class Jogo : MonoBehaviour, IClient
         if (numeroQuestao <= Manager.nQ_total)
         {
             SetIndividual();
+            Invoke("NextQ", 3f);
             CarregarPergunta();
         }
         else {
@@ -427,16 +429,16 @@ public class Jogo : MonoBehaviour, IClient
 
         // txt_geral.enabled = true;
         // txt_geral.text = "Aguarde até que todos enviem suas respostas.";
-        painelAguarde();
+        painelAguarde("Aguarde até que todos enviem suas respostas.");
 
 
 
     }
 
-    public void painelAguarde()
+    public void painelAguarde(string s)
     {
         painel_aguarde.SetActive(true);
-        txt_painelGeral.text = "Aguarde até que todos enviem suas respostas.";
+        txt_painelGeral.text = "" + s;
     }
     
     public void fechaPainelAguarde()
@@ -591,7 +593,6 @@ public class Jogo : MonoBehaviour, IClient
         zeraTimer();
         Manager.MOMENTO = "GRUPO";
         txt_geral.enabled = false;
-        fechaPainelAguarde();
 
         btn5050.gameObject.SetActive(true);
         btnPular.gameObject.SetActive(true);
@@ -601,8 +602,7 @@ public class Jogo : MonoBehaviour, IClient
 
         if (Manager.leaderId == dadosTimes.player.id)
         {
-            txt_geral.enabled = true;
-            txt_geral.text = "Como líder, converse com sua equipe e envie a respota final do grupo.";
+            painelAguarde("Como líder, converse com sua equipe e envie a respota final do grupo.");
 
             generalCommands.EnableAllObjectsInteractions();
         
@@ -617,8 +617,8 @@ public class Jogo : MonoBehaviour, IClient
         if (dadosTimes.player.id != Manager.leaderId)
         {
 
-            txt_geral.enabled = true;
-            txt_geral.text = "A resposta deve ser enviada pelo líder da equipe.\nLembrem-se de dircutir a solução.";
+            painelAguarde("Discutam a solução e aguarde a confirmação da resposta final pelo líder.");
+
 
             btnAlternativas[0].gameObject.SetActive(false);
             btnAlternativas[1].gameObject.SetActive(false);
@@ -627,6 +627,7 @@ public class Jogo : MonoBehaviour, IClient
             
             generalCommands.DisableAllObjectsInteractions();
             btnDica.interactable = true;
+            btnOK.interactable = true;
             generalCommands.EnableInteraction(quadroChat);
         }
     }
@@ -679,7 +680,13 @@ public class Jogo : MonoBehaviour, IClient
         alternativas[2].enabled = true;
         alternativas[3].enabled = true;
  
-        Invoke("AtivarTelaJogo", 5f);
+        var msg_prox = new ProxQuestao("PROXIMA_QUESTAO", dadosTimes.player, Manager.teamId, Manager.sessionId,
+                                    Manager.gameId);
+
+        cm.send(msg_prox);
+   
+   
+        // Invoke("AtivarTelaJogo", 5f);
 
 
 
@@ -758,8 +765,8 @@ public class Jogo : MonoBehaviour, IClient
         // }
 
 
-        SetIndividual();
-        ProximaQuestao();
+        // SetIndividual();
+        // ProximaQuestao();
         // var msg = new ProxQuestao("PROXIMA_QUESTAO", dadosTimes.player, Manager.teamId, Manager.sessionId,
         //                             Manager.gameId);
 
@@ -841,6 +848,11 @@ public class Jogo : MonoBehaviour, IClient
             alternativas[alt5050[1]].enabled = false;
             qntAlternatives[alt5050[0]].gameObject.SetActive(false);
             qntAlternatives[alt5050[1]].gameObject.SetActive(false);
+
+            // for (i=0, i < alternativas.Length();i++)
+            // {
+            //     if (i != alt5050[0] || i )
+            // }
             
         }
 
