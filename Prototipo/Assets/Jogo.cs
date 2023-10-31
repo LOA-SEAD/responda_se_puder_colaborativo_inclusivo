@@ -49,6 +49,10 @@ public class Jogo : MonoBehaviour, IClient
     public GameObject confirmaAlternativa;
     public GameObject painelDica;
     public GameObject painelConfirma;
+
+    public GameObject painel_aguarde;
+    public TMP_Text txt_painelGeral;
+
     public GameObject quadroChat;
 
     public Button btnDica;
@@ -107,6 +111,10 @@ public class Jogo : MonoBehaviour, IClient
         }
     }
 
+    void ActivateCanvasJogo()
+    {
+        CanvasJogo.SetActive(true);
+    }
 
     void NextQ()
     {
@@ -116,6 +124,7 @@ public class Jogo : MonoBehaviour, IClient
         CanvasRErrada.SetActive(false);
         CanvasFase.SetActive(false);
         CanvasJogo.SetActive(true);
+        // Invoke("ActivateCanvasJogo", 4.0f);
 
     }
 
@@ -137,6 +146,9 @@ public class Jogo : MonoBehaviour, IClient
     void Start()
     {
         // tempoQuestao.text = timer.ToString();
+
+
+            
         tempoQuestao.text = "Tempo Restante: " + timer;
         pontuacao.text = "Pontuação: ";
         pontuacao.text = pontuacao.text + "0";
@@ -152,6 +164,7 @@ public class Jogo : MonoBehaviour, IClient
 
         painelDica.gameObject.SetActive(false);
         painelConfirma.gameObject.SetActive(false);
+        painel_aguarde.SetActive(false);
 
         Manager.totalQuestoes = 0;
         Manager.totalFacil = 0;
@@ -406,12 +419,29 @@ public class Jogo : MonoBehaviour, IClient
 
         cm.send(msg);
 
+        btnAlternativas[0].gameObject.SetActive(false);
+        btnAlternativas[1].gameObject.SetActive(false);
+        btnAlternativas[2].gameObject.SetActive(false);
+        btnAlternativas[3].gameObject.SetActive(false);
 
-        txt_geral.enabled = true;
-        txt_geral.text = "Aguarde até que todos enviem suas respostas.";
+
+        // txt_geral.enabled = true;
+        // txt_geral.text = "Aguarde até que todos enviem suas respostas.";
+        painelAguarde();
 
 
 
+    }
+
+    public void painelAguarde()
+    {
+        painel_aguarde.SetActive(true);
+        txt_painelGeral.text = "Aguarde até que todos enviem suas respostas.";
+    }
+    
+    public void fechaPainelAguarde()
+    {
+        painel_aguarde.SetActive(false);
     }
 
     public void fechaConfirma()
@@ -536,9 +566,15 @@ public class Jogo : MonoBehaviour, IClient
     {
         Manager.MOMENTO = "INDIVIDUAL";
         txt_geral.enabled = false;
+        fechaPainelAguarde();
 
-        // btn5050.gameObject.SetActive(false);
-        // btnPular.gameObject.SetActive(false);
+        btnAlternativas[0].gameObject.SetActive(true);
+        btnAlternativas[1].gameObject.SetActive(true);
+        btnAlternativas[2].gameObject.SetActive(true);
+        btnAlternativas[3].gameObject.SetActive(true);
+
+        btn5050.gameObject.SetActive(false);
+        btnPular.gameObject.SetActive(false);
         
         foreach (Button btn in btnAlternativas)        
         {
@@ -555,6 +591,7 @@ public class Jogo : MonoBehaviour, IClient
         zeraTimer();
         Manager.MOMENTO = "GRUPO";
         txt_geral.enabled = false;
+        fechaPainelAguarde();
 
         btn5050.gameObject.SetActive(true);
         btnPular.gameObject.SetActive(true);
@@ -564,6 +601,9 @@ public class Jogo : MonoBehaviour, IClient
 
         if (Manager.leaderId == dadosTimes.player.id)
         {
+            txt_geral.enabled = true;
+            txt_geral.text = "Como líder, converse com sua equipe e envie a respota final do grupo.";
+
             generalCommands.EnableAllObjectsInteractions();
         
             foreach (Button btn in btnAlternativas)        
@@ -576,6 +616,14 @@ public class Jogo : MonoBehaviour, IClient
         // Debug.Log("ID Lider: " + Manager.leaderId);
         if (dadosTimes.player.id != Manager.leaderId)
         {
+
+            txt_geral.enabled = true;
+            txt_geral.text = "A resposta deve ser enviada pelo líder da equipe.\nLembrem-se de dircutir a solução.";
+
+            btnAlternativas[0].gameObject.SetActive(false);
+            btnAlternativas[1].gameObject.SetActive(false);
+            btnAlternativas[2].gameObject.SetActive(false);
+            btnAlternativas[3].gameObject.SetActive(false);
             
             generalCommands.DisableAllObjectsInteractions();
             btnDica.interactable = true;
@@ -791,6 +839,8 @@ public class Jogo : MonoBehaviour, IClient
             btnAlternativas[alt5050[1]].gameObject.SetActive(false);
             alternativas[alt5050[0]].enabled = false;
             alternativas[alt5050[1]].enabled = false;
+            qntAlternatives[alt5050[0]].gameObject.SetActive(false);
+            qntAlternatives[alt5050[1]].gameObject.SetActive(false);
             
         }
 
@@ -821,7 +871,9 @@ public class Jogo : MonoBehaviour, IClient
             CanvasFase.SetActive(true);
             SetLevelText();
             SetLeaderText();
-            Invoke("NextQ", 5f);
+            Invoke("NextQ", 3f);
+            CanvasJogo.SetActive(true);
+
 
         } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium)
         {
@@ -840,7 +892,9 @@ public class Jogo : MonoBehaviour, IClient
             CanvasFase.SetActive(true);
             SetLevelText();
             SetLeaderText();
-            Invoke("NextQ", 5f);
+            Invoke("NextQ", 3f);
+            CanvasJogo.SetActive(true);
+
 
         } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
         {

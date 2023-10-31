@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using NativeWebSocket;
 using TMPro;
-
+using UnityEngine.EventSystems;
 
 
 public class playerConfig : MonoBehaviour, IClient
@@ -18,7 +18,9 @@ public class playerConfig : MonoBehaviour, IClient
     public User user;
 
     public TMP_Text txt_erro;
+    public TMP_Text txt_aguarde;
     public TMP_InputField[] inputFields;
+    public int InputSelected;
 
 
     //public InputField inputName;
@@ -45,9 +47,9 @@ public class playerConfig : MonoBehaviour, IClient
 
         var msg = new EntrarSessao("ENTRAR_SESSAO", this.user, this.secret);
 
-        txt_erro.enabled = true;
+        txt_aguarde.enabled = true;
 
-        txt_erro.text = "Aguarde a autorização de sua entrada no grupo.";
+        txt_aguarde.text = "Aguarde a autorização de sua entrada no grupo.";
 
         cm.send(msg);
         btnEntrar.interactable = false;
@@ -138,6 +140,8 @@ public class playerConfig : MonoBehaviour, IClient
         btnEntrar.interactable = true;
         // txt_erro.SetActive(false);
         txt_erro.enabled = false;
+        txt_aguarde.enabled = false;
+
 
         carregaDados.Load();
         
@@ -171,6 +175,26 @@ public class playerConfig : MonoBehaviour, IClient
                     btnEntrar.interactable = allInputs;
                 }
         }
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            Selectable currentInput = EventSystem.current.currentSelectedGameObject.GetComponent<Selectable>();
+
+            int currentIndex = System.Array.IndexOf(inputFields, currentInput);
+
+            if (currentIndex >= 0)
+            {
+                int nextIndex = (currentIndex + 1) % inputFields.Length;
+                Selectable nextInput = inputFields[nextIndex];
+                nextInput.Select();
+            }
+            else
+            {
+                // Se nenhum campo de entrada estiver selecionado, selecione o primeiro.
+                inputFields[0].Select();
+            }
+        }
+
     }
 
 }
