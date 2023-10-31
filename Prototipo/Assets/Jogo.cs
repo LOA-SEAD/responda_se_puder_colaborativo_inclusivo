@@ -679,12 +679,15 @@ public class Jogo : MonoBehaviour, IClient
         alternativas[1].enabled = true;
         alternativas[2].enabled = true;
         alternativas[3].enabled = true;
- 
-        var msg_prox = new ProxQuestao("PROXIMA_QUESTAO", dadosTimes.player, Manager.teamId, Manager.sessionId,
-                                    Manager.gameId);
 
-        cm.send(msg_prox);
-   
+
+        if (Manager.leaderId == dadosTimes.player.id)
+        {
+            var msg_prox = new ProxQuestao("PROXIMA_QUESTAO", dadosTimes.player, Manager.teamId, Manager.sessionId,
+                                        Manager.gameId);
+
+            cm.send(msg_prox);
+        } 
    
         // Invoke("AtivarTelaJogo", 5f);
 
