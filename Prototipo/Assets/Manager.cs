@@ -42,6 +42,8 @@ public static class Manager
     public static int nrHelp5050;
     public static int time;
     public static int teamId;
+    
+    public static int gameTime = 0;
 
     public static string MOMENTO = "INDIVIDUAL";
 
@@ -51,8 +53,13 @@ public static class Manager
     public static int[] qEasy;
     public static int[] qMedium;
     public static int[] qHard;
-    public static int[] numQ;
+    // public static int[] numQ;
 
+
+    // public static int[][] numQ;
+
+    public static int[] numQ;
+    
     public static int nQ_easy;
     public static int nQ_medium;
     public static int nQ_hard;
@@ -85,15 +92,34 @@ public static class Manager
             index++;
         }
 
+
+
+        // for (int i = 0; i < qEasy.Length; i++) {
+        //     numQ[0][index] = qEasy[i];
+        //     index++;
+        // }
+
+
         for (int i = 0; i < qMedium.Length; i++) {
             numQ[index] = qMedium[i];
             index++;
         }
 
+        // for (int i = 0; i < qMedium.Length; i++) {
+        //     numQ[1][index] = qMedium[i];
+        //     index++;
+        // }
+
+
         for (int i = 0; i < qHard.Length; i++) {
             numQ[index] = qHard[i];
             index++;
         }
+
+        // for (int i = 0; i < qHard.Length; i++) {
+        //     numQ[2][index] = qHard[i];
+        //     index++;
+        // }
     }
 
     public static void SetNrTeam(int nrTeam)

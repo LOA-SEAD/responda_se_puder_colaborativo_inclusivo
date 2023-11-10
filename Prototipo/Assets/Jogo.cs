@@ -78,8 +78,12 @@ public class Jogo : MonoBehaviour, IClient
     private RespostasGrupo ansGroup;
     private int correct;
     private int pulou = 0;
+    private int pulou_no_facil = 0;
 
     private int qst;
+
+    private int level_qst = 0;
+    private int indice_qst = 0;
     private int qst_respondidas = 0;
 
     public TMP_Text txt_lider_jogo;
@@ -172,6 +176,8 @@ public class Jogo : MonoBehaviour, IClient
         Manager.totalMedio = 0;
         Manager.totalDificil = 0;
         qst = 0;
+        indice_qst = 0;
+        level_qst = 0;
 
         // btn5050.gameObject.SetActive(false);
         // btnPular.gameObject.SetActive(false);
@@ -257,7 +263,13 @@ public class Jogo : MonoBehaviour, IClient
             correctAnswer = perguntaAtual.resposta; 
             pergunta.text = perguntaAtual.pergunta;
             dica.text = perguntaAtual.dica;
-            answer.nrQ = Manager.numQ[qst];
+
+            Debug.Log("LEVEL_QST = " + level_qst);
+            Debug.Log("INDICE_QST = " + indice_qst);
+            // if (level_qst == 0) answer.nrQ = Manager.qEasy[indice_qst];
+            // else if (level_qst == 1) answer.nrQ = Manager.qMedium[indice_qst];
+            // else if (level_qst == 2) answer.nrQ = Manager.qHard[indice_qst];
+            
 
 
             carregaDados.Shuffle(ref perguntaAtual, alt);
@@ -367,7 +379,7 @@ public class Jogo : MonoBehaviour, IClient
     {
         numeroQuestao++;
 
-        if (numeroQuestao <= Manager.nQ_total)
+        if (qst_respondidas <= Manager.nQ_total)
         {
             SetIndividual();
             Invoke("NextQ", 3f);
@@ -415,6 +427,10 @@ public class Jogo : MonoBehaviour, IClient
         if (correct == 1) {
             Manager.indScore += 10;
         }
+
+        if (level_qst == 0) answer.nrQ = Manager.qEasy[indice_qst];
+        else if (level_qst == 1) answer.nrQ = Manager.qMedium[indice_qst];
+        else if (level_qst == 2) answer.nrQ = Manager.qHard[indice_qst];
 
         var msg = new RespostaIndividual("RESPOSTA_INDIVIDUAL", dadosTimes.player, Manager.teamId, Manager.sessionId,
                                         Manager.gameId, answer.alternativa, answer.level, answer.nrQ);
@@ -661,6 +677,8 @@ public class Jogo : MonoBehaviour, IClient
 
                  cm.send(msg);
 
+                 indice_qst = 0;
+
             } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium)
             {
                 var msg = new ProxFase("PROXIMA_FASE", dadosTimes.player, Manager.teamId, Manager.sessionId,
@@ -668,9 +686,14 @@ public class Jogo : MonoBehaviour, IClient
 
                 cm.send(msg);
 
+                indice_qst = 0;
+
             } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
             {
-            
+                var msg = new FimDeJogo("FIM_DE_JOGO", Manager.teamId, Manager.sessionId,
+                                                            Manager.gameId, Manager.grpScore, Manager.indScore, Manager.gameTime);
+
+                cm.send(msg);    
             }
 
         }
@@ -681,13 +704,18 @@ public class Jogo : MonoBehaviour, IClient
         alternativas[3].enabled = true;
 
 
-        if (Manager.leaderId == dadosTimes.player.id)
+        if (Manager.leaderId == dadosTimes.player.id && (qst_respondidas != Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard))
         {
             var msg_prox = new ProxQuestao("PROXIMA_QUESTAO", dadosTimes.player, Manager.teamId, Manager.sessionId,
                                         Manager.gameId);
 
             cm.send(msg_prox);
-        } 
+
+            indice_qst++;
+
+        } else {
+            indice_qst++;
+        }
    
         // Invoke("AtivarTelaJogo", 5f);
 
@@ -835,9 +863,12 @@ public class Jogo : MonoBehaviour, IClient
             txt_geral.enabled = true;
 
             pulou = 1;
-            qst++;
+            
+            if (perguntaAtual.nivel == "facil") pulou_no_facil = 1;
 
+            indice_qst++;
             SetIndividual();
+
 
             Invoke("DesativaTXT", 5f);
         }
@@ -869,6 +900,9 @@ public class Jogo : MonoBehaviour, IClient
 
         Manager.leaderId = message.leaderId;
 
+        indice_qst = 0;
+        level_qst++;
+
         if (qst_respondidas == Manager.nQ_easy)
         {
 
@@ -893,7 +927,7 @@ public class Jogo : MonoBehaviour, IClient
         } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium)
         {
 
-            if (pulou == 0)
+            if (pulou == 0 || pulou_no_facil == 1)
             {
                 SetIndividual();
                 CarregarPergunta();

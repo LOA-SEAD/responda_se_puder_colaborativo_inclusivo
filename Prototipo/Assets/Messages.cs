@@ -196,6 +196,30 @@ public class RespostaFinal : Message
 }
 
 [Serializable]
+public class FimDeJogo : Message
+{
+    
+    public int teamId;
+    public int sessionId;
+    public int gameId;
+    public int grpScore;
+    public int indScore;
+    public int gameTime; 
+
+    public FimDeJogo(string messageType, int teamId, int sessionId, int gameId, int grpScore, int indScore, int gameTime)
+    {
+        this.messageType = messageType;
+        this.teamId = teamId;
+        this.sessionId = sessionId;
+        this.gameId = gameId;
+        this.grpScore = grpScore;
+        this.indScore = indScore;
+        this.gameTime = gameTime;
+
+    }
+}
+
+[Serializable]
 public class ClientMessage : Message
 {
 
