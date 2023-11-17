@@ -428,7 +428,8 @@ public class Jogo : MonoBehaviour, IClient
         correct = VerificaResposta();
         
         if (correct == 1) {
-            Manager.indScore += 10;
+            dadosTimes.player.indScore += 10;
+            // Manager.indScore += 10;
         }
 
         if (level_qst == 0) answer.nrQ = Manager.qEasy[indice_qst];
@@ -693,11 +694,11 @@ public class Jogo : MonoBehaviour, IClient
 
             } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
             {
-                var msg = new FimDeJogo("FIM_DE_JOGO", dadosTimes.player, Manager.teamId, Manager.sessionId,
-                                                            Manager.gameId, Manager.grpScore, Manager.indScore, Manager.gameTime);
-
                 // var msg = new FimDeJogo("FIM_DE_JOGO", dadosTimes.player, Manager.teamId, Manager.sessionId,
-                //                                             Manager.gameId, Manager.grpScore, Manager.gameTime);
+                //                                             Manager.gameId, Manager.grpScore, Manager.indScore, Manager.gameTime);
+
+                var msg = new FimDeJogo("FIM_DE_JOGO", dadosTimes.player, Manager.teamId, Manager.sessionId,
+                                                            Manager.gameId, Manager.grpScore, Manager.gameTime);
 
 
 
@@ -706,11 +707,11 @@ public class Jogo : MonoBehaviour, IClient
 
         } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
         {
-                var msg = new FimDeJogo("FIM_DE_JOGO", dadosTimes.player, Manager.teamId, Manager.sessionId,
-                                                            Manager.gameId, Manager.grpScore, Manager.indScore, Manager.gameTime);
-
                 // var msg = new FimDeJogo("FIM_DE_JOGO", dadosTimes.player, Manager.teamId, Manager.sessionId,
-                //                                             Manager.gameId, Manager.grpScore, Manager.gameTime);
+                //                                             Manager.gameId, Manager.grpScore, Manager.indScore, Manager.gameTime);
+
+                var msg = new FimDeJogo("FIM_DE_JOGO", dadosTimes.player, Manager.teamId, Manager.sessionId,
+                                                            Manager.gameId, Manager.grpScore, Manager.gameTime);
 
                 cm.send(msg);    
         }
@@ -1005,6 +1006,11 @@ public class Jogo : MonoBehaviour, IClient
 
     }
 
+    public void MSG_CLASSIFICAO_FINAL()
+    {
+        SceneManager.LoadScene("Fim");
+    }
+
 
     public void handle(string ms)   
     {
@@ -1035,7 +1041,9 @@ public class Jogo : MonoBehaviour, IClient
         }
         else if (messageType == "INICIA_NOVA_FASE"){
             MSG_NOVA_FASE(ms);
-        }
+        } //else if (messageType == "CLASSIFICACAO_FINAL"){
+            //MSG_CLASSIFICAO_FINAL(ms);
+        //}
     }
 
 }

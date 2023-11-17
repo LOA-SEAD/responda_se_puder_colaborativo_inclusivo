@@ -61,5 +61,5 @@ public class User
 {
     public int id;
     public string name;
-    // public int indScore = 0;
+    public int indScore = 0;
 }
