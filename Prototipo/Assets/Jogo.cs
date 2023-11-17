@@ -63,9 +63,12 @@ public class Jogo : MonoBehaviour, IClient
     public Button btn5050;
 
 
-
+    public int[] ordem_alternativas;
     public int[] alt;
     public int[] alt5050;
+
+    private int[] indice_5050;
+
 
     private DadosJogo perguntaAtual;
     private int numeroQuestao = 0;
@@ -690,12 +693,26 @@ public class Jogo : MonoBehaviour, IClient
 
             } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
             {
-                var msg = new FimDeJogo("FIM_DE_JOGO", Manager.teamId, Manager.sessionId,
+                var msg = new FimDeJogo("FIM_DE_JOGO", dadosTimes.player, Manager.teamId, Manager.sessionId,
                                                             Manager.gameId, Manager.grpScore, Manager.indScore, Manager.gameTime);
 
-                cm.send(msg);    
-            }
+                // var msg = new FimDeJogo("FIM_DE_JOGO", dadosTimes.player, Manager.teamId, Manager.sessionId,
+                //                                             Manager.gameId, Manager.grpScore, Manager.gameTime);
 
+
+
+                cm.send(msg);    
+            } 
+
+        } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
+        {
+                var msg = new FimDeJogo("FIM_DE_JOGO", dadosTimes.player, Manager.teamId, Manager.sessionId,
+                                                            Manager.gameId, Manager.grpScore, Manager.indScore, Manager.gameTime);
+
+                // var msg = new FimDeJogo("FIM_DE_JOGO", dadosTimes.player, Manager.teamId, Manager.sessionId,
+                //                                             Manager.gameId, Manager.grpScore, Manager.gameTime);
+
+                cm.send(msg);    
         }
 
         alternativas[0].enabled = true;
@@ -813,6 +830,7 @@ public class Jogo : MonoBehaviour, IClient
         
         Manager.leaderId = message.leaderId;
         alt = message.alternativas;
+        ordem_alternativas = message.alternativas;
 
         // qst++;
 
@@ -874,14 +892,16 @@ public class Jogo : MonoBehaviour, IClient
         }
         else{
             alt5050 = message.alternativa;
+            
+            Ajuda5050(alt5050);
+            
 
-
-            btnAlternativas[alt5050[0]].gameObject.SetActive(false);
-            btnAlternativas[alt5050[1]].gameObject.SetActive(false);
-            alternativas[alt5050[0]].enabled = false;
-            alternativas[alt5050[1]].enabled = false;
-            qntAlternatives[alt5050[0]].gameObject.SetActive(false);
-            qntAlternatives[alt5050[1]].gameObject.SetActive(false);
+            // btnAlternativas[indice_5050[0]].gameObject.SetActive(false);
+            // btnAlternativas[indice_5050[1]].gameObject.SetActive(false);
+            // alternativas[indice_5050[0]].enabled = false;
+            // alternativas[indice_5050[1]].enabled = false;
+            // qntAlternatives[indice_5050[0]].gameObject.SetActive(false);
+            // qntAlternatives[indice_5050[1]].gameObject.SetActive(false);
 
             // for (i=0, i < alternativas.Length();i++)
             // {
@@ -889,6 +909,39 @@ public class Jogo : MonoBehaviour, IClient
             // }
             
         }
+
+    }
+
+    public void Ajuda5050(int[] alternativas_mantidas)
+    {
+        // ordem_alternativas
+
+        for(int i=0; i < alternativas_mantidas.Length; i++)
+        {
+            for(int j=0; j < ordem_alternativas.Length; j++)
+            {
+                if (ordem_alternativas[j] == alternativas_mantidas[i])
+                {
+                    ordem_alternativas[j] = -1;
+                }
+            }
+        }
+
+        for(int k=0; k < ordem_alternativas.Length; k++)
+        {
+            Debug.Log(ordem_alternativas[k]);
+        }
+
+        for(int k=0; k < ordem_alternativas.Length; k++)
+        {
+           if (ordem_alternativas[k] != -1)
+           {
+                btnAlternativas[k].gameObject.SetActive(false);
+                alternativas[k].enabled = false;
+                qntAlternatives[k].gameObject.SetActive(false);
+           }
+        }
+
 
     }
 
@@ -920,8 +973,8 @@ public class Jogo : MonoBehaviour, IClient
             CanvasFase.SetActive(true);
             SetLevelText();
             SetLeaderText();
-            Invoke("NextQ", 3f);
-            CanvasJogo.SetActive(true);
+            Invoke("NextQ", 10f);
+            // CanvasJogo.SetActive(true);
 
 
         } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium)
@@ -941,8 +994,8 @@ public class Jogo : MonoBehaviour, IClient
             CanvasFase.SetActive(true);
             SetLevelText();
             SetLeaderText();
-            Invoke("NextQ", 3f);
-            CanvasJogo.SetActive(true);
+            Invoke("NextQ", 10f);
+                // CanvasJogo.SetActive(true);
 
 
         } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
@@ -953,7 +1006,7 @@ public class Jogo : MonoBehaviour, IClient
     }
 
 
-    public void handle(string ms)
+    public void handle(string ms)   
     {
 
         //string messageType = ms.messageType;

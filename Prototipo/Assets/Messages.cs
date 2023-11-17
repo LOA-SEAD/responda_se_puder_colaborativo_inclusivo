@@ -199,6 +199,7 @@ public class RespostaFinal : Message
 public class FimDeJogo : Message
 {
     
+    public User user;
     public int teamId;
     public int sessionId;
     public int gameId;
@@ -206,9 +207,10 @@ public class FimDeJogo : Message
     public int indScore;
     public int gameTime; 
 
-    public FimDeJogo(string messageType, int teamId, int sessionId, int gameId, int grpScore, int indScore, int gameTime)
+    public FimDeJogo(string messageType, User user, int teamId, int sessionId, int gameId, int grpScore, int indScore, int gameTime)
     {
         this.messageType = messageType;
+        this.user = user;
         this.teamId = teamId;
         this.sessionId = sessionId;
         this.gameId = gameId;
@@ -218,6 +220,31 @@ public class FimDeJogo : Message
 
     }
 }
+
+// [Serializable]
+// public class FimDeJogo : Message
+// {
+    
+//     public User user;
+//     public int teamId;
+//     public int sessionId;
+//     public int gameId;
+//     public int grpScore;
+//     public int gameTime; 
+
+//     public FimDeJogo(string messageType, User user, int teamId, int sessionId, int gameId, int grpScore, int gameTime)
+//     {
+//         this.messageType = messageType;
+//         this.user = user;
+//         this.teamId = teamId;
+//         this.sessionId = sessionId;
+//         this.gameId = gameId;
+//         this.grpScore = grpScore;
+//         this.gameTime = gameTime;
+
+//     }
+// }
+
 
 [Serializable]
 public class ClientMessage : Message
