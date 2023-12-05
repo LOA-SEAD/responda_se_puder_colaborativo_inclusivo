@@ -23,8 +23,8 @@ TagManager:
   - btncancelar
   - 
   - 
-  - 
-  - 
+  - "Painel Configura\xE7\xF5es"
+  - "Painel Instru\xE7\xF5es"
   - 
   - 
   - 
@@ -49,4 +49,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: "Painel Configura\xE7\xF5es"
+    uniqueID: 1361553155
+    locked: 0
+  - name: "Painel Instru\xE7\xF5es"
+    uniqueID: 1770092537
     locked: 0

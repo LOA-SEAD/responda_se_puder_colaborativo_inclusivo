@@ -3,10 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System;
 using TMPro;
-using UnityEngine.SceneManagement;
-
 
 public class Jogo : MonoBehaviour, IClient
 {
@@ -244,19 +243,23 @@ public class Jogo : MonoBehaviour, IClient
         
         //numeroQuestaoText.text = "Questão " + numeroQuestao + " de " + Manager.nQ_total;
         
-        nivel.text = "Nível " + perguntaAtual.nivel;
         
         if (perguntaAtual.nivel == "facil")
         {
             answer.level = 0;
+            nivel.text = "Nível Fácil";
         }
         else if (perguntaAtual.nivel == "medio")
         {
             answer.level = 1;
+            nivel.text = "Nível Médio";
+
         }
         else
         {
             answer.level = 2;
+            nivel.text = "Nível Difícil";
+
         }
 
 
@@ -595,9 +598,12 @@ public class Jogo : MonoBehaviour, IClient
         btnAlternativas[2].gameObject.SetActive(true);
         btnAlternativas[3].gameObject.SetActive(true);
 
-        btn5050.gameObject.SetActive(false);
-        btnPular.gameObject.SetActive(false);
+        // btn5050.gameObject.SetActive(false);
+        // btnPular.gameObject.SetActive(false);
         
+        btn5050.interactable = false;
+        btnPular.interactable = false;     
+           
         foreach (Button btn in btnAlternativas)        
         {
             btn.gameObject.SetActive(true);
@@ -658,7 +664,7 @@ public class Jogo : MonoBehaviour, IClient
         if (correct == 1) {
             CanvasJogo.SetActive(false);
             CanvasRCerta.SetActive(true);
-            txt_correto_resposta.text = "A resposta correta é " + answer.s;
+            txt_correto_resposta.text = "A resposta correta é " + correctAnswer;
             txt_pontuacao_correto.text = "Sua equipe ganhou 10 pontos\nLembre-se de conversar com os colegas de equipe";
 
             Manager.grpScore += 10;
@@ -666,7 +672,7 @@ public class Jogo : MonoBehaviour, IClient
         else {
             CanvasJogo.SetActive(false);
             CanvasRErrada.SetActive(true);
-            txt_errado_resposta.text = "Sua equipe respondeu " + answer.s + "\nA resposta correta é " + perguntaAtual.resposta;
+            txt_errado_resposta.text = "\nA resposta correta é " + correctAnswer;
             txt_pontuacao_errada.text = "Sua equipe ganhou 0 pontos\nLembre-se de conversar com os colegas de equipe";
             // txt_errado_resposta_dada.text = "A resposta correta é " + perguntaAtual.resposta;
         }
@@ -700,9 +706,12 @@ public class Jogo : MonoBehaviour, IClient
                 var msg = new FimDeJogo("FIM_DE_JOGO", dadosTimes.player, Manager.teamId, Manager.sessionId,
                                                             Manager.gameId, Manager.grpScore, Manager.gameTime);
 
-
+                
 
                 cm.send(msg);    
+
+                SceneManager.LoadScene("Fim");
+
             } 
 
         } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
@@ -713,7 +722,9 @@ public class Jogo : MonoBehaviour, IClient
                 var msg = new FimDeJogo("FIM_DE_JOGO", dadosTimes.player, Manager.teamId, Manager.sessionId,
                                                             Manager.gameId, Manager.grpScore, Manager.gameTime);
 
-                cm.send(msg);    
+                cm.send(msg);
+
+                SceneManager.LoadScene("Fim");    
         }
 
         alternativas[0].enabled = true;
