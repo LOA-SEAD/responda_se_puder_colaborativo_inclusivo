@@ -1050,8 +1050,8 @@ public class Jogo : MonoBehaviour, IClient
         msgCHAT message = JsonUtility.FromJson<msgCHAT>(msgJSON);
 
         if(messageList.Count >= chatMax){
-            Destroy(messageList[0].painelTexto.gameObject);
-            messageList.Remove(messageList[0]);
+            // Destroy(messageList[0].painelTexto.gameObject);
+            // messageList.Remove(messageList[0]);
         }
 
         msgCHAT textoChat = new msgCHAT();
