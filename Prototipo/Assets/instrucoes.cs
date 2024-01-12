@@ -8,6 +8,7 @@ using TMPro;
 
 public class instrucoes : MonoBehaviour
 {
+    //DEFINE E MANIPULA AS INSTRUCOES DO JOGO
 
     public GameObject painelInstrucoes;
     public TMP_Text instrucoesText;

@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using NativeWebSocket;
 using TMPro;
+using UnityEngine.EventSystems;
+
 
 public class profConfig : MonoBehaviour, IClient
 {
@@ -159,6 +161,25 @@ public class profConfig : MonoBehaviour, IClient
         if (btnCadastrar != null)
         {
             btnCadastrar.interactable = allInputs;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            Selectable currentInput = EventSystem.current.currentSelectedGameObject.GetComponent<Selectable>();
+
+            int currentIndex = System.Array.IndexOf(inputFields, currentInput);
+
+            if (currentIndex >= 0)
+            {
+                int nextIndex = (currentIndex + 1) % inputFields.Length;
+                Selectable nextInput = inputFields[nextIndex];
+                nextInput.Select();
+            }
+            else
+            {
+                // Se nenhum campo de entrada estiver selecionado, selecione o primeiro.
+                inputFields[0].Select();
+            }
         }
     }
         

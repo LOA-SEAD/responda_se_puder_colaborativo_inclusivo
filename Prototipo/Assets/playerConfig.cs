@@ -195,6 +195,7 @@ public class playerConfig : MonoBehaviour, IClient
             }
         }
 
+
     }
 
 }

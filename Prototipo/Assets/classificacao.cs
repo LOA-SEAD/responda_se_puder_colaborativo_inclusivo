@@ -20,18 +20,13 @@ public class classificacao : MonoBehaviour, IClient
     [SerializeField] private int m_ItemsToGenerate;
   
     
-    
     // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        cm.retrieveMessages(this);
-    }
+
 
     public void MSG_CLASSIFICACAO_FINAL(string msgJSON){
 
@@ -46,6 +41,13 @@ public class classificacao : MonoBehaviour, IClient
 
         Debug.Log("Items: " + m_ItemsToGenerate);
         
+        foreach (GameObject quadroClassf in quadrosClassf)
+        {
+            Destroy(quadroClassf);
+        }
+
+        quadrosClassf.Clear();
+
         for (int i = 0; i < m_ItemsToGenerate; i++)
         {
             GameObject novo = Instantiate(prefabClassf, transform.position, Quaternion.identity);
@@ -98,6 +100,12 @@ public class classificacao : MonoBehaviour, IClient
             
             MSG_CLASSIFICACAO_FINAL(ms);
         }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        cm.retrieveMessages(this);
     }
 
 }

@@ -16,6 +16,17 @@ public class profEspera : MonoBehaviour, IClient
     //BTN
     public Button btnIniciarSessao;
 
+    public GameObject quadroChat;
+    public GameObject painelTexto;
+    public GameObject painelChat;
+
+    public InputField chatBox;
+
+    [SerializeField]
+    public List<msgCHAT> messageList = new List<msgCHAT>();
+
+    public int chatMax = 25;
+
 
     //Quadros em tela
     [SerializeField] private Transform ContentQuadros;
@@ -140,6 +151,43 @@ public class profEspera : MonoBehaviour, IClient
 
     }
 
+    public void MSG_CHAT(string msgJSON){
+            Color cor;
+            msgCHAT message = JsonUtility.FromJson<msgCHAT>(msgJSON);
+
+            if(messageList.Count >= chatMax){
+                Destroy(messageList[0].painelTexto.gameObject);
+                messageList.Remove(messageList[0]);
+            }
+
+            msgCHAT textoChat = new msgCHAT();
+            if(message.moderator)
+                textoChat.texto = message.user.name + ":" + message.texto;//falou;
+            else
+                textoChat.texto = "Equipe " + message.teamId + " / " + message.user.name + ":" + message.texto;   
+
+            GameObject novoChat = Instantiate(painelTexto, painelChat.transform);
+
+            textoChat.painelTexto = novoChat.GetComponent<Text>();
+
+            textoChat.painelTexto.text = textoChat.texto;
+
+            if(message.moderator){
+                ColorUtility.TryParseHtmlString("#f41004", out cor);
+                textoChat.painelTexto.fontStyle = FontStyle.Bold;
+            }
+            else{
+                //textoChat.painelTexto.fontStyle = FontStyle.Regular;
+                    ColorUtility.TryParseHtmlString("#112A46", out cor);
+            }
+
+            textoChat.painelTexto.color = cor;
+            messageList.Add(textoChat);
+
+            Debug.Log(textoChat.texto);
+        }
+
+
 
 
 
@@ -161,6 +209,10 @@ public class profEspera : MonoBehaviour, IClient
         else if(messageType == "ENTROU_SESSAO")
         {
             MSG_ENTROU_SESSAO(ms);
+        }
+        else if (messageType == "MENSAGEM_CHAT")
+        {
+            MSG_CHAT(ms);
         }
 
     }
@@ -193,10 +245,23 @@ public class profEspera : MonoBehaviour, IClient
     {
        
         cm.retrieveMessages(this);
+
+         if(chatBox.text != "")
+        {
+            if(Input.GetKeyDown(KeyCode.Return)){
+               
+                var msg = new mensagemChat("MENSAGEM_CHAT", Manager.moderator, Manager.teamId, Manager.sessionId, Manager.gameId, chatBox.text, true);
+                //var msg = new mensagemChat("MENSAGEM_CHAT", dadosTimes.player, Manager.teamId, Manager.sessionId, Manager.gameId, chatBox.text, Manager.moderator);
+                cm.send(msg);
+               // readChat(chatBox.text);
+                chatBox.text = "";
+            }
+        }
         
     }
         
 }
+
 
 [System.Serializable] 
 public class msgSESSAO_CRIADA

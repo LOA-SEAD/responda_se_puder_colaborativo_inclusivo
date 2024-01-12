@@ -6056,7 +6056,6 @@ MonoBehaviour:
   txt_MaxMedio: {fileID: 1373472182}
   txt_MaxDificil: {fileID: 1507836785}
   inputFields:
-  - {fileID: 1930873510}
   - {fileID: 890700263}
   - {fileID: 1422195361}
   - {fileID: 1977722578}
@@ -6064,6 +6063,7 @@ MonoBehaviour:
   - {fileID: 1735893525}
   - {fileID: 1065993825}
   - {fileID: 736693493}
+  - {fileID: 1930873510}
   btnCadastrar: {fileID: 1075847109}
   mod:
     id: 0

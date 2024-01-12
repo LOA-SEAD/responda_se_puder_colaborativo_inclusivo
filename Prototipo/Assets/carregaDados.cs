@@ -30,43 +30,6 @@ public class carregaDados : MonoBehaviour
         //Load();
     }
 
-//     public static void Load()
-//     { 
-//         BetterStreamingAssets.Initialize();
-//         listaDados.Clear();
-//         listaBase.Clear();
-//         var jsonText = BetterStreamingAssets.ReadAllLines(arquivo);
-        
-//         foreach (var line in jsonText)
-//         {
-//             DadosJogo DadosJson = JsonUtility.FromJson<DadosJogo>(line);
-//             DadosJogo dados = new DadosJogo();
-//             dados.pergunta = DadosJson.pergunta;
-//             dados.resposta = DadosJson.resposta;
-//             dados.r2 = DadosJson.r2;
-//             dados.r3 = DadosJson.r3;
-//             dados.r4 = DadosJson.r4;
-//             dados.dica = DadosJson.dica;
-//             dados.nivel = DadosJson.nivel;
-//             if (dados.nivel == "facil") {
-//                 Manager.totalQuestoes++;
-//                 Manager.totalFacil++;
-//             }
-//             else if (dados.nivel == "medio") {
-//                 Manager.totalQuestoes++;
-//                 Manager.totalMedio++;
-//             }
-//             else {
-//                 Manager.totalQuestoes++;
-//                 Manager.totalDificil++;
-//             }
-
-//             listaDados.Add(dados);
-//             listaBase.Add(dados);
-//         }
-//     }
-// }
-
     public static void LoadURL()
     {
         BetterStreamingAssets.Initialize();
@@ -110,8 +73,6 @@ public class carregaDados : MonoBehaviour
                 listHard.Add(dados);
             }
 
-            // listaDados.Add(dados);
-            // listaBase.Add(dados);
         }
 
 
@@ -185,8 +146,4 @@ public class DadosJogo
     public string dica;
     public string nivel;
         
-
-    // public string audio_pergunta;
-    // public string audio_dica;
-    // public string[] audio_alternativas = new string[4];
 }

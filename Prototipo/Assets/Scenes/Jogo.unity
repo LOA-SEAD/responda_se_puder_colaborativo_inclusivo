@@ -7095,6 +7095,9 @@ MonoBehaviour:
   painel_aguarde: {fileID: 423900316}
   txt_painelGeral: {fileID: 426735958}
   quadroChat: {fileID: 1136874205}
+  painelTexto: {fileID: 913663327811833547, guid: a3dbaadb5e440f042b97bc897f07b1a8, type: 3}
+  painelChat: {fileID: 1136874205}
+  chatBox: {fileID: 563856047}
   btnDica: {fileID: 2017551445}
   confirmaDica: {fileID: 311063478}
   btnOK: {fileID: 2080299529}
@@ -7103,6 +7106,8 @@ MonoBehaviour:
   ordem_alternativas: 
   alt: 00000000010000000200000003000000
   alt5050: 
+  messageList: []
+  chatMax: 0
   answer:
     s: 
     alternativa: 

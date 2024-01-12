@@ -70,6 +70,9 @@ public static class Manager
     //MODERADOR
     public static string moderatorName;
 
+    //MODERADOR
+    public static User moderator;
+
 
     public static string msgPrimeiraQuestao;
 
@@ -93,22 +96,10 @@ public static class Manager
         }
 
 
-
-        // for (int i = 0; i < qEasy.Length; i++) {
-        //     numQ[0][index] = qEasy[i];
-        //     index++;
-        // }
-
-
         for (int i = 0; i < qMedium.Length; i++) {
             numQ[index] = qMedium[i];
             index++;
         }
-
-        // for (int i = 0; i < qMedium.Length; i++) {
-        //     numQ[1][index] = qMedium[i];
-        //     index++;
-        // }
 
 
         for (int i = 0; i < qHard.Length; i++) {
@@ -116,10 +107,6 @@ public static class Manager
             index++;
         }
 
-        // for (int i = 0; i < qHard.Length; i++) {
-        //     numQ[2][index] = qHard[i];
-        //     index++;
-        // }
     }
 
     public static void SetNrTeam(int nrTeam)

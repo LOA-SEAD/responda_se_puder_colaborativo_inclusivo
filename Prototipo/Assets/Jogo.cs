@@ -53,6 +53,10 @@ public class Jogo : MonoBehaviour, IClient
     public TMP_Text txt_painelGeral;
 
     public GameObject quadroChat;
+    public GameObject painelTexto;
+    public GameObject painelChat;
+
+    public TMP_InputField chatBox;
 
     public Button btnDica;
     public Button confirmaDica;
@@ -74,6 +78,12 @@ public class Jogo : MonoBehaviour, IClient
     private int totalQuestoes;
 
     private string correctAnswer;
+
+    [SerializeField]
+    public List<msgCHAT> messageList = new List<msgCHAT>();
+
+    public int chatMax = 25;
+
     public ans answer;
     private int level;
     private int nrQuestion;
@@ -480,6 +490,8 @@ public class Jogo : MonoBehaviour, IClient
 
         correct = VerificaResposta();
 
+        // TODO Interaction não está enviado
+
         var msg = new RespostaFinal("RESPOSTA_FINAL", dadosTimes.player, Manager.teamId, Manager.sessionId, 
                                     Manager.gameId, answer.alternativa, correct);
 
@@ -533,6 +545,17 @@ public class Jogo : MonoBehaviour, IClient
         atualizaTimer();
 
         cm.retrieveMessages(this);
+
+        if(chatBox.text != "")
+        {
+            if(Input.GetKeyDown(KeyCode.Return)){
+                var msg = new mensagemChat("MENSAGEM_CHAT", dadosTimes.player, Manager.teamId, Manager.sessionId, Manager.gameId, chatBox.text, false);
+                //var msg = new mensagemChat("MENSAGEM_CHAT", dadosTimes.player, Manager.teamId, Manager.sessionId, Manager.gameId, chatBox.text, Manager.moderator);
+                cm.send(msg);
+               // readChat(chatBox.text);
+                chatBox.text = "";
+            }
+        }
 
 
     }
@@ -1017,9 +1040,46 @@ public class Jogo : MonoBehaviour, IClient
 
     }
 
-    public void MSG_CLASSIFICAO_FINAL()
-    {
-        SceneManager.LoadScene("Fim");
+    // public void MSG_CLASSIFICAO_FINAL()
+    // {
+    //     SceneManager.LoadScene("Fim");
+    // }
+
+    public void MSG_CHAT(string msgJSON){
+        Color cor;
+        msgCHAT message = JsonUtility.FromJson<msgCHAT>(msgJSON);
+
+        if(messageList.Count >= chatMax){
+            Destroy(messageList[0].painelTexto.gameObject);
+            messageList.Remove(messageList[0]);
+        }
+
+        msgCHAT textoChat = new msgCHAT();
+
+        textoChat.texto = message.user.name + ":" + message.texto; 
+
+        GameObject novoChat = Instantiate(painelTexto, painelChat.transform);
+
+        textoChat.painelTexto = novoChat.GetComponent<Text>();
+
+        textoChat.painelTexto.text = textoChat.texto;
+
+        if(message.moderator){
+            ColorUtility.TryParseHtmlString("#f41004", out cor);
+            textoChat.painelTexto.fontStyle = FontStyle.Bold;
+        }
+        else{
+            //textoChat.painelTexto.fontStyle = FontStyle.Regular;
+            if(message.user.name == dadosTimes.player.name)
+                ColorUtility.TryParseHtmlString("#0505B1", out cor);
+            else
+                ColorUtility.TryParseHtmlString("#112A46", out cor);
+        }
+
+        textoChat.painelTexto.color = cor;
+        messageList.Add(textoChat);
+
+        Debug.Log(textoChat.texto);
     }
 
 
@@ -1055,7 +1115,28 @@ public class Jogo : MonoBehaviour, IClient
         } //else if (messageType == "CLASSIFICACAO_FINAL"){
             //MSG_CLASSIFICAO_FINAL(ms);
         //}
+        
+        else if (messageType == "MENSAGEM_CHAT")
+        {
+            MSG_CHAT(ms);
+        }
     }
+
+}
+
+[System.Serializable]
+public class msgCHAT
+{
+    public string message_type;
+    public string texto;
+
+    public Text painelTexto;
+    public User user;
+
+    public int teamId;
+    public string sessionId;
+    public int gameId;
+    public bool moderator;
 
 }
 
