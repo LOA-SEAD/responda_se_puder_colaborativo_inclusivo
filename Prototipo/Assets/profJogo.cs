@@ -91,9 +91,14 @@ public class profJogo : MonoBehaviour, IClient
     //         Debug.Log(textoChat.texto);
     //     }
 
+    public void MSG_CHAT(string msgJSON) {
+        Debug.Log("Recebeu mensagem enviada no chat !!");
+    }
+
 
     public void handle(string ms){
         //string messageType = ms.messageType;
+        Debug.Log(ms);
 
         //executa JSON->messageType dentro do handle
         string messageType = JsonUtility.FromJson<ServerMessage>(ms).messageType;
@@ -101,7 +106,11 @@ public class profJogo : MonoBehaviour, IClient
 
 
         // route message to handler based on message type
-        Debug.Log(ms);
+
+        if (messageType == "MENSAGEM_CHAT")
+        {
+            MSG_CHAT(ms);
+        }
 
         // if (messageType == "SESSAO_CRIADA") 
         // {
@@ -152,24 +161,24 @@ public class profJogo : MonoBehaviour, IClient
         
     }
 
-    // // Update is called once per frame
-    // void Update()
-    // {
+    // Update is called once per frame
+    void Update()
+    {
        
-    //     cm.retrieveMessages(this);
+        cm.retrieveMessages(this);
 
-    //      if(chatBox.text != "")
-    //     {
-    //         if(Input.GetKeyDown(KeyCode.Return)){
+        //  if(chatBox.text != "")
+        // {
+        //     if(Input.GetKeyDown(KeyCode.Return)){
                
-    //             var msg = new mensagemChat("MENSAGEM_CHAT", Manager.moderator, Manager.teamId, Manager.sessionId, Manager.gameId, chatBox.text, true);
-    //             //var msg = new mensagemChat("MENSAGEM_CHAT", dadosTimes.player, Manager.teamId, Manager.sessionId, Manager.gameId, chatBox.text, Manager.moderator);
-    //             cm.send(msg);
-    //            // readChat(chatBox.text);
-    //             chatBox.text = "";
-    //         }
-    //     }
+        //         var msg = new mensagemChat("MENSAGEM_CHAT", Manager.moderator, Manager.teamId, Manager.sessionId, Manager.gameId, chatBox.text, true);
+        //         //var msg = new mensagemChat("MENSAGEM_CHAT", dadosTimes.player, Manager.teamId, Manager.sessionId, Manager.gameId, chatBox.text, Manager.moderator);
+        //         cm.send(msg);
+        //        // readChat(chatBox.text);
+        //         chatBox.text = "";
+        //     }
+        // }
         
-    // }
+    }
         
 }
