@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - txt_equipe
+  - txt_players
+  - txt_codigo
+  - A
+  - B
+  - C
+  - D
+  - txt_team
+  - txt_nrEquipe
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - btncancelar
+  - 
+  - 
+  - "Painel Configura\xE7\xF5es"
+  - "Painel Instru\xE7\xF5es"
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: "Painel Configura\xE7\xF5es"
+    uniqueID: 1361553155
+    locked: 0
+  - name: "Painel Instru\xE7\xF5es"
+    uniqueID: 1770092537
+    locked: 0
