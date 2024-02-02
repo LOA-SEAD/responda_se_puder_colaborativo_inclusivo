@@ -149,6 +149,8 @@ public class profEspera : MonoBehaviour, IClient
 
         cm.send(msg);
 
+        SceneManager.LoadScene("profJogo");
+
     }
 
     public void MSG_CHAT(string msgJSON){

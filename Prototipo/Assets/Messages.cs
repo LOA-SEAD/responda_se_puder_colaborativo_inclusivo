@@ -25,7 +25,7 @@ public class EntrarSessao : Message
 
 }
 
-public class mensagemChat : Message
+public class mensagemChat : ServerMessage
 {
  //   public User user;
     public string texto;
