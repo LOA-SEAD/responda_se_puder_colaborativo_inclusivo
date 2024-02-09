@@ -101,6 +101,8 @@ public class profConfig : MonoBehaviour, IClient
     // //message_type: CADASTRAR_SESSAO
     public void btnCadastraSessao(){
 
+        Manager.moderator = mod;
+        
         int[] vetorQuestions = new int[3] {Manager.totalFacil, Manager.totalMedio, Manager.totalDificil};
         int[] questionAmount = new int[3] {this.nrEasy, this.nrMedium, this.nrHard};
 

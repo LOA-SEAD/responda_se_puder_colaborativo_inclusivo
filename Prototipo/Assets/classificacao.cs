@@ -69,7 +69,7 @@ public class classificacao : MonoBehaviour, IClient
                 {
                     if (classfGeral.Count > i)
                     {
-                        textFieldC.text = classfGeral[i].ranking + ") " + "Equipe " + classfGeral[i].id + " " + "Pontuação: " + classfGeral[i].point; 
+                        textFieldC.text = classfGeral[i].ranking + ") " + "Equipe " + classfGeral[i].idTeam + " " + "Pontuação: " + classfGeral[i].point; 
                     }
                     break;
                 }
@@ -113,7 +113,7 @@ public class classificacao : MonoBehaviour, IClient
 [System.Serializable] 
 public class teams_classf
 {
-    public int id;
+    public int idTeam;
     public int point;
     public int gameTime;
     public int ranking;

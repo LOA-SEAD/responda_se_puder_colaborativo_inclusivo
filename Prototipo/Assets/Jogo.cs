@@ -76,6 +76,9 @@ public class Jogo : MonoBehaviour, IClient
     private DadosJogo perguntaAtual;
     private int numeroQuestao = 0;
     private int totalQuestoes;
+    private int interaction;
+    private Dictionary<int, int> enviouMSG = new Dictionary<int, int>();
+
 
     private string correctAnswer;
 
@@ -494,6 +497,11 @@ public class Jogo : MonoBehaviour, IClient
 
         var msg = new RespostaFinal("RESPOSTA_FINAL", dadosTimes.player, Manager.teamId, Manager.sessionId, 
                                     Manager.gameId, answer.alternativa, correct);
+        
+        Debug.Log("Pessoas que enviaram msg:" + interaction);
+
+        // var msg = new RespostaFinal("RESPOSTA_FINAL", dadosTimes.player, Manager.teamId, Manager.sessionId, 
+        //                             Manager.gameId, answer.alternativa, correct, interaction);
 
         cm.send(msg);
 
@@ -878,7 +886,7 @@ public class Jogo : MonoBehaviour, IClient
     {
         msgMOMENTO_GRUPO message = JsonUtility.FromJson<msgMOMENTO_GRUPO>(msgJSON);
 
-
+        interaction = 0;
 
         Manager.leaderId = message.leaderId;
         altA.text = "" + message.answer.A;
@@ -1053,6 +1061,8 @@ public class Jogo : MonoBehaviour, IClient
             // Destroy(messageList[0].painelTexto.gameObject);
             // messageList.Remove(messageList[0]);
         }
+
+        int remetenteId = message.user.id;
 
         msgCHAT textoChat = new msgCHAT();
 
