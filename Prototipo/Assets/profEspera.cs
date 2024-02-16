@@ -51,6 +51,8 @@ public class profEspera : MonoBehaviour, IClient
         //Salva os dados que precisam ser permanentes da mensagem
         dadosTimes.listaTimes = message.teams;
         Manager.sessionId = message.sessionId;
+        Manager.moderator.name = message.user.name;
+        Manager.moderator.id = message.user.id;
 
         // //Teste
         // Debug.Log("Message Type: " + messageType);
@@ -148,6 +150,8 @@ public class profEspera : MonoBehaviour, IClient
         var msg = new ComecarJogo("COMECAR_JOGO", Manager.sessionId, Manager.gameId);
 
         cm.send(msg);
+
+        SceneManager.LoadScene("profJogo");
 
     }
 
@@ -269,6 +273,7 @@ public class msgSESSAO_CRIADA
     public string messageType;
     public List<Team> teams;
     public int sessionId;
+    public User user;
 }
 
 [System.Serializable] 

@@ -76,6 +76,11 @@ public class Jogo : MonoBehaviour, IClient
     private DadosJogo perguntaAtual;
     private int numeroQuestao = 0;
     private int totalQuestoes;
+    private int interaction;
+    private Dictionary<int, int> enviouMSG = new Dictionary<int, int>();
+
+    public Scrollbar bar;
+
 
     private string correctAnswer;
 
@@ -118,6 +123,11 @@ public class Jogo : MonoBehaviour, IClient
     //     Invoke("NextQ", sec);
     // }
 
+    public void setBar(){
+
+
+    }
+    
     public void SetQuadroEquipe() 
     {
         equipe_nr.text = "Equipe " + Manager.teamId;
@@ -494,6 +504,11 @@ public class Jogo : MonoBehaviour, IClient
 
         var msg = new RespostaFinal("RESPOSTA_FINAL", dadosTimes.player, Manager.teamId, Manager.sessionId, 
                                     Manager.gameId, answer.alternativa, correct);
+        
+        Debug.Log("Pessoas que enviaram msg:" + interaction);
+
+        // var msg = new RespostaFinal("RESPOSTA_FINAL", dadosTimes.player, Manager.teamId, Manager.sessionId, 
+        //                             Manager.gameId, answer.alternativa, correct, interaction);
 
         cm.send(msg);
 
@@ -680,6 +695,75 @@ public class Jogo : MonoBehaviour, IClient
             generalCommands.EnableInteraction(quadroChat);
         }
     }
+
+    // private int calculaBonus()
+    // {
+
+    //     percentualInteracao = (interaction/Manager.nrPlayerTeam);
+
+    //     if (percentualInteracao < 0.33)
+    //     {
+    //         bonus = 1;
+    //     }
+    //     else if (percentualInteracao < 0.66)
+    //     {
+    //         bonus = 2;
+    //     }
+    //     else
+    //     {
+    //         bonus = 3;
+    //     }
+
+    //     return bonus;
+    // }
+
+    // public int bonificacao(bool houveConsenso, bool houveInteracao, bool acertaramQuestao)
+    // {
+
+    //     if (houveConsenso)
+    //     {
+    //         if (houveInteracao)
+    //         {
+
+    //             bonus = calculaBonus();
+
+    //             if (acertaramQuestao)
+    //             {
+    //                 return bonus;
+    //             }
+    //             else
+    //             {
+    //                 return bonus;
+    //             }
+    //         }
+    //         else
+    //         {
+    //             return 0;
+    //         }
+    //     }
+    //     else
+    //     {
+    //         if (houveInteracao)
+    //         {
+
+    //             bonus = calculaBonus();
+
+    //             if (acertaramQuestao)
+    //             {
+    //                 return bonus;
+    //             }
+    //             else
+    //             {
+    //                 return bonus;
+    //             }
+    //         }
+    //         else
+    //         {
+    //             return 0;
+    //         }
+    //     }
+    // }
+
 
     public void EncerraQuestao(string ans, int correct) 
     {
@@ -878,7 +962,7 @@ public class Jogo : MonoBehaviour, IClient
     {
         msgMOMENTO_GRUPO message = JsonUtility.FromJson<msgMOMENTO_GRUPO>(msgJSON);
 
-
+        interaction = 0;
 
         Manager.leaderId = message.leaderId;
         altA.text = "" + message.answer.A;
@@ -1046,6 +1130,7 @@ public class Jogo : MonoBehaviour, IClient
     // }
 
     public void MSG_CHAT(string msgJSON){
+
         Color cor;
         msgCHAT message = JsonUtility.FromJson<msgCHAT>(msgJSON);
 
@@ -1053,6 +1138,9 @@ public class Jogo : MonoBehaviour, IClient
             // Destroy(messageList[0].painelTexto.gameObject);
             // messageList.Remove(messageList[0]);
         }
+
+        int remetenteId = message.user.id;
+
 
         msgCHAT textoChat = new msgCHAT();
 
@@ -1078,6 +1166,7 @@ public class Jogo : MonoBehaviour, IClient
 
         textoChat.painelTexto.color = cor;
         messageList.Add(textoChat);
+
 
         Debug.Log(textoChat.texto);
     }
