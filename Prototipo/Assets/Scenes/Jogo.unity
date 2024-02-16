@@ -7169,6 +7169,7 @@ MonoBehaviour:
   ordem_alternativas: 
   alt: 00000000010000000200000003000000
   alt5050: 
+  bar: {fileID: 1084237421}
   messageList: []
   chatMax: 0
   answer:
