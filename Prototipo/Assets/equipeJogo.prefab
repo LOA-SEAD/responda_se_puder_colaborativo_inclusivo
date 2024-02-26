@@ -50,10 +50,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   encerrarJogo: {fileID: 0}
+  quadroChat: {fileID: 0}
+  painelTexto: {fileID: 0}
+  painelChat: {fileID: 0}
+  chatBox: {fileID: 0}
+  messageText: {fileID: 0}
+  messageList: []
+  chatMax: 25
   ContentEquipes: {fileID: 0}
   prefabEquipes: {fileID: 0}
   m_Itens: 0
-  painelChat: {fileID: 0}
 --- !u!1 &2507529503883637746
 GameObject:
   m_ObjectHideFlags: 0

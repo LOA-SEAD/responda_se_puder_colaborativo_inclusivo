@@ -207,12 +207,12 @@ public class RespostaFinal : Message
     public int gameId;
     public string finalAnswer;
     public int correct; 
-    // public int interaction;
+    public int interaction;
 
-    public RespostaFinal(string messageType, User user, int teamId, int sessionId, int gameId, string finalAnswer, int correct)
-    {
-    // public RespostaFinal(string messageType, User user, int teamId, int sessionId, int gameId, string finalAnswer, int correct, int interaction)
+    // public RespostaFinal(string messageType, User user, int teamId, int sessionId, int gameId, string finalAnswer, int correct)
     // {
+    public RespostaFinal(string messageType, User user, int teamId, int sessionId, int gameId, string finalAnswer, int correct, int interaction)
+    {
         this.messageType = messageType;
         this.user = user;
         this.teamId = teamId;
@@ -220,7 +220,7 @@ public class RespostaFinal : Message
         this.gameId = gameId;
         this.finalAnswer = finalAnswer;
         this.correct = correct;
-        // this.interaction = interaction;
+        this.interaction = interaction;
 
     }
 }
