@@ -621,16 +621,6 @@ public class Jogo : MonoBehaviour, IClient
 
                     cm.send(msg);
             }
-            else 
-            {
-                    if (dadosTimes.player.id != Manager.leaderId)
-                    {
-                        var msg = new RespostaFinal("RESPOSTA_FINAL", dadosTimes.player, Manager.teamId, Manager.sessionId, 
-                                                    Manager.gameId, "", correct, interaction);
-
-                        cm.send(msg);  
-                    }
-            }
             }
 
             int min = Mathf.FloorToInt(timer / 60f);
@@ -657,6 +647,8 @@ public class Jogo : MonoBehaviour, IClient
     {
         Manager.MOMENTO = "INDIVIDUAL";
         txt_geral.enabled = false;
+        tempoQuestao.enabled = true;
+
         fechaPainelAguarde();
 
         btnAlternativas[0].gameObject.SetActive(true);
@@ -683,6 +675,8 @@ public class Jogo : MonoBehaviour, IClient
     public void SetGrupo()
     {
         zeraTimer();
+        tempoQuestao.enabled = false;
+        
         Manager.MOMENTO = "GRUPO";
         txt_geral.enabled = false;
 
@@ -803,7 +797,15 @@ public class Jogo : MonoBehaviour, IClient
             CanvasJogo.SetActive(false);
             CanvasRCerta.SetActive(true);
             txt_correto_resposta.text = "A resposta correta é " + correctAnswer;
-            txt_pontuacao_correto.text = "Sua equipe ganhou 10 pontos\nLembre-se de conversar com os colegas de equipe";
+            if (bonusInteracao != 3)
+            {
+                txt_pontuacao_correto.text = "Sua equipe ganhou " + (10+bonusInteracao) + " pontos\nLembrem-se de que a colaboração é imporante";
+            }
+            else 
+            {
+                txt_pontuacao_correto.text = "Sua equipe ganhou "  + (10+bonusInteracao) + " pontos\nQue bom que colaboraram!";
+
+            }
 
             Manager.grpScore += 10;
         }
@@ -811,7 +813,17 @@ public class Jogo : MonoBehaviour, IClient
             CanvasJogo.SetActive(false);
             CanvasRErrada.SetActive(true);
             txt_errado_resposta.text = "\nA resposta correta é " + correctAnswer;
-            txt_pontuacao_errada.text = "Sua equipe ganhou 0 pontos\nLembre-se de conversar com os colegas de equipe";
+            if (bonusInteracao != 0)
+            {
+                txt_pontuacao_errada.text = "Sua equipe ganhou"  + (bonusInteracao) + " pontos pela colaboração\nLembrem-se de que a colaboração é imporante";
+
+            }
+            else 
+            {
+                txt_pontuacao_errada.text = "Sua equipe ganhou "  + (bonusInteracao) + " pontos\nLembre-se que a colaboração é importante";
+
+            }
+            // txt_pontuacao_errada.text = "Sua equipe ganhou 0 pontos\nLembre-se de conversar com os colegas de equipe";
             // txt_errado_resposta_dada.text = "A resposta correta é " + perguntaAtual.resposta;
         }
 
@@ -1068,18 +1080,28 @@ public class Jogo : MonoBehaviour, IClient
 
         if (message.help == "pular"){
 
-            txt_geral.text = "A equipe decidiu por pular a questão.";
-            txt_geral.enabled = true;
+            if(pulou == 1)
+            {
+                txt_geral.text = "A equipe já utilizou a ajuda PULAR (Máximo por equipe: 1).";
+                txt_geral.enabled = true;
+                Invoke("DesativaTXT", 5f);
 
-            pulou = 1;
-            
-            if (perguntaAtual.nivel == "facil") pulou_no_facil = 1;
+            }
+            else {
 
-            indice_qst++;
-            SetIndividual();
+                txt_geral.text = "A equipe decidiu por pular a questão.";
+                txt_geral.enabled = true;
+
+                pulou = 1;
+                
+                if (perguntaAtual.nivel == "facil") pulou_no_facil = 1;
+
+                indice_qst++;
+                SetIndividual();
 
 
-            Invoke("DesativaTXT", 5f);
+                Invoke("DesativaTXT", 5f);
+            }
         }
         else{
             alt5050 = message.alternativa;
@@ -1133,6 +1155,11 @@ public class Jogo : MonoBehaviour, IClient
            }
         }
 
+
+    }
+
+    void MOMENTO_AVALIACAO()
+    {
 
     }
 
