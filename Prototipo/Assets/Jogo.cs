@@ -475,6 +475,9 @@ public class Jogo : MonoBehaviour, IClient
         var msg = new RespostaIndividual("RESPOSTA_INDIVIDUAL", dadosTimes.player, Manager.teamId, Manager.sessionId,
                                         Manager.gameId, answer.alternativa, answer.level, answer.nrQ);
 
+        zerouTimer = 1;
+
+
         cm.send(msg);
 
         btnAlternativas[0].gameObject.SetActive(false);
