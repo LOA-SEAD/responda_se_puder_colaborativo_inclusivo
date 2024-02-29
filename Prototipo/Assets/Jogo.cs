@@ -616,6 +616,11 @@ public class Jogo : MonoBehaviour, IClient
             
             if (Manager.MOMENTO == "INDIVIDUAL") 
             {
+                    if (level_qst == 0) answer.nrQ = Manager.qEasy[indice_qst];
+                    else if (level_qst == 1) answer.nrQ = Manager.qMedium[indice_qst];
+                    else if (level_qst == 2) answer.nrQ = Manager.qHard[indice_qst];
+
+                    Debug.Log("NUMERO QUESTAO: " + answer.nrQ);
                     var msg = new RespostaIndividual("RESPOSTA_INDIVIDUAL", dadosTimes.player, Manager.teamId, Manager.sessionId,
                                             Manager.gameId, "", answer.level, answer.nrQ);
 
