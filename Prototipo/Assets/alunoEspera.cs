@@ -31,7 +31,7 @@ public class alunoEspera : MonoBehaviour, IClient
 
         Manager.nrPlayerTeam = dadosTimes.meuTime.Count - 1;
 
-        Debug.Log("Nr jogadores do meu time: " + Manager.nrPlayerTeam);
+        // Debug.Log("Nr jogadores do meu time: " + Manager.nrPlayerTeam);
 
         SceneManager.LoadScene("Jogo");
     }

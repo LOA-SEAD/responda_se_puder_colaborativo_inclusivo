@@ -62,4 +62,7 @@ public class User
     public int id;
     public string name;
     public int indScore = 0;
+    public int elogio1;
+    public int elogio2;
+    public int elogio3;
 }

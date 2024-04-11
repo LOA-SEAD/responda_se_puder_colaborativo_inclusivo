@@ -4932,9 +4932,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1382524656}
-        m_TargetAssemblyTypeName: config, Assembly-CSharp
-        m_MethodName: AtivaDesativaConfig
+      - m_Target: {fileID: 1382524657}
+        m_TargetAssemblyTypeName: instrucoes, Assembly-CSharp
+        m_MethodName: AtivaDesativaInstrucoes
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4964,7 +4964,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: abe4cfb3c750a794e8ac0dd6d3fc0d7f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 57aa171901820d2428e5b99311059fdf, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

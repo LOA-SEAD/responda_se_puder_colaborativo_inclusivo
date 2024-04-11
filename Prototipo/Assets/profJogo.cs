@@ -33,6 +33,13 @@ public class profJogo : MonoBehaviour, IClient
 
     public int chatMax = 25;
 
+    public ScrollRect scrollRect_prof;
+
+    public int chatAberto = 0;
+
+    [SerializeField]
+    public List<GameObject> notification = new List<GameObject>();
+    
 
     // //Quadros em tela
     [SerializeField] private Transform ContentEquipes;
@@ -104,13 +111,19 @@ public class profJogo : MonoBehaviour, IClient
         }
         GameObject novoChat = Instantiate(painelTexto, painelChat.transform);
         textoChat.painelTexto = novoChat.GetComponent<Text>();
-        textoChat.painelTexto.text = textoChat.texto;
+        textoChat.painelTexto.text = textoChat.texto;        
+        if(scrollRect_prof.normalizedPosition.y < 0.0001f){
+            scrollRect_prof.velocity = new Vector2 (0f, 1000f);
+        }
 
         textoChat.painelTexto.gameObject.SetActive(false);
         if (Manager.teamId == message.teamId) {
             textoChat.painelTexto.gameObject.SetActive(true);
         }
 
+        if (chatAberto != message.teamId) 
+            notification[message.teamId].gameObject.SetActive(true);
+     
         if (message.moderator)
         {
             ColorUtility.TryParseHtmlString("#f41004", out cor);
@@ -121,7 +134,7 @@ public class profJogo : MonoBehaviour, IClient
             ColorUtility.TryParseHtmlString("#112A46", out cor);
         }
         textoChat.painelTexto.color = cor;
-
+ 
         msgTeams[message.teamId].Add(textoChat);
 
         Debug.Log(textoChat.texto);
@@ -131,6 +144,8 @@ public class profJogo : MonoBehaviour, IClient
     {
         Manager.teamId = teamId;
         Debug.Log(Manager.teamId);
+        chatAberto = teamId;
+        notification[teamId].gameObject.SetActive(false);
         if (msgTeams.ContainsKey(teamId))
         {
             List<msgCHAT_moderator> mensagensDoTime = msgTeams[teamId];
@@ -190,11 +205,11 @@ public class profJogo : MonoBehaviour, IClient
         m_Itens = Manager.nrTeam;
         for (int i = 0; i < m_Itens; i++)
         {
-
             GameObject novaEquipe = Instantiate(prefabEquipes, transform.position, Quaternion.identity);
             novaEquipe.transform.SetParent(ContentEquipes);
             novaEquipe.transform.localScale = new Vector3(1.894364f, 0.179433f, 0.23102f);
-        
+            notification.Add(novaEquipe.transform.Find("notification").gameObject);
+           // notification[i].SetActive(true);
             quadrosEquipe.Add(novaEquipe);
 
             int teamId = i+1;
@@ -219,7 +234,7 @@ public class profJogo : MonoBehaviour, IClient
                 }
             }
         }
-
+           scrollRect_prof.GetComponent<ScrollRect> ();
         
     }
 

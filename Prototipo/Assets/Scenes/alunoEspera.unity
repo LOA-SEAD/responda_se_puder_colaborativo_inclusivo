@@ -181,7 +181,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "O jogo inici\xE1ra em instantes..."
+  m_text: "Aguarde. O jogo inici\xE1ra em instantes..."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -208,8 +208,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
-  m_fontSizeBase: 18
+  m_fontSize: 16.21
+  m_fontSizeBase: 16.21
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -369,7 +369,7 @@ RectTransform:
   m_GameObject: {fileID: 308301214}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5779365, y: 0.6166187, z: 0.9319225}
+  m_LocalScale: {x: 0.48598677, y: 0.51851463, z: 0.7836536}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 170938004}
@@ -377,7 +377,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 7.449999, y: -5.227274}
+  m_AnchoredPosition: {x: 7.75, y: -5.227274}
   m_SizeDelta: {x: 7.48, y: 11.07}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &308301216
@@ -637,8 +637,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1382524658}
-        m_TargetAssemblyTypeName: instrucoes, Assembly-CSharp
+      - m_Target: {fileID: 1382524660}
+        m_TargetAssemblyTypeName: instrucoes2, Assembly-CSharp
         m_MethodName: InstrucaoAnterior
         m_Mode: 1
         m_Arguments:
@@ -1178,7 +1178,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.01, y: 2.4}
+  m_AnchoredPosition: {x: 0.01, y: 2.6}
   m_SizeDelta: {x: 341.1506, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &848818212
@@ -1631,7 +1631,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1382524658}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: instrucoes, Assembly-CSharp
         m_MethodName: AtivaDesativaInstrucoes
         m_Mode: 1
@@ -1765,7 +1765,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1382524659}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: config, Assembly-CSharp
         m_MethodName: AtivaDesativaConfig
         m_Mode: 1
@@ -2169,8 +2169,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1382524658}
-        m_TargetAssemblyTypeName: instrucoes, Assembly-CSharp
+      - m_Target: {fileID: 1382524660}
+        m_TargetAssemblyTypeName: instrucoes2, Assembly-CSharp
         m_MethodName: ProximaInstrucao
         m_Mode: 1
         m_Arguments:
@@ -2455,7 +2455,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1311547230
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2520,9 +2520,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1382524659}
-        m_TargetAssemblyTypeName: config, Assembly-CSharp
-        m_MethodName: AtivaDesativaConfig
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: instrucoes, Assembly-CSharp
+        m_MethodName: AtivaDesativaInstrucoes
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2552,7 +2552,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: abe4cfb3c750a794e8ac0dd6d3fc0d7f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 57aa171901820d2428e5b99311059fdf, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2719,8 +2719,6 @@ GameObject:
   - component: {fileID: 1382524655}
   - component: {fileID: 1382524656}
   - component: {fileID: 1382524657}
-  - component: {fileID: 1382524658}
-  - component: {fileID: 1382524659}
   - component: {fileID: 1382524660}
   m_Layer: 0
   m_Name: EventSystem
@@ -2816,35 +2814,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b388c8c76ac97841bd2ac377906e654, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1382524658
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1382524651}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df217ff2d74d39d4890b6a036a30c570, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  painelInstrucoes: {fileID: 1311534660}
-  instrucoesText: {fileID: 1768956767}
-  paginaText: {fileID: 979965377}
-  instrLista: []
---- !u!114 &1382524659
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1382524651}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd16c26c22f25494a93b393d36d49ef8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  painelConfig: {fileID: 1730772655}
 --- !u!114 &1382524660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2858,8 +2827,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   painelInstrucoes: {fileID: 1311534660}
-  instrucoesText: {fileID: 1367305141}
-  paginaText: {fileID: 1169238856}
+  instrucoesText: {fileID: 1768956767}
+  paginaText: {fileID: 979965377}
   instrLista: []
 --- !u!1 &1519651830
 GameObject:
@@ -3562,7 +3531,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1382524658}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: instrucoes, Assembly-CSharp
         m_MethodName: AtivaDesativaInstrucoes
         m_Mode: 1
@@ -3677,12 +3646,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 36
+  m_fontSize: 9
+  m_fontSizeBase: 9
   m_fontWeight: 400
-  m_enableAutoSizing: 1
-  m_fontSizeMin: 10
-  m_fontSizeMax: 20
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 8
+  m_fontSizeMax: 16
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512

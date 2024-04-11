@@ -32,37 +32,36 @@ public class instrucoes2 : MonoBehaviour
         // string inst3 = "INSTRUÇÔES PAGINA 3";
         // string inst4 = "INSTRUÇÔES PAGINA 4";
 
-        string inst1 = @"ENTRADA
-- Digite o seu nome e o código da sua equipe que o(a) professor(a) vai dar para você.
-- Espere até que todos os jogadores tenham entrado.
+        string inst1 = "<align=\"center\"><b>REGRAS DO JOGO</b></align>\n\n" +
+                              "O jogo tem 3 níveis: fácil, médio e difícil.\n" +
+                              "O jogo possui momentos individuais e momentos em equipe.\n\n" +
+                            "<b>Momento individual</b>\n" +
+                              "No momento individual, cada jogador deve responder à pergunta dentro do tempo disponível.\n" +
+                              "Uma Dica estará disponível para consulta, sem custo.\n\n" +
+                            "<b>Momento em grupo</b>\n" +
+                              "No momento em grupo, vamos ver as respostas de todos e discutir no chat para decidir a resposta correta.\n" +
+                              "O líder guiará a conversa e enviará a resposta escolhida pelo grupo. O líder também pode pedir ajuda, como eliminar metade das opções ou pular para outra pergunta (apenas uma vez).";
 
-LÍDER
-- A cada etapa, um jogador da equipe será escolhido aleatoriamente para ser o líder. 
-- O líder é a pessoa que irá estimular a comunicação entre os jogadores para confirmar a resposta da equipe";
+        string inst2 =  "<align=\"center\"><b>PONTUAÇÃO</b></align>\n\n" +
+                                "<u>A cada questão:</u>\n" +
+                                "   10 pontos se resposta correta\n" +
+                                "   até 3 pontos de colaboração\n" +
+                                "<u>Ao final do jogo:</u>\n" +
+                                "   bônus para cada Ajuda NÃO usada (50-50 ou Pular)\n" +
+                                "A pontuação da sua equipe e o ranking das equipes serão apresentados no final. " +
+                                "Aguarde até que todas as equipes terminem para ver a classificação geral.";
+        
+        string inst3 = "<align=\"center\"><b>LÍDER</b></align>\n\n" +
+                            "A cada etapa, um jogador da equipe será escolhido aleatoriamente para ser o líder.\n" +
+                            "O líder é a pessoa que irá estimular a comunicação entre os jogadores para decidir a resposta da equipe.\n\n" +
+                        "<align=\"center\"><b>MODERADOR/PROFESSOR</b></align>\n\n" +
+                            "Se houver discórdia ou comportamento inadequado, você pode alertar o professor, clicando no botão “Alerta!”.\n" +
+                            "Se houver dúvida, poderá apertar o botão “Dúvida?” para chamar o professor.";
 
-        string inst2 = @"REGRAS DO JOGO
-- Responda a pergunta escolhendo a resposta certa antes que o tempo acabe.
-- Toda vez que você escolher uma resposta, você precisa confirmar a sua escolha.
-- Se estiver com dificuldade para escolher uma resposta, você pode usar uma dica. A dica pode ser usada quantas vezes quiser.
-- Espere até que todos os jogadores tenham respondido às suas perguntas.
-- O jogo tem 3 níveis: fácil, médio e difícil. 
-- Todos os integrantes da equipe podem ver quais alternativas foram mais escolhidas pelo grupo.
-- Vocês devem conversar no chat com os membros da equipe para decidirem juntos qual é a melhor resposta para escolher.";   
+        string inst4 = "<align=\"center\"><b>AVALIAÇÃO DA COLABORAÇÃO</b></align>\n\n" +
+                            "Ao final de cada fase, haverá um momento de reflexão sobre a colaboração do grupo.\n" +
+                            "Cada integrante deverá avaliar os seus colegas com relação ao engajamento, comunicação e gentileza.";
 
-        string inst3 = @"AJUDA
-- Qualquer jogador da equipe pode pedir ao líder que use uma ajuda (escolher entre duas opções: 'pular' ou '50 50').
-- 50 50 - Essa ajuda elimina metade das opções. A equipe só pode usá-la o número de vezes indicado no botão. Use com cuidado.
-- Pular - A pergunta atual será trocada por uma diferente. O 'pular' só pode ser usado uma vez pela equipe.
-                        
-REFLEXÃO
-- Sempre que a fase mudar, você tem a chance de refletir e dar feedbacks positivos aos membros da sua equipe.";
-
-        string inst4 =  @"PONTUAÇÃO
-- A cada questão certa, a equipe ganhará 10 pontos.
-- Se todos os jogadores conversarem no chat, a equipe ganhará um bônus de 3 pontos pela interação.
-- Se a resposta da equipe estiver errada, não receberão pontos por aquela pergunta. No entanto, se todos os jogadores conversarem no chat, a equipe ganhará um bônus de 3 pontos pela interação, mesmo que a resposta esteja errada.
-- Se vocês terminarem o jogo sem usar as ajudas '50 50' ou 'Pular', a equipe ganhará um bônus por cada ajuda que não foi usada.
-- Quando o jogo terminar, você verá a pontuação da sua equipe e o ranking com as pontuações de todas as equipes. Lembre-se de esperar até que todas as equipes terminem para ver a classificação geral.";
 
         instrLista.Add(inst1);
         instrLista.Add(inst2);

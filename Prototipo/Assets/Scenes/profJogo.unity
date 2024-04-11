@@ -2490,7 +2490,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2037799017}
   m_HandleRect: {fileID: 2037799016}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2976,7 +2976,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1414973193}
   m_HandleRect: {fileID: 1414973192}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 0.049999837
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3428,6 +3428,10 @@ MonoBehaviour:
   messageText: {fileID: 0}
   messageList: []
   chatMax: 25
+  scrollRect_prof: {fileID: 1761406064}
+  chatAberto: 0
+  notification:
+  - {fileID: 0}
   ContentEquipes: {fileID: 1911760261}
   prefabEquipes: {fileID: 4799459328417201882, guid: 296fb8b2d9ff97e45918d88d0f6594d1, type: 3}
   m_Itens: 0
@@ -4063,7 +4067,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1052.6199, y: 119.861496}
+  m_AnchoredPosition: {x: 1052.6199, y: 119.86151}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 0.95}
 --- !u!114 &1683960793

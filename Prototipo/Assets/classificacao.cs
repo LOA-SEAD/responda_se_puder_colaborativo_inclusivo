@@ -18,11 +18,59 @@ public class classificacao : MonoBehaviour, IClient
     public static List<teams_classf> classfGeral = new List<teams_classf>();  
 
     [SerializeField] private int m_ItemsToGenerate;
+
+    public TMP_Text txt_nome;
+
+    public float elogio_comunicativo;
+    public double elogio_engajado;
+    public float elogio_gentil;
+
+    public Sprite estrela_cheia;
+    public Sprite estrela_meia;
+    public Sprite estrela_vazia;
+
+    public SpriteRenderer estrela_comunicativo_1;
+    public SpriteRenderer estrela_comunicativo_2;
+    public SpriteRenderer estrela_comunicativo_3;
+    public SpriteRenderer estrela_engajado_1;
+    public SpriteRenderer estrela_engajado_2;
+    public SpriteRenderer estrela_engajado_3;
+    public SpriteRenderer estrela_gentil_1;
+    public SpriteRenderer estrela_gentil_2;
+    public SpriteRenderer estrela_gentil_3;
   
     
     // Start is called before the first frame update
     void Start()
     {
+        txt_nome.text = dadosTimes.player.name + ",";
+
+        SpriteRenderer image_comunicativo_1 = estrela_comunicativo_1.GetComponent<SpriteRenderer>();
+        image_comunicativo_1.sprite = estrela_vazia;
+
+        SpriteRenderer image_comunicativo_2 = estrela_comunicativo_2.GetComponent<SpriteRenderer>();
+        image_comunicativo_2.sprite = estrela_vazia;
+
+        SpriteRenderer image_comunicativo_3 = estrela_comunicativo_3.GetComponent<SpriteRenderer>();
+        image_comunicativo_3.sprite = estrela_vazia;
+
+        SpriteRenderer image_engajado_1 = estrela_engajado_1.GetComponent<SpriteRenderer>();
+        image_engajado_1.sprite = estrela_vazia;
+
+        SpriteRenderer image_engajado_2 = estrela_engajado_2.GetComponent<SpriteRenderer>();
+        image_engajado_2.sprite = estrela_vazia;
+
+        SpriteRenderer image_engajado_3 = estrela_engajado_3.GetComponent<SpriteRenderer>();
+        image_engajado_3.sprite = estrela_vazia;
+
+        SpriteRenderer image_gentil_1 = estrela_gentil_1.GetComponent<SpriteRenderer>();
+        image_gentil_1.sprite = estrela_vazia;
+
+        SpriteRenderer image_gentil_2 = estrela_gentil_2.GetComponent<SpriteRenderer>();
+        image_gentil_2.sprite = estrela_vazia;
+
+        SpriteRenderer image_gentil_3 = estrela_gentil_3.GetComponent<SpriteRenderer>();
+        image_gentil_3.sprite = estrela_vazia;
         
     }
 
@@ -77,8 +125,239 @@ public class classificacao : MonoBehaviour, IClient
         }
 
         Debug.Log("Fim MSG_CLASSIFICACAO_FINAL");
+    }
 
+    public void MSG_RETORNA_AVALIACAO(string msgJSON)
+    {
+        msgRETORNA_AVALIACAO message = JsonUtility.FromJson<msgRETORNA_AVALIACAO>(msgJSON);
 
+        dadosTimes.player.elogio1 = message.user.elogio1;
+        dadosTimes.player.elogio2 = message.user.elogio2;
+        dadosTimes.player.elogio3 = message.user.elogio3;
+
+        setEstrelasAvaliadas();
+    }
+
+    public void setEstrelasAvaliadas()
+    {
+        elogio_comunicativo = (float)dadosTimes.player.elogio1 / (3.0f * (float)Manager.nrPlayerTeam);
+        elogio_engajado = (float)dadosTimes.player.elogio2 / (3.0f * (float)Manager.nrPlayerTeam);
+        elogio_gentil = (float)dadosTimes.player.elogio3 / (3.0f * (float)Manager.nrPlayerTeam);
+
+        setEstrelaComunicativo(elogio_comunicativo);
+        setEstrelaEngajado(elogio_engajado);
+        setEstrelaGentil(elogio_gentil);
+    }
+
+    public void setEstrelaComunicativo(float n)
+    {
+        if (n > 0 && n < 0.75)
+        {
+            SpriteRenderer image_comunicativo_1 = estrela_comunicativo_1.GetComponent<SpriteRenderer>();
+            image_comunicativo_1.sprite = estrela_meia;
+
+            SpriteRenderer image_comunicativo_2 = estrela_comunicativo_2.GetComponent<SpriteRenderer>();
+            image_comunicativo_2.sprite = estrela_vazia;
+
+            SpriteRenderer image_comunicativo_3 = estrela_comunicativo_3.GetComponent<SpriteRenderer>();
+            image_comunicativo_3.sprite = estrela_vazia;
+        }
+        else if (n >= 0.75 && n < 1.25) 
+        {
+            SpriteRenderer image_comunicativo_1 = estrela_comunicativo_1.GetComponent<SpriteRenderer>();
+            image_comunicativo_1.sprite = estrela_cheia;
+
+            SpriteRenderer image_comunicativo_2 = estrela_comunicativo_2.GetComponent<SpriteRenderer>();
+            image_comunicativo_2.sprite = estrela_vazia;
+
+            SpriteRenderer image_comunicativo_3 = estrela_comunicativo_3.GetComponent<SpriteRenderer>();
+            image_comunicativo_3.sprite = estrela_vazia;
+        }
+        else if (n >= 1.25 && n < 1.75)
+        {
+            SpriteRenderer image_comunicativo_1 = estrela_comunicativo_1.GetComponent<SpriteRenderer>();
+            image_comunicativo_1.sprite = estrela_cheia;
+
+            SpriteRenderer image_comunicativo_2 = estrela_comunicativo_2.GetComponent<SpriteRenderer>();
+            image_comunicativo_2.sprite = estrela_meia;
+
+            SpriteRenderer image_comunicativo_3 = estrela_comunicativo_3.GetComponent<SpriteRenderer>();
+            image_comunicativo_3.sprite = estrela_vazia;       
+        }
+        else if (n >= 1.75 && n < 2.25)
+        {
+            SpriteRenderer image_comunicativo_1 = estrela_comunicativo_1.GetComponent<SpriteRenderer>();
+            image_comunicativo_1.sprite = estrela_cheia;
+
+            SpriteRenderer image_comunicativo_2 = estrela_comunicativo_2.GetComponent<SpriteRenderer>();
+            image_comunicativo_2.sprite = estrela_cheia;
+
+            SpriteRenderer image_comunicativo_3 = estrela_comunicativo_3.GetComponent<SpriteRenderer>();
+            image_comunicativo_3.sprite = estrela_vazia; 
+        }
+        else if (n >= 2.25 && n < 2.75)
+        {
+            SpriteRenderer image_comunicativo_1 = estrela_comunicativo_1.GetComponent<SpriteRenderer>();
+            image_comunicativo_1.sprite = estrela_cheia;
+
+            SpriteRenderer image_comunicativo_2 = estrela_comunicativo_2.GetComponent<SpriteRenderer>();
+            image_comunicativo_2.sprite = estrela_cheia;
+
+            SpriteRenderer image_comunicativo_3 = estrela_comunicativo_3.GetComponent<SpriteRenderer>();
+            image_comunicativo_3.sprite = estrela_meia; 
+        } else if (n >= 2.75)
+        {
+            SpriteRenderer image_comunicativo_1 = estrela_comunicativo_1.GetComponent<SpriteRenderer>();
+            image_comunicativo_1.sprite = estrela_cheia;
+
+            SpriteRenderer image_comunicativo_2 = estrela_comunicativo_2.GetComponent<SpriteRenderer>();
+            image_comunicativo_2.sprite = estrela_cheia;
+
+            SpriteRenderer image_comunicativo_3 = estrela_comunicativo_3.GetComponent<SpriteRenderer>();
+            image_comunicativo_3.sprite = estrela_cheia; 
+        }
+
+    }
+
+    public void setEstrelaEngajado(double n)
+    {
+        if (n > 0 && n < 0.75)
+        {
+            SpriteRenderer image_engajado_1 = estrela_engajado_1.GetComponent<SpriteRenderer>();
+            image_engajado_1.sprite = estrela_meia;
+
+            SpriteRenderer image_engajado_2 = estrela_engajado_2.GetComponent<SpriteRenderer>();
+            image_engajado_2.sprite = estrela_vazia;
+
+            SpriteRenderer image_engajado_3 = estrela_engajado_3.GetComponent<SpriteRenderer>();
+            image_engajado_3.sprite = estrela_vazia;
+        }
+        else if (n >= 0.75 && n < 1.25) 
+        {
+            SpriteRenderer image_engajado_1 = estrela_engajado_1.GetComponent<SpriteRenderer>();
+            image_engajado_1.sprite = estrela_cheia;
+
+            SpriteRenderer image_engajado_2 = estrela_engajado_2.GetComponent<SpriteRenderer>();
+            image_engajado_2.sprite = estrela_vazia;
+
+            SpriteRenderer image_engajado_3 = estrela_engajado_3.GetComponent<SpriteRenderer>();
+            image_engajado_3.sprite = estrela_vazia;
+        }
+        else if (n >= 1.25 && n < 1.75)
+        {
+            SpriteRenderer image_engajado_1 = estrela_engajado_1.GetComponent<SpriteRenderer>();
+            image_engajado_1.sprite = estrela_cheia;
+
+            SpriteRenderer image_engajado_2 = estrela_engajado_2.GetComponent<SpriteRenderer>();
+            image_engajado_2.sprite = estrela_meia;
+
+            SpriteRenderer image_engajado_3 = estrela_engajado_3.GetComponent<SpriteRenderer>();
+            image_engajado_3.sprite = estrela_vazia;       
+        }
+        else if (n >= 1.75 && n < 2.25)
+        {
+            SpriteRenderer image_engajado_1 = estrela_engajado_1.GetComponent<SpriteRenderer>();
+            image_engajado_1.sprite = estrela_cheia;
+
+            SpriteRenderer image_engajado_2 = estrela_engajado_2.GetComponent<SpriteRenderer>();
+            image_engajado_2.sprite = estrela_cheia;
+
+            SpriteRenderer image_engajado_3 = estrela_engajado_3.GetComponent<SpriteRenderer>();
+            image_engajado_3.sprite = estrela_vazia; 
+        }
+        else if (n >= 2.25 && n < 2.75)
+        {
+            SpriteRenderer image_engajado_1 = estrela_engajado_1.GetComponent<SpriteRenderer>();
+            image_engajado_1.sprite = estrela_cheia;
+
+            SpriteRenderer image_engajado_2 = estrela_engajado_2.GetComponent<SpriteRenderer>();
+            image_engajado_2.sprite = estrela_cheia;
+
+            SpriteRenderer image_engajado_3 = estrela_engajado_3.GetComponent<SpriteRenderer>();
+            image_engajado_3.sprite = estrela_meia; 
+        } 
+        else if (n >= 2.75)
+        {
+            SpriteRenderer image_engajado_1 = estrela_engajado_1.GetComponent<SpriteRenderer>();
+            image_engajado_1.sprite = estrela_cheia;
+
+            SpriteRenderer image_engajado_2 = estrela_engajado_2.GetComponent<SpriteRenderer>();
+            image_engajado_2.sprite = estrela_cheia;
+
+            SpriteRenderer image_engajado_3 = estrela_engajado_3.GetComponent<SpriteRenderer>();
+            image_engajado_3.sprite = estrela_cheia; 
+        }
+
+    }
+
+    public void setEstrelaGentil(float n)
+    {
+        if (n > 0 && n < 0.75)
+        {
+            SpriteRenderer image_gentil_1 = estrela_gentil_1.GetComponent<SpriteRenderer>();
+            image_gentil_1.sprite = estrela_meia;
+
+            SpriteRenderer image_gentil_2 = estrela_gentil_2.GetComponent<SpriteRenderer>();
+            image_gentil_2.sprite = estrela_vazia;
+
+            SpriteRenderer image_gentil_3 = estrela_gentil_3.GetComponent<SpriteRenderer>();
+            image_gentil_3.sprite = estrela_vazia;
+        }
+        else if (n >= 0.75 && n < 1.25) 
+        {
+            SpriteRenderer image_gentil_1 = estrela_gentil_1.GetComponent<SpriteRenderer>();
+            image_gentil_1.sprite = estrela_cheia;
+
+            SpriteRenderer image_gentil_2 = estrela_gentil_2.GetComponent<SpriteRenderer>();
+            image_gentil_2.sprite = estrela_vazia;
+
+            SpriteRenderer image_gentil_3 = estrela_gentil_3.GetComponent<SpriteRenderer>();
+            image_gentil_3.sprite = estrela_vazia;
+        }
+        else if (n >= 1.25 && n < 1.75)
+        {
+            SpriteRenderer image_gentil_1 = estrela_gentil_1.GetComponent<SpriteRenderer>();
+            image_gentil_1.sprite = estrela_cheia;
+
+            SpriteRenderer image_gentil_2 = estrela_gentil_2.GetComponent<SpriteRenderer>();
+            image_gentil_2.sprite = estrela_meia;
+
+            SpriteRenderer image_gentil_3 = estrela_gentil_3.GetComponent<SpriteRenderer>();
+            image_gentil_3.sprite = estrela_vazia;       
+        }
+        else if (n >= 1.75 && n < 2.25)
+        {
+            SpriteRenderer image_gentil_1 = estrela_gentil_1.GetComponent<SpriteRenderer>();
+            image_gentil_1.sprite = estrela_cheia;
+
+            SpriteRenderer image_gentil_2 = estrela_gentil_2.GetComponent<SpriteRenderer>();
+            image_gentil_2.sprite = estrela_cheia;
+
+            SpriteRenderer image_gentil_3 = estrela_gentil_3.GetComponent<SpriteRenderer>();
+            image_gentil_3.sprite = estrela_vazia; 
+        }
+        else if (n >= 2.25 && n < 2.75)
+        {
+            SpriteRenderer image_gentil_1 = estrela_gentil_1.GetComponent<SpriteRenderer>();
+            image_gentil_1.sprite = estrela_cheia;
+
+            SpriteRenderer image_gentil_2 = estrela_gentil_2.GetComponent<SpriteRenderer>();
+            image_gentil_2.sprite = estrela_cheia;
+
+            SpriteRenderer image_gentil_3 = estrela_gentil_3.GetComponent<SpriteRenderer>();
+            image_gentil_3.sprite = estrela_meia; 
+        } 
+        else if (n >= 2.75)
+        {
+            SpriteRenderer image_gentil_1 = estrela_gentil_1.GetComponent<SpriteRenderer>();
+            image_gentil_1.sprite = estrela_cheia;
+
+            SpriteRenderer image_gentil_2 = estrela_gentil_2.GetComponent<SpriteRenderer>();
+            image_gentil_2.sprite = estrela_cheia;
+
+            SpriteRenderer image_gentil_3 = estrela_gentil_3.GetComponent<SpriteRenderer>();
+            image_gentil_3.sprite = estrela_cheia; 
+        }
 
     }
 
@@ -99,6 +378,10 @@ public class classificacao : MonoBehaviour, IClient
             Debug.Log("msg é classificacao_final");
             
             MSG_CLASSIFICACAO_FINAL(ms);
+        }
+        if (messageType == "RETORNA_AVALIACAO")
+        {
+            MSG_RETORNA_AVALIACAO(ms);
         }
     }
 
@@ -127,4 +410,39 @@ public class msgCLASSIFICACAO_FINAL
     public int sessionId;
     public int gameId;
 }
+
+[System.Serializable] 
+public class msgRETORNA_AVALIACAO
+{
+    public string messageType;
+    public generic_user user;
+    public Received received;
+    public int sessionId;
+    public int gameId;
+}
+
+[System.Serializable]
+public class generic_user
+{
+    public string _id;
+    public int id;
+    public string name;
+    public int teamId;
+    public int indScore;
+    public int interaction;
+    public int elogio1;
+    public int elogio2;
+    public int elogio3;
+    public int sessionId;
+    public string ws_id;
+}
+
+[System.Serializable]
+public class Received
+{
+    public int elogio1;
+    public int elogio2;
+    public int elogio3;
+}
+
 

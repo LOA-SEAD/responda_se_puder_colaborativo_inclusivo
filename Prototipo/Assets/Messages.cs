@@ -1,5 +1,7 @@
 ﻿using System;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 // Classe base dos JSON enviados/recebidos
 
@@ -209,8 +211,6 @@ public class RespostaFinal : Message
     public int correct; 
     public int interaction;
 
-    // public RespostaFinal(string messageType, User user, int teamId, int sessionId, int gameId, string finalAnswer, int correct)
-    // {
     public RespostaFinal(string messageType, User user, int teamId, int sessionId, int gameId, string finalAnswer, int correct, int interaction)
     {
         this.messageType = messageType;
@@ -222,6 +222,26 @@ public class RespostaFinal : Message
         this.correct = correct;
         this.interaction = interaction;
 
+    }
+}
+
+[Serializable]
+public class Aval : Message
+{
+    public User user;
+    public int teamId;
+    public List<User> team;
+    public int sessionId;
+    public int gameId;
+
+    public Aval(string messageType, User user, int teamId, List<User> team, int sessionId, int gameId)
+    {
+        this.messageType = messageType;
+        this.user = user;
+        this.teamId = teamId;
+        this.team = team;
+        this.sessionId = sessionId;
+        this.gameId = gameId;
     }
 }
 
@@ -271,6 +291,24 @@ public class FimDeJogo : Message
         this.gameId = gameId;
         this.grpScore = grpScore;
         this.gameTime = gameTime;
+
+    }
+}
+
+[Serializable]
+public class EncerrarJogo : Message
+{
+    
+    public User user;
+    public int sessionId;
+    public int gameId;
+
+    public EncerrarJogo(string messageType, User user, int sessionId, int gameId)
+    {
+        this.messageType = messageType;
+        this.user = user;
+        this.sessionId = sessionId;
+        this.gameId = gameId;
 
     }
 }

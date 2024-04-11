@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
+   
 
     public void loadScene (string name) {
         SceneManager.LoadScene(name);
@@ -20,7 +21,6 @@ public class Menu : MonoBehaviour
     void Start()
     {
         carregaDados.LoadURL();
-        
     }
 
     // Update is called once per frame
