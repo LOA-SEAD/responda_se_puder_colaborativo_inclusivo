@@ -245,31 +245,22 @@ public class Aval : Message
     }
 }
 
-// [Serializable]
-// public class FimDeJogo : Message
-// {
-    
-//     public User user;
-//     public int teamId;
-//     public int sessionId;
-//     public int gameId;
-//     public int grpScore;
-//     public int indScore;
-//     public int gameTime; 
+[Serializable]
+public class Duvida : Message
+{
+    public int teamId;
+    public int sessionId;
+    public int gameId;
 
-//     public FimDeJogo(string messageType, User user, int teamId, int sessionId, int gameId, int grpScore, int indScore, int gameTime)
-//     {
-//         this.messageType = messageType;
-//         this.user = user;
-//         this.teamId = teamId;
-//         this.sessionId = sessionId;
-//         this.gameId = gameId;
-//         this.grpScore = grpScore;
-//         this.indScore = indScore;
-//         this.gameTime = gameTime;
+    public Duvida(string messageType, int teamId, int sessionId, int gameId)
+    {
+        this.messageType = messageType;
+        this.teamId = teamId;
+        this.sessionId = sessionId;
+        this.gameId = gameId;
 
-//     }
-// }
+    }
+}
 
 [Serializable]
 public class FimDeJogo : Message
@@ -299,14 +290,12 @@ public class FimDeJogo : Message
 public class EncerrarJogo : Message
 {
     
-    public User user;
     public int sessionId;
     public int gameId;
 
-    public EncerrarJogo(string messageType, User user, int sessionId, int gameId)
+    public EncerrarJogo(string messageType, int sessionId, int gameId)
     {
         this.messageType = messageType;
-        this.user = user;
         this.sessionId = sessionId;
         this.gameId = gameId;
 

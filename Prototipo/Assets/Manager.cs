@@ -64,6 +64,9 @@ public static class Manager
     public static int nQ_medium;
     public static int nQ_hard;
     public static int nQ_total;
+
+    public static int reset_estrelas = 0;
+    public static int reset_estrelas_aux = 0;
     
     
 

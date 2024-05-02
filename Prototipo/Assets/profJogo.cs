@@ -15,6 +15,11 @@ public class profJogo : MonoBehaviour, IClient
 
     private Dictionary<int, List<msgCHAT_moderator>> msgTeams = new Dictionary<int, List<msgCHAT_moderator>>();
 
+    // private float transparencia = 0.0f;
+    // private float sem_transparencia = 1.0f;
+    public Image btnExclamacao;
+    public int id_team;
+
     // //BTN
     public Button encerrarJogo;
 
@@ -175,6 +180,31 @@ public class profJogo : MonoBehaviour, IClient
         }
     }
 
+    public void encerrar(){
+        var msg = new EncerrarJogo("ENCERRAR_JOGO", Manager.sessionId, Manager.gameId);
+
+        cm.send(msg);
+
+    }
+
+    void MSG_DUVIDA(string msgJSON)
+    {
+        msgDuvida msg_duvida = JsonUtility.FromJson<msgDuvida>(msgJSON);
+        int id = msg_duvida.teamId;
+
+        for (int i = 0; i < quadrosEquipe.Count; i++)
+        {
+            GameObject equipe = quadrosEquipe[i];
+
+            if (id ==  equipe.GetComponent<id_equipejogo>().id_equipe)
+            {
+                Debug.Log("entrou");
+                GameObject imageObject = equipe.transform.Find("btnDuvida").gameObject;
+                imageObject.SetActive(true);
+            }
+        }
+    }
+
 
     public void handle(string ms){
         //string messageType = ms.messageType;
@@ -190,6 +220,10 @@ public class profJogo : MonoBehaviour, IClient
         if (messageType == "MENSAGEM_CHAT")
         {
             MSG_CHAT(ms);
+        }
+        if(messageType == "DUVIDA")
+        {
+            MSG_DUVIDA(ms);
         }
 
     }
@@ -229,6 +263,7 @@ public class profJogo : MonoBehaviour, IClient
                     if (dadosTimes.listaTimes.Count > i)
                     {
                         textField.text = "Equipe " + dadosTimes.listaTimes[i].id;
+                        equipe.GetComponent<id_equipejogo>().id_equipe = dadosTimes.listaTimes[i].id;
                     }
                     break;
                 }
@@ -274,4 +309,13 @@ public class msgCHAT_moderator
     public int gameId;
     public bool moderator;
 
+}
+
+[System.Serializable]
+public class msgDuvida
+{
+    public string message_type;
+    public int teamId;
+    public string sessionId;
+    public int gameId;
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
+using System.Threading.Tasks;
 using TMPro;
 
 public class Jogo : MonoBehaviour, IClient
@@ -74,6 +75,7 @@ public class Jogo : MonoBehaviour, IClient
 
     public Button btnPular;
     public Button btn5050;
+    public Button btnProfessor;
     private float transparencia = 0.3f;
     private float sem_transparencia = 1.0f;
 
@@ -149,6 +151,7 @@ public class Jogo : MonoBehaviour, IClient
     public static List<GameObject> quadrosPlayerAval = new List<GameObject>();
     private bool primeira_avaliacao = true;
 
+// --------- VARIÁVEIS ESTRELAS ---------
 
     
 // --------- START ---------
@@ -230,23 +233,25 @@ public class Jogo : MonoBehaviour, IClient
         {
             GameObject equipe = quadrosPlayerAval[i];
             TextMeshProUGUI[] textFields = equipe.GetComponentsInChildren<TextMeshProUGUI>();
-            // int id_player = equipe.GetComponent<avaliacao>().id;
+
 
             foreach (TextMeshProUGUI textField in textFields)
             {
+
                 if (textField.CompareTag("txt_nome_player"))
                 {
                     if (dadosTimes.meuTime.Count > i)
                     {
                         textField.text = dadosTimes.meuTime[i].name;
-                        equipe.GetComponent<avaliacao>().id_avaliacao =  dadosTimes.meuTime[i].id;
-  
-                        // Debug.Log(textField.text);
-                        // Debug.Log(dadosTimes.meuTime[i].name);
 
-                        // Debug.Log(equipe.GetComponent<avaliacao>().id);
-                        // Debug.Log(id_player);
-                        // Debug.Log(dadosTimes.meuTime[i].id);
+                        Debug.Log(equipe.GetComponent<id_avaliacao>().id_auxiliar_avaliacao);
+                        Debug.Log(dadosTimes.meuTime[i].id);
+
+                        equipe.GetComponent<id_avaliacao>().id_auxiliar_avaliacao =  dadosTimes.meuTime[i].id;
+  
+                        Debug.Log(equipe.GetComponent<id_avaliacao>().id_auxiliar_avaliacao);
+
+
                     }
                     break;
                 }
@@ -314,6 +319,7 @@ public class Jogo : MonoBehaviour, IClient
     {
         Image btn5050Image = btn5050.image;
         Image btnPularImage = btnPular.image;
+        Image btnProfessorImage = btnProfessor.image;
 
         if (Manager.MOMENTO == "INDIVIDUAL")
         {
@@ -324,6 +330,10 @@ public class Jogo : MonoBehaviour, IClient
             Color corAtualPular = btnPularImage.color;
             corAtualPular.a = transparencia;
             btnPularImage.color = corAtualPular;
+
+            Color corAtualProf = btnProfessorImage.color;
+            corAtualProf.a = transparencia;
+            btnProfessorImage.color = corAtualProf;
         }
         if (Manager.MOMENTO == "GRUPO") {
             Color corAtual5050 = btn5050Image.color;
@@ -333,6 +343,10 @@ public class Jogo : MonoBehaviour, IClient
             Color corAtualPular = btnPularImage.color;
             corAtualPular.a = sem_transparencia;
             btnPularImage.color = corAtualPular;
+
+            Color corAtualProf = btnProfessorImage.color;
+            corAtualProf.a = sem_transparencia;
+            btnProfessorImage.color = corAtualProf;
         }
         
     }
@@ -541,11 +555,11 @@ public class Jogo : MonoBehaviour, IClient
 
         float percentualInteracao = ((float) interaction)/((float) Manager.nrPlayerTeam);
 
-        if (percentualInteracao <= 0.33)
+        if (percentualInteracao <= 0.35)
         {
             bonus = 1;
         }
-        else if (percentualInteracao <= 0.66)
+        else if (percentualInteracao <= 0.68)
         {
             bonus = 2;
         }
@@ -829,6 +843,14 @@ public class Jogo : MonoBehaviour, IClient
 
     }
 
+    public void ajudaDuvida()
+    {
+        var msg = new Duvida("DUVIDA", ID_TEAM, Manager.sessionId,
+                                                            Manager.gameId);
+
+        cm.send(msg);
+    }
+
 
 
 // --------- TIMER ---------
@@ -906,6 +928,7 @@ public class Jogo : MonoBehaviour, IClient
         
         btn5050.interactable = true;
         btnPular.interactable = true;    
+        btnProfessor.interactable = true;
         SetAlpha();
 
            
@@ -929,6 +952,7 @@ public class Jogo : MonoBehaviour, IClient
 
         btn5050.gameObject.SetActive(true);
         btnPular.gameObject.SetActive(true);
+        btnProfessor.gameObject.SetActive(true);
         
         SetQntAlternatives(1);
         quadroChat.SetActive(true);
@@ -964,6 +988,7 @@ public class Jogo : MonoBehaviour, IClient
             btnOK.interactable = true;
             btn5050.interactable = true;
             btnPular.interactable = true;
+            btnProfessor.interactable = true;
             generalCommands.EnableInteraction(quadroChat);
         }
     }
@@ -1094,9 +1119,11 @@ public class Jogo : MonoBehaviour, IClient
 
 // --------- CONFIRMA AVALIAÇÃO ---------
 
-    public void avaliacaoUltimaFase()
+    public async void avaliacaoUltimaFase()
     {
+        await Task.Delay(5000);
         MOMENTO_AVALIACAO();
+        
     }
 
     public void confirmaAvaliacao(){
@@ -1104,6 +1131,8 @@ public class Jogo : MonoBehaviour, IClient
         var avaliacao = new Aval("AVALIACAO", dadosTimes.player, ID_TEAM, dadosTimes.meuTime, Manager.sessionId, Manager.gameId);
         
         cm.send(avaliacao);
+
+        Manager.reset_estrelas = 1;
 
         CanvasAvaliacao.SetActive(false);
 
@@ -1424,10 +1453,17 @@ public class Jogo : MonoBehaviour, IClient
                 chatBox.text = "";
             }
         }
+
+        // if (Manager.reset_estrelas == 1){
+        //     resetaEstrelas();
+        //     Manager.reset_estrelas = 0;
+        // }
+            
     }
 
 }
 
+// --------- ESTRELAS ---------
 
 
 

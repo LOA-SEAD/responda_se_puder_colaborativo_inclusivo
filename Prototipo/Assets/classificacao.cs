@@ -119,6 +119,9 @@ public class classificacao : MonoBehaviour, IClient
                     {
                         textFieldC.text = classfGeral[i].ranking + ") " + "Equipe " + classfGeral[i].idTeam + " " + "Pontuação: " + classfGeral[i].point; 
                     }
+                    if (classfGeral[i].idTeam == Manager.teamId) {
+                        textFieldC.text = "<b>" + textFieldC.text + "</b>";
+                    }
                     break;
                 }
             }
