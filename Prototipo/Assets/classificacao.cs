@@ -139,6 +139,13 @@ public class classificacao : MonoBehaviour, IClient
         dadosTimes.player.elogio3 = message.user.elogio3;
 
         setEstrelasAvaliadas();
+
+        // var msg = new FimDeJogo("FIM_DE_JOGO", dadosTimes.player, Manager.teamId, Manager.sessionId,
+        //                         Manager.gameId, Manager.grpScore, Manager.gameTime);
+
+                
+
+        // cm.send(msg);   
     }
 
     public void setEstrelasAvaliadas()

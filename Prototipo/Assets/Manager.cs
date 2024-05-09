@@ -20,6 +20,8 @@ public static class Manager
     public static int gameId = 0;
     public static int sessionId;
 
+    public static User moderador_user;
+
     //BASE DE QUESTOES
     public static int totalQuestoes = 0;
     public static int totalFacil = 0;

@@ -289,7 +289,6 @@ public class FimDeJogo : Message
 [Serializable]
 public class EncerrarJogo : Message
 {
-    
     public int sessionId;
     public int gameId;
 

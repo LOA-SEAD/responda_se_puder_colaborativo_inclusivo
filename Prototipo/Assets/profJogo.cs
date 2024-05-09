@@ -26,6 +26,7 @@ public class profJogo : MonoBehaviour, IClient
     public GameObject quadroChat;
     public GameObject painelTexto;
     public GameObject painelChat;
+    public GameObject prefab_equipeJogo;
 
     public TMP_InputField chatBox;
 
@@ -203,6 +204,12 @@ public class profJogo : MonoBehaviour, IClient
                 imageObject.SetActive(true);
             }
         }
+    }
+
+    public void removeExcl()
+    {
+        GameObject imageObject = prefab_equipeJogo.transform.Find("btnDuvida").gameObject;
+        imageObject.SetActive(false);
     }
 
 

@@ -58,6 +58,7 @@ public class Jogo : MonoBehaviour, IClient
     public GameObject painelConfirma;
     public GameObject painelAjuda5050;
     public GameObject painelAjudaPular;
+    public GameObject painelPulou;
 
 
     public GameObject painel_aguarde;
@@ -78,6 +79,8 @@ public class Jogo : MonoBehaviour, IClient
     public Button btnProfessor;
     private float transparencia = 0.3f;
     private float sem_transparencia = 1.0f;
+    private Color cor_btn_professor;
+    private bool transparencia_btn_professor = false;
 
     public int[] ordem_alternativas;
     public int[] alt;
@@ -181,6 +184,7 @@ public class Jogo : MonoBehaviour, IClient
         painel_aguarde.SetActive(false);
         painelAjuda5050.SetActive(false);
         painelAjudaPular.SetActive(false);
+        painelPulou.SetActive(false);
 
         Manager.totalQuestoes = 0;
         Manager.totalFacil = 0;
@@ -275,7 +279,7 @@ public class Jogo : MonoBehaviour, IClient
         txt_nivel.text = Manager.FASE;
         if (Manager.FASE == "Nível Médio")
         {
-            txt_nivel.color = Color.yellow;
+            txt_nivel.color =  new Color(1.0f, 0.64f, 0.0f);
         }
         if (Manager.FASE == "Nível Difícil")
         {
@@ -415,7 +419,7 @@ public class Jogo : MonoBehaviour, IClient
         {
             answer.level = 1;
             nivel.text = "Nível Médio";
-            nivel.color = Color.yellow;
+            nivel.color = new Color(1.0f, 0.64f, 0.0f);
 
         }
         else
@@ -736,6 +740,11 @@ public class Jogo : MonoBehaviour, IClient
         painelDica.SetActive(false);
     }
 
+    public void fechaPulou()
+    {
+        painelPulou.SetActive(false);
+    }
+
 
 // --------- FUNÇÕES DAS AJUDAS ---------
 
@@ -845,12 +854,31 @@ public class Jogo : MonoBehaviour, IClient
 
     public void ajudaDuvida()
     {
-        var msg = new Duvida("DUVIDA", ID_TEAM, Manager.sessionId,
-                                                            Manager.gameId);
+        var msg = new Duvida("DUVIDA", ID_TEAM, Manager.sessionId, Manager.gameId);
 
         cm.send(msg);
+
+        if (!transparencia_btn_professor)
+        {
+            cor_btn_professor = btnProfessor.image.color;
+            Color newColor = cor_btn_professor;
+            newColor.a = 0.4f;
+            btnProfessor.image.color = newColor;
+            btnProfessor.interactable = false;
+
+
+            StartCoroutine(ResetTransparencyAfterDelay());
+        }
     }
 
+    private System.Collections.IEnumerator ResetTransparencyAfterDelay()
+    {
+        transparencia_btn_professor = true;
+        yield return new WaitForSeconds(20f);
+        btnProfessor.image.color = cor_btn_professor;
+        transparencia_btn_professor = false;
+        btnProfessor.interactable = true;
+    }
 
 
 // --------- TIMER ---------
@@ -928,7 +956,7 @@ public class Jogo : MonoBehaviour, IClient
         
         btn5050.interactable = true;
         btnPular.interactable = true;    
-        btnProfessor.interactable = true;
+        btnProfessor.interactable = false;
         SetAlpha();
 
            
@@ -1180,6 +1208,8 @@ public class Jogo : MonoBehaviour, IClient
 
         } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
         {
+
+            Manager.teamId = ID_TEAM;
             var msg = new FimDeJogo("FIM_DE_JOGO", dadosTimes.player, ID_TEAM, Manager.sessionId,
                                                             Manager.gameId, Manager.grpScore, Manager.gameTime);
 
@@ -1187,7 +1217,7 @@ public class Jogo : MonoBehaviour, IClient
 
             cm.send(msg);    
 
-            // Invoke("AtivarTelaFimDeJogo", 5f);
+            Invoke("AtivarTelaFimDeJogo", 5f);
             SceneManager.LoadScene("Fim");    
 
         
@@ -1350,6 +1380,7 @@ public class Jogo : MonoBehaviour, IClient
 
                 txt_geral.text = "A equipe decidiu por pular a questão.";
                 txt_geral.enabled = true;
+                painelPulou.SetActive(true);
 
                 pulou = 1;
                 

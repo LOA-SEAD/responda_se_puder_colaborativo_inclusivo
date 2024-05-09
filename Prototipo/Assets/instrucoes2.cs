@@ -17,6 +17,8 @@ public class instrucoes2 : MonoBehaviour
     private int indiceInstrucaoAtual = 0;
     private int pagAtual = 1;
     private int instrucoesPorPagina = 1;
+    public Button btnProximo;
+    public Button btnAnterior;
 
     private void Start()
     {
@@ -55,8 +57,8 @@ public class instrucoes2 : MonoBehaviour
                             "A cada etapa, um jogador da equipe será escolhido aleatoriamente para ser o líder.\n" +
                             "O líder é a pessoa que irá estimular a comunicação entre os jogadores para decidir a resposta da equipe.\n\n" +
                         "<align=\"center\"><b>MODERADOR/PROFESSOR</b></align>\n\n" +
-                            "Se houver discórdia ou comportamento inadequado, você pode alertar o professor, clicando no botão “Alerta!”.\n" +
-                            "Se houver dúvida, poderá apertar o botão “Dúvida?” para chamar o professor.";
+                            "Se houver dúvida, discórdia ou comportamento inadequado, você poderá apertar o botão “PROFESSOR” para chamar o professor.";
+
 
         string inst4 = "<align=\"center\"><b>AVALIAÇÃO DA COLABORAÇÃO</b></align>\n\n" +
                             "Ao final de cada fase, haverá um momento de reflexão sobre a colaboração do grupo.\n" +
@@ -106,6 +108,15 @@ public class instrucoes2 : MonoBehaviour
     {
         instrucoesText.text = instrLista[indiceInstrucaoAtual];
         paginaText.text = pagAtual + "/" + instrLista.Count;
+    }
+
+    private void Update()
+    {
+        if (pagAtual == 1) btnAnterior.gameObject.SetActive(false);
+        else btnAnterior.gameObject.SetActive(true);
+
+        if (pagAtual == 4) btnProximo.gameObject.SetActive(false);
+        else btnProximo.gameObject.SetActive(true);
     }
 
 }

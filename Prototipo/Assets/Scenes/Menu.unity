@@ -2437,6 +2437,8 @@ MonoBehaviour:
   instrucoesText: {fileID: 379664433}
   paginaText: {fileID: 1094126208}
   instrLista: []
+  btnProximo: {fileID: 1307818668}
+  btnAnterior: {fileID: 1959532917}
 --- !u!1 &1424801417
 GameObject:
   m_ObjectHideFlags: 0
