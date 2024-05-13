@@ -783,6 +783,19 @@ public class Jogo : MonoBehaviour, IClient
         }
     }
 
+    public void ajudaGasta(int pulou)
+    {
+
+        Image btnPularImage = btnPular.image;
+
+        if (pulou == 1)
+        {
+            Color corAtualPular = btnPularImage.color;
+            corAtualPular.a = transparencia;
+            btnPularImage.color = corAtualPular;
+        }
+    }
+
     public void confirma5050()
     {
                 var msg = new PedirAjuda("PEDIR_AJUDA", dadosTimes.player, ID_TEAM, Manager.sessionId,
@@ -958,6 +971,8 @@ public class Jogo : MonoBehaviour, IClient
         btnPular.interactable = true;    
         btnProfessor.interactable = false;
         SetAlpha();
+        Debug.Log("PULOS: " + pulou);
+        ajudaGasta(pulou);
 
            
         foreach (Button btn in btnAlternativas)        
@@ -981,11 +996,14 @@ public class Jogo : MonoBehaviour, IClient
         btn5050.gameObject.SetActive(true);
         btnPular.gameObject.SetActive(true);
         btnProfessor.gameObject.SetActive(true);
+        Debug.Log("PULOS: " + pulou);
         
         SetQntAlternatives(1);
         quadroChat.SetActive(true);
 
         SetAlpha();
+        ajudaGasta(pulou);
+
 
         if (Manager.leaderId == dadosTimes.player.id)
         {
@@ -1260,9 +1278,10 @@ public class Jogo : MonoBehaviour, IClient
         }
         else if (messageType == "INICIA_NOVA_FASE"){
             MSG_NOVA_FASE(ms);
-        } //else if (messageType == "CLASSIFICACAO_FINAL"){
-            //MSG_CLASSIFICAO_FINAL(ms);
-        //}
+        } 
+        else if (messageType == "ENCERRAR"){
+            SceneManager.LoadScene("Fim");
+        }
         else if (messageType == "MENSAGEM_CHAT")
         {
             MSG_CHAT(ms);
@@ -1388,7 +1407,6 @@ public class Jogo : MonoBehaviour, IClient
 
                 indice_qst++;
                 SetIndividual();
-
 
                 Invoke("DesativaTXT", 5f);
             }
