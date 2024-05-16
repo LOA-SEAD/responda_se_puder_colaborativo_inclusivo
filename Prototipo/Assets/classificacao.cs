@@ -20,6 +20,7 @@ public class classificacao : MonoBehaviour, IClient
     [SerializeField] private int m_ItemsToGenerate;
 
     public TMP_Text txt_nome;
+    public TMP_Text txt_aguarde;
 
     public float elogio_comunicativo;
     public double elogio_engajado;
@@ -43,6 +44,8 @@ public class classificacao : MonoBehaviour, IClient
     // Start is called before the first frame update
     void Start()
     {
+        txt_aguarde.enabled = true;
+
         txt_nome.text = dadosTimes.player.name + ",";
 
         SpriteRenderer image_comunicativo_1 = estrela_comunicativo_1.GetComponent<SpriteRenderer>();
@@ -127,6 +130,7 @@ public class classificacao : MonoBehaviour, IClient
             }
         }
 
+        txt_aguarde.enabled = false;
         Debug.Log("Fim MSG_CLASSIFICACAO_FINAL");
     }
 
