@@ -73,7 +73,8 @@ public class Jogo : MonoBehaviour, IClient
     public Button btnDica;
     public Button confirmaDica;
     public Button btnOK;
-
+    public Button btnConfig;
+    public Button btnOK_painel;
     public Button btnPular;
     public Button btn5050;
     public Button btnProfessor;
@@ -678,7 +679,7 @@ public class Jogo : MonoBehaviour, IClient
 
         // txt_geral.enabled = true;
         // txt_geral.text = "Aguarde até que todos enviem suas respostas.";
-        painelAguarde("Aguarde até que todos enviem suas respostas.");
+        painelAguarde("Aguarde até que todos enviem suas respostas.", 0);
 
     }
 
@@ -704,10 +705,13 @@ public class Jogo : MonoBehaviour, IClient
 
 // --------- ATIVAÇÃO E DESATIVAÇÃO DE PAINEIS ---------
 
-    public void painelAguarde(string s)
+    public void painelAguarde(string s, int btn_ok)
     {
         painel_aguarde.SetActive(true);
         txt_painelGeral.text = "" + s;
+        
+        if (btn_ok == 1) btnOK_painel.gameObject.SetActive(true);
+        else btnOK_painel.gameObject.SetActive(false);
     }
     
     public void fechaPainelAguarde()
@@ -1007,7 +1011,7 @@ public class Jogo : MonoBehaviour, IClient
 
         if (Manager.leaderId == dadosTimes.player.id)
         {
-            painelAguarde("Como líder, converse com sua equipe e envie a respota final do grupo.");
+            painelAguarde("Como líder, converse com sua equipe e envie a respota final do grupo.", 1);
 
             generalCommands.EnableAllObjectsInteractions();
         
@@ -1022,7 +1026,7 @@ public class Jogo : MonoBehaviour, IClient
         if (dadosTimes.player.id != Manager.leaderId)
         {
 
-            painelAguarde("Discutam a solução e aguarde a confirmação da resposta final pelo líder.");
+            painelAguarde("Discutam a solução e aguarde a confirmação da resposta final pelo líder.", 1);
 
             btnAlternativas[0].gameObject.SetActive(false);
             btnAlternativas[1].gameObject.SetActive(false);
@@ -1035,6 +1039,8 @@ public class Jogo : MonoBehaviour, IClient
             btn5050.interactable = true;
             btnPular.interactable = true;
             btnProfessor.interactable = true;
+            confirmaDica.interactable = true;
+            btnConfig.interactable = true;
             generalCommands.EnableInteraction(quadroChat);
         }
     }
@@ -1280,16 +1286,44 @@ public class Jogo : MonoBehaviour, IClient
             MSG_NOVA_FASE(ms);
         } 
         else if (messageType == "ENCERRAR"){
+            var msg = new FimDeJogo("FIM_DE_JOGO", dadosTimes.player, ID_TEAM, Manager.sessionId,
+                                    Manager.gameId, Manager.grpScore, Manager.gameTime);
+
+            cm.send(msg);  
+            
             SceneManager.LoadScene("Fim");
         }
         else if (messageType == "MENSAGEM_CHAT")
         {
             MSG_CHAT(ms);
         }
+        else if (messageType == "DESCONEXAO")
+        {
+            MSG_DESCONEXAO(ms);
+        }
     }
 
 // --------- DESENVOLVIMENTO DAS MSG ---------
 
+    public void MSG_DESCONEXAO(string msgJSON)
+    {
+        msgDESCONEXAO message = JsonUtility.FromJson<msgDESCONEXAO>(msgJSON);
+
+        Debug.Log("Alguém se desconectou:");
+        Debug.Log("Usuário: "+ message.user);
+        Debug.Log("Time: "+ message.teamId);
+
+        if (message.leaderId == -1)
+        {
+            Debug.Log("O membro NÃO era o líder do grupo");
+        }
+        else 
+        {
+            Debug.Log("O membro era o líder do grupo.\nO novo líder é o membro de ID: " + message.leaderId);
+        }
+
+        
+    }
 
     public void MSG_NOVA_QUESTAO(string msgJSON) 
     {
@@ -1518,6 +1552,16 @@ public class Jogo : MonoBehaviour, IClient
 
 // --------- MENSAGENS ---------
 
+[System.Serializable]
+public class msgDESCONEXAO
+{
+    public string message_type;
+    public User user;
+    public int teamId;
+    public int sessionId;
+    public int gameId;
+    public int leaderId;
+}
 
 [System.Serializable]
 public class msgCHAT

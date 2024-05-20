@@ -578,7 +578,7 @@ MonoBehaviour:
   m_fontSizeMin: 26
   m_fontSizeMax: 26
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -2516,6 +2516,7 @@ MonoBehaviour:
   m_ItemsToGenerate: 0
   txt_nome: {fileID: 2089275646}
   txt_aguarde: {fileID: 1450354761}
+  txt_aval: {fileID: 295631340}
   elogio_comunicativo: 0
   elogio_engajado: 0
   elogio_gentil: 0

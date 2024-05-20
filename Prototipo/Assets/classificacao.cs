@@ -21,6 +21,7 @@ public class classificacao : MonoBehaviour, IClient
 
     public TMP_Text txt_nome;
     public TMP_Text txt_aguarde;
+    public TMP_Text txt_aval;
 
     public float elogio_comunicativo;
     public double elogio_engajado;
@@ -47,6 +48,7 @@ public class classificacao : MonoBehaviour, IClient
         txt_aguarde.enabled = true;
 
         txt_nome.text = dadosTimes.player.name + ",";
+        txt_aval.text = "estamos verificando sua avaliação";
 
         SpriteRenderer image_comunicativo_1 = estrela_comunicativo_1.GetComponent<SpriteRenderer>();
         image_comunicativo_1.sprite = estrela_vazia;
@@ -141,6 +143,8 @@ public class classificacao : MonoBehaviour, IClient
         dadosTimes.player.elogio1 = message.user.elogio1;
         dadosTimes.player.elogio2 = message.user.elogio2;
         dadosTimes.player.elogio3 = message.user.elogio3;
+
+        txt_aval.text = "essa é a avaliação da sua colaboração no jogo:";
 
         setEstrelasAvaliadas();
 
