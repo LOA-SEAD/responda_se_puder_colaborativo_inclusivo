@@ -192,6 +192,9 @@ MonoBehaviour:
   estrela_gentil_2: {fileID: 6733227790059452537}
   estrela_gentil_3: {fileID: 5463395150987759466}
   quadro: {fileID: 4799459328417201882}
+  estrela_comunicativo: 0
+  estrela_engajado: 0
+  estrela_gentil: 0
   estrela_clicada: {fileID: 21300000, guid: 12dedc5c7e1add44eb8b2470e5084510, type: 3}
   estrela_n_clicada: {fileID: 21300000, guid: 979f80a19b3d97c469c884ead82d39c7, type: 3}
 --- !u!1 &2867348160571862488
@@ -855,7 +858,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -222.52045, y: 26.218, z: 71.40897, w: 23.505802}
+  m_margin: {x: -236.85727, y: 26.218, z: 102.94998, w: 23.505802}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -985,6 +988,9 @@ MonoBehaviour:
   estrela_gentil_2: {fileID: 6733227790059452537}
   estrela_gentil_3: {fileID: 5463395150987759466}
   quadro: {fileID: 4799459328417201882}
+  estrela_comunicativo: 0
+  estrela_engajado: 0
+  estrela_gentil: 0
   estrela_clicada: {fileID: 21300000, guid: 12dedc5c7e1add44eb8b2470e5084510, type: 3}
   estrela_n_clicada: {fileID: 21300000, guid: 979f80a19b3d97c469c884ead82d39c7, type: 3}
 --- !u!1 &5014141569002566348
