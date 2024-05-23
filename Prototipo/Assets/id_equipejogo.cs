@@ -6,6 +6,7 @@ public class id_equipejogo : MonoBehaviour
 {
 
     public int id_equipe;
+    public int qst = 0;
 
     // Start is called before the first frame update
     void Start()

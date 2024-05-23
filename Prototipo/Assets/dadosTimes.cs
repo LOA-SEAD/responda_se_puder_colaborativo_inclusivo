@@ -44,6 +44,18 @@ public class dadosTimes : MonoBehaviour
         }
     }
 
+    public static void removeFromEquipe(int userId)
+    {
+        for (int i = meuTime.Count-1; i >= 0; i--)
+        {
+            User user = meuTime[i];
+            if (user.id == userId)
+            {
+                meuTime.RemoveAt(i);
+            }
+        }
+    }
+
 
 }
 

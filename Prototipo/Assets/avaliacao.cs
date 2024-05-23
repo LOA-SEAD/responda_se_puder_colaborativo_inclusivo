@@ -20,9 +20,9 @@ using TMPro;
         // public int id_avaliacao;
         public GameObject quadro;
 
-        int estrela_comunicativo = 0;
-        int estrela_engajado = 0;
-        int estrela_gentil = 0;
+        public int estrela_comunicativo = 0;
+        public int estrela_engajado = 0;
+        public int estrela_gentil = 0;
 
 
         public Sprite estrela_clicada;
@@ -405,6 +405,11 @@ using TMPro;
         {
             // Chama a função reseta
             resetaEstrelas();
+
+            Transform goScript = quadro.transform.Find("script");
+            goScript.GetComponent<avaliacao>().estrela_comunicativo = 0;
+            goScript.GetComponent<avaliacao>().estrela_engajado = 0;
+            goScript.GetComponent<avaliacao>().estrela_gentil = 0;
         }
 
     }

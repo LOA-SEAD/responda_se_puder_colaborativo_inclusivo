@@ -155,6 +155,9 @@ public class Jogo : MonoBehaviour, IClient
     public static List<GameObject> quadrosPlayerAval = new List<GameObject>();
     private bool primeira_avaliacao = true;
 
+    //Fila de desconexão
+    private Queue<int> filaDesconexao = new Queue<int>();
+
 // --------- VARIÁVEIS ESTRELAS ---------
 
     
@@ -213,6 +216,27 @@ public class Jogo : MonoBehaviour, IClient
 
 // --------- SETUPS ---------
 
+    void atualizaTelaAvaliacao()
+    {
+
+        for (; filaDesconexao.Count > 0;)
+        {
+            int item = filaDesconexao.Dequeue();
+
+            for (int i = 0; i < quadrosPlayerAval.Count; i++)
+            {
+                GameObject equipe = quadrosPlayerAval[i];
+
+                if (equipe.GetComponent<id_avaliacao>().id_auxiliar_avaliacao == item)
+                {
+                    Destroy(equipe);
+                }
+
+            }
+
+        }
+    }
+
     void setTelaAvaliacao()
     {
 
@@ -268,6 +292,8 @@ public class Jogo : MonoBehaviour, IClient
     public void SetQuadroEquipe() 
     {
         equipe_nr.text = "Equipe " + Manager.teamId;
+
+        equipe_players.text = "";
 
         foreach (User user in dadosTimes.meuTime)
         {
@@ -1058,9 +1084,7 @@ public class Jogo : MonoBehaviour, IClient
             primeira_avaliacao = false;
         }
 
-        // avaliacao.reset = 1;
-
-                  
+        atualizaTelaAvaliacao();                  
     }
 
 // --------- ENCERRAMENTO DAS QUESTÕES ---------
@@ -1312,18 +1336,51 @@ public class Jogo : MonoBehaviour, IClient
         Debug.Log("Alguém se desconectou:");
         Debug.Log("Usuário: "+ message.user);
         Debug.Log("Time: "+ message.teamId);
+        Debug.Log(message);
+        Debug.Log(message.user);
+        Debug.Log(message.user.id);
+        
 
         if (message.leaderId == -1)
         {
             Debug.Log("O membro NÃO era o líder do grupo");
+            
+            filaDesconexao.Enqueue(message.user.id);
+            dadosTimes.removeFromEquipe(message.user.id);
+            SetQuadroEquipe();
         }
         else 
         {
             Debug.Log("O membro era o líder do grupo.\nO novo líder é o membro de ID: " + message.leaderId);
+
+            filaDesconexao.Enqueue(message.user.id);
+            dadosTimes.removeFromEquipe(message.user.id);
+            SetQuadroEquipe();
+
+            Manager.leaderId = message.leaderId;
+            SetLeaderText();
+
+            if (Manager.leaderId == dadosTimes.player.id)
+            {
+                painelAguarde("O líder se desconectou. Você é o novo líder da equipe.", 1);
+
+                generalCommands.EnableAllObjectsInteractions();
+            
+                if (Manager.MOMENTO == "GRUPO")
+                {
+                    foreach (Button btn in btnAlternativas)        
+                    {
+                        btn.gameObject.SetActive(true);
+                    }
+                }
+
+            }
+
         }
 
         
     }
+
 
     public void MSG_NOVA_QUESTAO(string msgJSON) 
     {
@@ -1488,7 +1545,14 @@ public class Jogo : MonoBehaviour, IClient
 
         msgCHAT textoChat = new msgCHAT();
 
-        textoChat.texto = message.user.name + ":" + message.texto; 
+        if (message.moderator)
+        {
+            textoChat.texto = "MODERADOR - " + message.user.name + ": " + message.texto; // Se é moderador
+        }
+        else
+        {
+            textoChat.texto = message.user.name + ":" + message.texto; 
+        }
 
         GameObject novoChat = Instantiate(painelTexto, painelChat.transform);
 

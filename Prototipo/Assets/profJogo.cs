@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using NativeWebSocket;
+using System.IO;
 using TMPro;
 
 
@@ -19,6 +20,8 @@ public class profJogo : MonoBehaviour, IClient
     // private float sem_transparencia = 1.0f;
     public Image btnExclamacao;
     public int id_team;
+    public int questionAmount = Manager.nrEasy + Manager.nrMedium + Manager.nrHard;
+    public int equipes_terminadas = 0;
 
     // //BTN
     public Button encerrarJogo;
@@ -27,6 +30,8 @@ public class profJogo : MonoBehaviour, IClient
     public GameObject painelTexto;
     public GameObject painelChat;
     public GameObject prefab_equipeJogo;
+    public GameObject painelEncerrar;
+
 
     public TMP_InputField chatBox;
 
@@ -109,7 +114,7 @@ public class profJogo : MonoBehaviour, IClient
         msgCHAT_moderator textoChat = new msgCHAT_moderator();
         if (message.moderator)
         {
-            textoChat.texto = message.user.name + ": " + message.texto; // Se é moderador
+            textoChat.texto = "MODERADOR - " + message.user.name + ": " + message.texto; // Se é moderador
         }
         else
         {
@@ -186,6 +191,8 @@ public class profJogo : MonoBehaviour, IClient
 
         cm.send(msg);
 
+        painelEncerrar.SetActive(true);
+
     }
 
     void MSG_DUVIDA(string msgJSON)
@@ -213,6 +220,59 @@ public class profJogo : MonoBehaviour, IClient
     }
 
 
+    public void MSG_QUESTAO(string msgJSON)
+    {
+        msgQuestao_equipe message = JsonUtility.FromJson<msgQuestao_equipe>(msgJSON);
+
+        int id = message.teamId;
+
+        for (int i = 0; i < quadrosEquipe.Count; i++)
+        {
+            GameObject equipe = quadrosEquipe[i];
+
+            if (id == equipe.GetComponent<id_equipejogo>().id_equipe)
+            {   
+                Transform txt_qst = equipe.transform.Find("txt_qst_respondidas");
+                TMP_Text tmpText_qst = txt_qst.GetComponent<TMP_Text>();
+                equipe.GetComponent<id_equipejogo>().qst += 1;
+                tmpText_qst.text = equipe.GetComponent<id_equipejogo>().qst+"/"+questionAmount;
+                
+                break;
+            }
+        }
+    }
+
+    public void MSG_CLASSF_FINAL(string msgJSON)
+    {
+        gera_arquivo(msgJSON);
+        equipes_terminadas += 1;
+        if (equipes_terminadas == Manager.nrTeam)
+        {
+            Debug.Log("Todas as equipes terminaram de jogar.");
+            SceneManager.LoadScene("profFim");    
+
+        }
+    }
+    
+    void gera_arquivo(string json)
+    {
+             
+        string executablePath = Application.dataPath;
+        string directoryPath = Directory.GetParent(executablePath).FullName;
+        string filePath = Path.Combine(directoryPath, "resultados.txt");
+
+        // Escreve o JSON no arquivo
+        try
+        {
+            File.WriteAllText(filePath, json);
+            Debug.Log("JSON salvo com sucesso em: " + filePath);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Erro ao salvar JSON no arquivo: " + e.Message);
+        }
+    }
+
     public void handle(string ms){
         //string messageType = ms.messageType;
         Debug.Log(ms);
@@ -228,9 +288,17 @@ public class profJogo : MonoBehaviour, IClient
         {
             MSG_CHAT(ms);
         }
-        if(messageType == "DUVIDA")
+        else if(messageType == "DUVIDA")
         {
             MSG_DUVIDA(ms);
+        }
+        else if(messageType == "FINAL_QUESTAO")
+        {
+            MSG_QUESTAO(ms);
+        }
+        else if(messageType == "CLASSIFICACAO_FINAL_MODERADOR")
+        {
+            MSG_CLASSF_FINAL(ms);
         }
 
     }
@@ -271,6 +339,10 @@ public class profJogo : MonoBehaviour, IClient
                     {
                         textField.text = "Equipe " + dadosTimes.listaTimes[i].id;
                         equipe.GetComponent<id_equipejogo>().id_equipe = dadosTimes.listaTimes[i].id;
+                        Transform txt_qst = equipe.transform.Find("txt_qst_respondidas");
+                        TMP_Text tmpText_qst = txt_qst.GetComponent<TMP_Text>();
+                        questionAmount = Manager.nrEasy + Manager.nrMedium + Manager.nrHard;
+                        tmpText_qst.text = "0/"+questionAmount;
                     }
                     break;
                 }
@@ -300,6 +372,20 @@ public class profJogo : MonoBehaviour, IClient
         
     }
         
+}
+
+
+[System.Serializable]
+public class msgQuestao_equipe
+{
+    public string message_type;
+    public int teamId;
+    public string sessionId;
+    public int gameId;
+    public string finalAnswer;
+    public int correct;
+    public int interaction;
+
 }
 
 [System.Serializable]
