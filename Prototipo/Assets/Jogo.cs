@@ -94,6 +94,7 @@ public class Jogo : MonoBehaviour, IClient
     private int numeroQuestao = 0;
     private int totalQuestoes;
     private int interaction = 0;
+    private int nr5050 = 0;
     bool houveConsenso;
     bool houveInteracao;
     bool acertaramQuestao;
@@ -787,28 +788,38 @@ public class Jogo : MonoBehaviour, IClient
                 cm.send(msg);
 
                 painelAjudaPular.SetActive(false);
-                txt_geral.text = "Computando ajuda...";
-                txt_geral.enabled = true;
-                Invoke("DesativaTXT", 3f);
+                // txt_geral.text = "Computando ajuda...";
+                // txt_geral.enabled = true;
+                // Invoke("DesativaTXT", 3f);
+                painelAguarde("Computando ajuda...", 1);
     }
 
     public void ajudaPula()
     {
         if (Manager.MOMENTO == "INDIVIDUAL") 
         {
-            txt_geral.text = txt_pular_individual;
-            txt_geral.enabled = true;
-            Invoke("DesativaTXT", 5f);
+            // txt_geral.text = txt_pular_individual;
+            // txt_geral.enabled = true;
+            // Invoke("DesativaTXT", 5f);
+            painelAguarde("PULAR só pode ser usada no momento em grupo.", 1);
+
         }
-        if (Manager.MOMENTO == "GRUPO"){
-            if (Manager.leaderId == dadosTimes.player.id){
+        if(pulou == 1)
+        {
+            painelAguarde("A equipe utilizou todos os pulos (1).", 1);
+        }
+        else {
+            if (Manager.MOMENTO == "GRUPO"){
+                if (Manager.leaderId == dadosTimes.player.id){
 
-                painelAjudaPular.SetActive(true);
+                    painelAjudaPular.SetActive(true);
 
-            }else {
-                txt_geral.text = "Somente o líder pode solicitar esse tipo de ajuda. Converse com ele via chat para usá-la.";
-                txt_geral.enabled = true;
-                Invoke("DesativaTXT", 5f);
+                }else {
+                    // txt_geral.text = "Somente o líder pode solicitar esse tipo de ajuda. Converse com ele via chat para usá-la.";
+                    // txt_geral.enabled = true;
+                    // Invoke("DesativaTXT", 5f);
+                    painelAguarde("Somente o líder pode solicitar esse tipo de ajuda. Converse com ele via chat para usá-la.", 1);
+                }
             }
         }
     }
@@ -817,12 +828,19 @@ public class Jogo : MonoBehaviour, IClient
     {
 
         Image btnPularImage = btnPular.image;
+        Image btn5050Image = btn5050.image;
 
         if (pulou == 1)
         {
             Color corAtualPular = btnPularImage.color;
             corAtualPular.a = transparencia;
             btnPularImage.color = corAtualPular;
+        }
+        if (nr5050 == Manager.nrHelp5050)
+        {
+            Color corAtual5050 = btn5050Image.color;
+            corAtual5050.a = transparencia;
+            btn5050Image.color = corAtual5050;
         }
     }
 
@@ -836,28 +854,41 @@ public class Jogo : MonoBehaviour, IClient
                 painelAjuda5050.SetActive(false);
 
                 
-                txt_geral.text = "Computando ajuda...";
-                txt_geral.enabled = true;
-                Invoke("DesativaTXT", 3f);
+                // txt_geral.text = "Computando ajuda...";
+                // txt_geral.enabled = true;
+                // Invoke("DesativaTXT", 3f);
+                painelAguarde("Computando ajuda...", 1);
+
+                
     }
 
     public void ajuda5050()
     {
         if (Manager.MOMENTO == "INDIVIDUAL") 
         {
-            txt_geral.text = txt_5050_individual;
-            txt_geral.enabled = true;
-            Invoke("DesativaTXT", 5f);
-        }
-        if (Manager.MOMENTO == "GRUPO"){
-            if (Manager.leaderId == dadosTimes.player.id) {
-                
-                painelAjuda5050.SetActive(true);
+            // txt_geral.text = txt_5050_individual;
+            // txt_geral.enabled = true;
+            // Invoke("DesativaTXT", 5f);
+            painelAguarde("50/50 só pode ser usada no momento em grupo.", 1);
 
-            } else {
-                txt_geral.text = "Somente o líder pode solicitar esse tipo de ajuda. Converse com ele via chat para usá-la.";
-                txt_geral.enabled = true;
-                Invoke("DesativaTXT", 5f);
+        }
+        if (nr5050 == Manager.nrHelp5050)
+        {
+            painelAguarde("A equipe utilizou todas as ajudas 50/50 ("+Manager.nrHelp5050+").", 1);
+        }
+        else {
+            if (Manager.MOMENTO == "GRUPO"){
+                if (Manager.leaderId == dadosTimes.player.id) {
+                    
+                    painelAjuda5050.SetActive(true);
+
+                } else {
+                    // txt_geral.text = "Somente o líder pode solicitar esse tipo de ajuda. Converse com ele via chat para usá-la.";
+                    // txt_geral.enabled = true;
+                    // Invoke("DesativaTXT", 5f);
+                    painelAguarde("Somente o líder pode solicitar esse tipo de ajuda. Converse com ele via chat para usá-la.", 1);
+
+                }
             }
         }
     }
@@ -865,6 +896,7 @@ public class Jogo : MonoBehaviour, IClient
     public void Ajuda5050(int[] alternativas_mantidas)
     {
         // ordem_alternativas
+        nr5050+=1;
 
         for(int i=0; i < alternativas_mantidas.Length; i++)
         {
@@ -891,6 +923,8 @@ public class Jogo : MonoBehaviour, IClient
                 qntAlternatives[k].gameObject.SetActive(false);
            }
         }
+
+        ajudaGasta(pulou);
 
 
     }

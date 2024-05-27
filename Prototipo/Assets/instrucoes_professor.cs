@@ -35,30 +35,31 @@ public class instrucoes_professor : MonoBehaviour
         // string inst4 = "INSTRUÇÔES PAGINA 4";
 
         string inst1 = "<align=\"center\"><b>ENTRADA</b></align>\n\n" +
-                            "Na tela de configurações, insira o número de equipes desejado, a quantidade máxima de alunos por equipe, o tempo máximo permitido por questão e o seu nome.\n" +
-                            "Clique em “Criar”, as equipes serão geradas com um código exclusivo. Compartilhe esses códigos com os alunos para que possam formar suas equipes.\n" +
-                            "Aguarde até que todos os alunos tenham ingressado em suas equipes.\n" +
-                            "Clique em “Iniciar”.";
+                            "- Na tela de configurações, insira o número de equipes desejado, a quantidade máxima de alunos por equipe, o tempo máximo permitido por questão e o seu nome.\n" +
+                            "- Clique em “Criar”, as equipes serão geradas com um código exclusivo. Compartilhe esses códigos com os alunos para que possam formar suas equipes.\n" +
+                            "- Aguarde até que todos os alunos tenham ingressado em suas equipes.\n" +
+                            "- Clique em “Iniciar”.";
 
         string inst2 = "<align=\"center\"><b>DURANTE O JOGO</b></align>\n\n" +
-                              "Se uma equipe tiver dúvidas ou enfrentar conflitos, ela pode chamar o moderador por meio do chat para obter assistência. Um sinal de “exclamação” será exibido sobre o nome da equipe para indicar essa necessidade de auxílio.\n" +
-                              "O moderador tem a capacidade de visualizar o chat da equipe e pode oferecer assistência em caso de dúvidas ou ajudar a conciliar conflitos.\n";
+                              "- Durante a partida o moderador terá a capacidade de monitorar em qual questão cada equipe se encontra.\n" +
+                              "- Se uma equipe tiver dúvidas ou enfrentar conflitos, ela pode chamar o moderador por meio do chat para obter assistência. Um sinal de “exclamação” será exibido sobre o nome da equipe para indicar essa necessidade de auxílio.\n" +
+                              "- O moderador tem a capacidade de visualizar o chat da equipe e pode oferecer assistência em caso de dúvidas ou ajudar a conciliar conflitos.\n";
 
         string inst3 =  "<align=\"center\"><b>ENCERRAMENTO</b></align>\n\n" +
-                        "O jogo pode ser encerrado pelo professor de duas maneiras:\n" +
-                        "Após todas as equipes concluírem a partida, a classificação final de cada equipe será exibida.\n" +
-                        "Se o tempo da aula esgotar, o professor pode clicar no botão ENCERRAR, garantindo que todas as equipes recebam a classificação final com base na pontuação acumulada até esse momento.\n" +
-                        "O Moderador/Professor tem a capacidade de visualizar a pontuação de cada equipe para fins de avaliação.\n";
+                        "- O jogo pode ser encerrado pelo professor de duas maneiras:\n" +
+                        "- Após todas as equipes concluírem a partida, a classificação final de cada equipe será exibida.\n" +
+                        "- Se o tempo da aula esgotar, o professor pode clicar no botão ENCERRAR, garantindo que todas as equipes recebam a classificação final com base na pontuação acumulada até esse momento.\n" +
+                        "- O Moderador/Professor tem a capacidade de visualizar a pontuação de cada equipe para fins de avaliação.\n";
 
         string inst4 = "<align=\"center\"><b>REGRAS DO JOGO</b></align>\n\n" +
                               "O jogo tem 3 níveis: fácil, médio e difícil.\n" +
                               "O jogo possui momentos individuais e momentos em equipe.\n\n" +
                             "<b>Momento individual</b>\n" +
-                              "No momento individual, cada jogador deve responder à pergunta dentro do tempo disponível.\n" +
-                              "Uma Dica estará disponível para consulta, sem custo.\n\n" +
+                              "- No momento individual, cada jogador deve responder à pergunta dentro do tempo disponível.\n" +
+                              "- Uma Dica estará disponível para consulta, sem custo.\n\n" +
                             "<b>Momento em grupo</b>\n" +
-                              "No momento em grupo, vamos ver as respostas de todos e discutir no chat para decidir a resposta correta.\n" +
-                              "O líder guiará a conversa e enviará a resposta escolhida pelo grupo. O líder também pode pedir ajuda, como eliminar metade das opções ou pular para outra pergunta (apenas uma vez).";
+                              "- No momento em grupo, vamos ver as respostas de todos e discutir no chat para decidir a resposta correta.\n" +
+                              "- O líder guiará a conversa e enviará a resposta escolhida pelo grupo. O líder também pode pedir ajuda, como eliminar metade das opções ou pular para outra pergunta (apenas uma vez).";
 
         string inst5 =  "<align=\"center\"><b>PONTUAÇÃO</b></align>\n\n" +
                                 "<u>A cada questão:</u>\n" +
@@ -70,15 +71,15 @@ public class instrucoes_professor : MonoBehaviour
                                 "Aguarde até que todas as equipes terminem para ver a classificação geral.";
         
         string inst6 = "<align=\"center\"><b>LÍDER</b></align>\n\n" +
-                            "A cada etapa, um jogador da equipe será escolhido aleatoriamente para ser o líder.\n" +
-                            "O líder é a pessoa que irá estimular a comunicação entre os jogadores para decidir a resposta da equipe.\n\n" +
+                            "- A cada etapa, um jogador da equipe será escolhido aleatoriamente para ser o líder.\n" +
+                            "- O líder é a pessoa que irá estimular a comunicação entre os jogadores para decidir a resposta da equipe.\n\n" +
                         "<align=\"center\"><b>MODERADOR/PROFESSOR</b></align>\n\n" +
                             "Se houver dúvida, discórdia ou comportamento inadequado, você poderá apertar o botão “PROFESSOR” para chamar o professor.";
 
 
         string inst7 = "<align=\"center\"><b>AVALIAÇÃO DA COLABORAÇÃO</b></align>\n\n" +
-                            "Ao final de cada fase, haverá um momento de reflexão sobre a colaboração do grupo.\n" +
-                            "Cada integrante deverá avaliar os seus colegas com relação ao engajamento, comunicação e gentileza.";
+                            "- Ao final de cada fase, haverá um momento de reflexão sobre a colaboração do grupo.\n" +
+                            "- Cada integrante deverá avaliar os seus colegas com relação ao engajamento, comunicação e gentileza.";
 
 
         instrLista.Add(inst1);
