@@ -994,7 +994,8 @@ public class Jogo : MonoBehaviour, IClient
             tempoQuestao.text = "" + timeString;
         }   
         else {
-            tempoQuestao.text = "Aguarde até que todos enviem suas respostas.";
+            // tempoQuestao.text = "Aguarde até que todos enviem suas respostas.";
+            tempoQuestao.text = "";
         } 
     }
 

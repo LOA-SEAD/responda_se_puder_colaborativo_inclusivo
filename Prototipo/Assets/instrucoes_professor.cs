@@ -49,7 +49,8 @@ public class instrucoes_professor : MonoBehaviour
                         "- O jogo pode ser encerrado pelo professor de duas maneiras:\n" +
                         "- Após todas as equipes concluírem a partida, a classificação final de cada equipe será exibida.\n" +
                         "- Se o tempo da aula esgotar, o professor pode clicar no botão ENCERRAR, garantindo que todas as equipes recebam a classificação final com base na pontuação acumulada até esse momento.\n" +
-                        "- O Moderador/Professor tem a capacidade de visualizar a pontuação de cada equipe para fins de avaliação.\n";
+                        "- O Moderador/Professor tem a capacidade de visualizar a pontuação de cada equipe para fins de avaliação.\n" +
+                        "- O Moderador/Professor pode visualizar a pontuação de cada equipe para fins de avaliação após o término do jogo, utilizando o botão “ABRIR ARQUIVO”.\n";
 
         string inst4 = "<align=\"center\"><b>REGRAS DO JOGO</b></align>\n\n" +
                               "O jogo tem 3 níveis: fácil, médio e difícil.\n" +
