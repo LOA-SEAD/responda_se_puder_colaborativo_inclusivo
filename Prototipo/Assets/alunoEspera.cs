@@ -23,11 +23,16 @@ public class alunoEspera : MonoBehaviour, IClient
         Manager.gameId = message.gameId;
         Manager.leaderId = message.leaderId;
         Manager.time = message.timeQuestion;
+        Manager.nrHelp5050 = message.help5050;
         Manager.qEasy = message.question.easy;
         Manager.qMedium = message.question.medium;
         Manager.qHard = message.question.hard;
         
         dadosTimes.meuTime = message.team;
+
+        Manager.nrPlayerTeam = dadosTimes.meuTime.Count - 1;
+
+        // Debug.Log("Nr jogadores do meu time: " + Manager.nrPlayerTeam);
 
         SceneManager.LoadScene("Jogo");
     }
@@ -77,6 +82,7 @@ public class msgINICIA_JOGO
     public Question question;
     public List<User> team;
     public int timeQuestion;
+    public int help5050;
     public int leaderId;
     public int sessionId;
     public int gameId;

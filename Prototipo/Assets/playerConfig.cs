@@ -42,10 +42,9 @@ public class playerConfig : MonoBehaviour, IClient
 //Envio da mensagem para servidor quando clicar no botao
     public void btnEntrarJogo(){
 
-        //PASSAR sessionID@secret
- 
-
         var msg = new EntrarSessao("ENTRAR_SESSAO", this.user, this.secret);
+
+        txt_erro.enabled = false;
 
         txt_aguarde.enabled = true;
 
@@ -105,6 +104,8 @@ public class playerConfig : MonoBehaviour, IClient
         if(reason == "WRONG_PASSWORD")
         {
             
+            txt_aguarde.enabled = false;
+
             txt_erro.enabled = true;
 
             txt_erro.text = "Senha incorreta. Tente novamente.";
@@ -114,7 +115,9 @@ public class playerConfig : MonoBehaviour, IClient
         }
         else if(reason == "EXCEEDED_MAXIMUM_NUMBER_PARTICIPANTS")
         {
-            
+        
+            txt_aguarde.enabled = false;
+
             txt_erro.enabled = true;
 
             txt_erro.text = "A equipe atingiu o número máximo de participantes.\nTente novamente.";
@@ -123,7 +126,6 @@ public class playerConfig : MonoBehaviour, IClient
 
 
         }
-
 
     }
 

@@ -15,6 +15,8 @@ TagManager:
   - txt_nrEquipe
   - txt_equipe_jogo
   - chat_moderator
+  - txt_nome_player
+  - txt_id_player
   layers:
   - Default
   - TransparentFX

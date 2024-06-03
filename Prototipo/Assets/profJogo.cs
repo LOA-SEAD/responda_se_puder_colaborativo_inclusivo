@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using NativeWebSocket;
+using System.IO;
 using TMPro;
 
 
@@ -15,12 +16,22 @@ public class profJogo : MonoBehaviour, IClient
 
     private Dictionary<int, List<msgCHAT_moderator>> msgTeams = new Dictionary<int, List<msgCHAT_moderator>>();
 
+    // private float transparencia = 0.0f;
+    // private float sem_transparencia = 1.0f;
+    public Image btnExclamacao;
+    public int id_team;
+    public int questionAmount = Manager.nrEasy + Manager.nrMedium + Manager.nrHard;
+    public int equipes_terminadas = 0;
+
     // //BTN
     public Button encerrarJogo;
 
     public GameObject quadroChat;
     public GameObject painelTexto;
     public GameObject painelChat;
+    public GameObject prefab_equipeJogo;
+    public GameObject painelEncerrar;
+
 
     public TMP_InputField chatBox;
 
@@ -33,6 +44,13 @@ public class profJogo : MonoBehaviour, IClient
 
     public int chatMax = 25;
 
+    public ScrollRect scrollRect_prof;
+
+    public int chatAberto = 0;
+
+    [SerializeField]
+    public List<GameObject> notification = new List<GameObject>();
+    
 
     // //Quadros em tela
     [SerializeField] private Transform ContentEquipes;
@@ -96,7 +114,7 @@ public class profJogo : MonoBehaviour, IClient
         msgCHAT_moderator textoChat = new msgCHAT_moderator();
         if (message.moderator)
         {
-            textoChat.texto = message.user.name + ": " + message.texto; // Se é moderador
+            textoChat.texto = "MODERADOR - " + message.user.name + ": " + message.texto; // Se é moderador
         }
         else
         {
@@ -104,13 +122,19 @@ public class profJogo : MonoBehaviour, IClient
         }
         GameObject novoChat = Instantiate(painelTexto, painelChat.transform);
         textoChat.painelTexto = novoChat.GetComponent<Text>();
-        textoChat.painelTexto.text = textoChat.texto;
+        textoChat.painelTexto.text = textoChat.texto;        
+        if(scrollRect_prof.normalizedPosition.y < 0.0001f){
+            scrollRect_prof.velocity = new Vector2 (0f, 1000f);
+        }
 
         textoChat.painelTexto.gameObject.SetActive(false);
         if (Manager.teamId == message.teamId) {
             textoChat.painelTexto.gameObject.SetActive(true);
         }
 
+        if (chatAberto != message.teamId) 
+            notification[message.teamId].gameObject.SetActive(true);
+     
         if (message.moderator)
         {
             ColorUtility.TryParseHtmlString("#f41004", out cor);
@@ -121,7 +145,7 @@ public class profJogo : MonoBehaviour, IClient
             ColorUtility.TryParseHtmlString("#112A46", out cor);
         }
         textoChat.painelTexto.color = cor;
-
+ 
         msgTeams[message.teamId].Add(textoChat);
 
         Debug.Log(textoChat.texto);
@@ -131,6 +155,8 @@ public class profJogo : MonoBehaviour, IClient
     {
         Manager.teamId = teamId;
         Debug.Log(Manager.teamId);
+        chatAberto = teamId;
+        notification[teamId].gameObject.SetActive(false);
         if (msgTeams.ContainsKey(teamId))
         {
             List<msgCHAT_moderator> mensagensDoTime = msgTeams[teamId];
@@ -160,6 +186,92 @@ public class profJogo : MonoBehaviour, IClient
         }
     }
 
+    public void encerrar(){
+        var msg = new EncerrarJogo("ENCERRAR_JOGO", Manager.sessionId, Manager.gameId);
+
+        cm.send(msg);
+
+        painelEncerrar.SetActive(true);
+
+    }
+
+    void MSG_DUVIDA(string msgJSON)
+    {
+        msgDuvida msg_duvida = JsonUtility.FromJson<msgDuvida>(msgJSON);
+        int id = msg_duvida.teamId;
+
+        for (int i = 0; i < quadrosEquipe.Count; i++)
+        {
+            GameObject equipe = quadrosEquipe[i];
+
+            if (id ==  equipe.GetComponent<id_equipejogo>().id_equipe)
+            {
+                Debug.Log("entrou");
+                GameObject imageObject = equipe.transform.Find("btnDuvida").gameObject;
+                imageObject.SetActive(true);
+            }
+        }
+    }
+
+    public void removeExcl()
+    {
+        GameObject imageObject = prefab_equipeJogo.transform.Find("btnDuvida").gameObject;
+        imageObject.SetActive(false);
+    }
+
+
+    public void MSG_QUESTAO(string msgJSON)
+    {
+        msgQuestao_equipe message = JsonUtility.FromJson<msgQuestao_equipe>(msgJSON);
+
+        int id = message.teamId;
+
+        for (int i = 0; i < quadrosEquipe.Count; i++)
+        {
+            GameObject equipe = quadrosEquipe[i];
+
+            if (id == equipe.GetComponent<id_equipejogo>().id_equipe)
+            {   
+                Transform txt_qst = equipe.transform.Find("txt_qst_respondidas");
+                TMP_Text tmpText_qst = txt_qst.GetComponent<TMP_Text>();
+                equipe.GetComponent<id_equipejogo>().qst += 1;
+                tmpText_qst.text = equipe.GetComponent<id_equipejogo>().qst+"/"+questionAmount;
+                
+                break;
+            }
+        }
+    }
+
+    public void MSG_CLASSF_FINAL(string msgJSON)
+    {
+        gera_arquivo(msgJSON);
+        equipes_terminadas += 1;
+        if (equipes_terminadas == Manager.nrTeam)
+        {
+            Debug.Log("Todas as equipes terminaram de jogar.");
+            SceneManager.LoadScene("profFim");    
+
+        }
+    }
+    
+    void gera_arquivo(string json)
+    {
+             
+        string executablePath = Application.dataPath;
+        string directoryPath = Directory.GetParent(executablePath).FullName;
+        string filePath = Path.Combine(directoryPath, "resultados.txt");
+
+        // Escreve o JSON no arquivo
+        try
+        {
+            File.WriteAllText(filePath, json);
+            Debug.Log("JSON salvo com sucesso em: " + filePath);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Erro ao salvar JSON no arquivo: " + e.Message);
+        }
+    }
 
     public void handle(string ms){
         //string messageType = ms.messageType;
@@ -176,6 +288,18 @@ public class profJogo : MonoBehaviour, IClient
         {
             MSG_CHAT(ms);
         }
+        else if(messageType == "DUVIDA")
+        {
+            MSG_DUVIDA(ms);
+        }
+        else if(messageType == "FINAL_QUESTAO")
+        {
+            MSG_QUESTAO(ms);
+        }
+        else if(messageType == "CLASSIFICACAO_FINAL_MODERADOR")
+        {
+            MSG_CLASSF_FINAL(ms);
+        }
 
     }
     
@@ -190,11 +314,11 @@ public class profJogo : MonoBehaviour, IClient
         m_Itens = Manager.nrTeam;
         for (int i = 0; i < m_Itens; i++)
         {
-
             GameObject novaEquipe = Instantiate(prefabEquipes, transform.position, Quaternion.identity);
             novaEquipe.transform.SetParent(ContentEquipes);
             novaEquipe.transform.localScale = new Vector3(1.894364f, 0.179433f, 0.23102f);
-        
+            notification.Add(novaEquipe.transform.Find("notification").gameObject);
+           // notification[i].SetActive(true);
             quadrosEquipe.Add(novaEquipe);
 
             int teamId = i+1;
@@ -214,12 +338,17 @@ public class profJogo : MonoBehaviour, IClient
                     if (dadosTimes.listaTimes.Count > i)
                     {
                         textField.text = "Equipe " + dadosTimes.listaTimes[i].id;
+                        equipe.GetComponent<id_equipejogo>().id_equipe = dadosTimes.listaTimes[i].id;
+                        Transform txt_qst = equipe.transform.Find("txt_qst_respondidas");
+                        TMP_Text tmpText_qst = txt_qst.GetComponent<TMP_Text>();
+                        questionAmount = Manager.nrEasy + Manager.nrMedium + Manager.nrHard;
+                        tmpText_qst.text = "0/"+questionAmount;
                     }
                     break;
                 }
             }
         }
-
+           scrollRect_prof.GetComponent<ScrollRect> ();
         
     }
 
@@ -245,6 +374,20 @@ public class profJogo : MonoBehaviour, IClient
         
 }
 
+
+[System.Serializable]
+public class msgQuestao_equipe
+{
+    public string message_type;
+    public int teamId;
+    public string sessionId;
+    public int gameId;
+    public string finalAnswer;
+    public int correct;
+    public int interaction;
+
+}
+
 [System.Serializable]
 public class msgCHAT_moderator
 {
@@ -259,4 +402,13 @@ public class msgCHAT_moderator
     public int gameId;
     public bool moderator;
 
+}
+
+[System.Serializable]
+public class msgDuvida
+{
+    public string message_type;
+    public int teamId;
+    public string sessionId;
+    public int gameId;
 }
