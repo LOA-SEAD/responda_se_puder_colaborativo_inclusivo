@@ -1578,8 +1578,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1382524657}
-        m_TargetAssemblyTypeName: instrucoes, Assembly-CSharp
+      - m_Target: {fileID: 1382524658}
+        m_TargetAssemblyTypeName: instrucoes_professor, Assembly-CSharp
         m_MethodName: InstrucaoAnterior
         m_Mode: 1
         m_Arguments:
@@ -4932,9 +4932,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1382524656}
-        m_TargetAssemblyTypeName: config, Assembly-CSharp
-        m_MethodName: AtivaDesativaConfig
+      - m_Target: {fileID: 1382524657}
+        m_TargetAssemblyTypeName: instrucoes, Assembly-CSharp
+        m_MethodName: AtivaDesativaInstrucoes
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4964,7 +4964,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: abe4cfb3c750a794e8ac0dd6d3fc0d7f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 57aa171901820d2428e5b99311059fdf, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5343,8 +5343,8 @@ MonoBehaviour:
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 12
-  m_fontSizeMax: 24
+  m_fontSizeMin: 8
+  m_fontSizeMax: 12
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
@@ -5983,6 +5983,7 @@ GameObject:
   - component: {fileID: 1382524655}
   - component: {fileID: 1382524657}
   - component: {fileID: 1382524656}
+  - component: {fileID: 1382524658}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -6069,6 +6070,9 @@ MonoBehaviour:
     id: 0
     name: 
     indScore: 0
+    elogio1: 0
+    elogio2: 0
+    elogio3: 0
 --- !u!114 &1382524656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6089,7 +6093,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1382524651}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df217ff2d74d39d4890b6a036a30c570, type: 3}
   m_Name: 
@@ -6098,6 +6102,26 @@ MonoBehaviour:
   instrucoesText: {fileID: 1330755640}
   paginaText: {fileID: 759906238}
   instrLista: []
+  btnProximo: {fileID: 0}
+  btnAnterior: {fileID: 0}
+--- !u!114 &1382524658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382524651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 628e26bef1e3b244d8407442f8da3f5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  painelInstrucoes: {fileID: 765906470}
+  instrucoesText: {fileID: 1330755640}
+  paginaText: {fileID: 759906238}
+  instrLista: []
+  btnProximo: {fileID: 2128616038}
+  btnAnterior: {fileID: 385632355}
 --- !u!1 &1392915275
 GameObject:
   m_ObjectHideFlags: 0
@@ -9558,8 +9582,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1382524657}
-        m_TargetAssemblyTypeName: instrucoes, Assembly-CSharp
+      - m_Target: {fileID: 1382524658}
+        m_TargetAssemblyTypeName: instrucoes_professor, Assembly-CSharp
         m_MethodName: ProximaInstrucao
         m_Mode: 1
         m_Arguments:

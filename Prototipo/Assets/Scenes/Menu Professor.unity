@@ -1044,7 +1044,7 @@ MonoBehaviour:
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 12
+  m_fontSizeMin: 8
   m_fontSizeMax: 24
   m_fontStyle: 0
   m_HorizontalAlignment: 1
@@ -1745,7 +1745,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &972051639
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1761,9 +1761,9 @@ RectTransform:
   m_Father: {fileID: 924263463}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 683, y: -526.30994}
   m_SizeDelta: {x: 1369.7, y: 130.57}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &972051640
@@ -2200,8 +2200,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1382524658}
-        m_TargetAssemblyTypeName: instrucoes, Assembly-CSharp
+      - m_Target: {fileID: 1382524659}
+        m_TargetAssemblyTypeName: instrucoes_professor, Assembly-CSharp
         m_MethodName: ProximaInstrucao
         m_Mode: 1
         m_Arguments:
@@ -2341,6 +2341,7 @@ GameObject:
   - component: {fileID: 1382524656}
   - component: {fileID: 1382524658}
   - component: {fileID: 1382524657}
+  - component: {fileID: 1382524659}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -2442,7 +2443,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1382524651}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df217ff2d74d39d4890b6a036a30c570, type: 3}
   m_Name: 
@@ -2451,6 +2452,26 @@ MonoBehaviour:
   instrucoesText: {fileID: 379664433}
   paginaText: {fileID: 1094126208}
   instrLista: []
+  btnProximo: {fileID: 0}
+  btnAnterior: {fileID: 0}
+--- !u!114 &1382524659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382524651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 628e26bef1e3b244d8407442f8da3f5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  painelInstrucoes: {fileID: 1677824680}
+  instrucoesText: {fileID: 379664433}
+  paginaText: {fileID: 1094126208}
+  instrLista: []
+  btnProximo: {fileID: 1307818668}
+  btnAnterior: {fileID: 1959532917}
 --- !u!1 &1424801417
 GameObject:
   m_ObjectHideFlags: 0
@@ -3101,8 +3122,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1382524658}
-        m_TargetAssemblyTypeName: instrucoes, Assembly-CSharp
+      - m_Target: {fileID: 1382524659}
+        m_TargetAssemblyTypeName: instrucoes_professor, Assembly-CSharp
         m_MethodName: InstrucaoAnterior
         m_Mode: 1
         m_Arguments:
@@ -3897,7 +3918,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2128387354}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1382524656}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: quit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2128387354
 MonoBehaviour:
   m_ObjectHideFlags: 0

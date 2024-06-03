@@ -43,6 +43,7 @@ public class profConfig : MonoBehaviour, IClient
     public void readName(string name){
         moderatorName = name;
         mod.name = name;
+        Manager.moderador_user.name = name;
         Manager.moderatorName = this.moderatorName;
 
         Debug.Log(moderatorName);

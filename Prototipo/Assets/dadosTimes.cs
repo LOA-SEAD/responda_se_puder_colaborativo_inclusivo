@@ -44,6 +44,18 @@ public class dadosTimes : MonoBehaviour
         }
     }
 
+    public static void removeFromEquipe(int userId)
+    {
+        for (int i = meuTime.Count-1; i >= 0; i--)
+        {
+            User user = meuTime[i];
+            if (user.id == userId)
+            {
+                meuTime.RemoveAt(i);
+            }
+        }
+    }
+
 
 }
 
@@ -62,4 +74,7 @@ public class User
     public int id;
     public string name;
     public int indScore = 0;
+    public int elogio1;
+    public int elogio2;
+    public int elogio3;
 }

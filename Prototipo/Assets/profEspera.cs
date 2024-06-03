@@ -155,6 +155,16 @@ public class profEspera : MonoBehaviour, IClient
 
     }
 
+    // public void btnEncerrarJogo(){
+        
+    //     var msg = new EncerrarJogo("ENCERRAR_JOGO", Manager.moderator, Manager.sessionId, Manager.gameId);
+
+    //     cm.send(msg);
+
+    //     SceneManager.LoadScene("Menu Professor");
+
+    // }
+
     public void MSG_CHAT(string msgJSON){
             Color cor;
             msgCHAT message = JsonUtility.FromJson<msgCHAT>(msgJSON);

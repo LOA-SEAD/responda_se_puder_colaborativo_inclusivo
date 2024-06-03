@@ -1,5 +1,7 @@
 ﻿using System;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 // Classe base dos JSON enviados/recebidos
 
@@ -207,12 +209,10 @@ public class RespostaFinal : Message
     public int gameId;
     public string finalAnswer;
     public int correct; 
-    // public int interaction;
+    public int interaction;
 
-    public RespostaFinal(string messageType, User user, int teamId, int sessionId, int gameId, string finalAnswer, int correct)
+    public RespostaFinal(string messageType, User user, int teamId, int sessionId, int gameId, string finalAnswer, int correct, int interaction)
     {
-    // public RespostaFinal(string messageType, User user, int teamId, int sessionId, int gameId, string finalAnswer, int correct, int interaction)
-    // {
         this.messageType = messageType;
         this.user = user;
         this.teamId = teamId;
@@ -220,36 +220,47 @@ public class RespostaFinal : Message
         this.gameId = gameId;
         this.finalAnswer = finalAnswer;
         this.correct = correct;
-        // this.interaction = interaction;
+        this.interaction = interaction;
 
     }
 }
 
-// [Serializable]
-// public class FimDeJogo : Message
-// {
-    
-//     public User user;
-//     public int teamId;
-//     public int sessionId;
-//     public int gameId;
-//     public int grpScore;
-//     public int indScore;
-//     public int gameTime; 
+[Serializable]
+public class Aval : Message
+{
+    public User user;
+    public int teamId;
+    public List<User> team;
+    public int sessionId;
+    public int gameId;
 
-//     public FimDeJogo(string messageType, User user, int teamId, int sessionId, int gameId, int grpScore, int indScore, int gameTime)
-//     {
-//         this.messageType = messageType;
-//         this.user = user;
-//         this.teamId = teamId;
-//         this.sessionId = sessionId;
-//         this.gameId = gameId;
-//         this.grpScore = grpScore;
-//         this.indScore = indScore;
-//         this.gameTime = gameTime;
+    public Aval(string messageType, User user, int teamId, List<User> team, int sessionId, int gameId)
+    {
+        this.messageType = messageType;
+        this.user = user;
+        this.teamId = teamId;
+        this.team = team;
+        this.sessionId = sessionId;
+        this.gameId = gameId;
+    }
+}
 
-//     }
-// }
+[Serializable]
+public class Duvida : Message
+{
+    public int teamId;
+    public int sessionId;
+    public int gameId;
+
+    public Duvida(string messageType, int teamId, int sessionId, int gameId)
+    {
+        this.messageType = messageType;
+        this.teamId = teamId;
+        this.sessionId = sessionId;
+        this.gameId = gameId;
+
+    }
+}
 
 [Serializable]
 public class FimDeJogo : Message
@@ -271,6 +282,21 @@ public class FimDeJogo : Message
         this.gameId = gameId;
         this.grpScore = grpScore;
         this.gameTime = gameTime;
+
+    }
+}
+
+[Serializable]
+public class EncerrarJogo : Message
+{
+    public int sessionId;
+    public int gameId;
+
+    public EncerrarJogo(string messageType, int sessionId, int gameId)
+    {
+        this.messageType = messageType;
+        this.sessionId = sessionId;
+        this.gameId = gameId;
 
     }
 }
