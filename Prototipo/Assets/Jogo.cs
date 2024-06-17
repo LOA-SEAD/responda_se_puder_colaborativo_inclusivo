@@ -60,6 +60,8 @@ public class Jogo : MonoBehaviour, IClient
     public GameObject painelAjudaPular;
     public GameObject painelPulou;
 
+    public GameObject painelMensagensProntas;
+
 
     public GameObject painel_aguarde;
     public TMP_Text txt_painelGeral;
@@ -78,6 +80,8 @@ public class Jogo : MonoBehaviour, IClient
     public Button btnPular;
     public Button btn5050;
     public Button btnProfessor;
+
+    public Button btnAbrirMensagensProntas;
     private float transparencia = 0.3f;
     private float sem_transparencia = 1.0f;
     private Color cor_btn_professor;
@@ -957,6 +961,33 @@ public class Jogo : MonoBehaviour, IClient
         btnProfessor.interactable = true;
     }
 
+     public void mensagemPronta()
+    {
+        painelMensagensProntas.SetActive(true);
+    }
+     public void fechaMensagemPronta()
+    {
+        painelMensagensProntas.SetActive(false);
+    }
+     public void mensagemProntaBtns(int id)
+    {
+        string textoMensagemPronta;
+        if(id == 0){
+            textoMensagemPronta = "Vamos com a maioria!";
+        }
+        else if(id == 1){
+            textoMensagemPronta = "Vamos usar ajuda 50/50!";
+        }
+        else{
+            textoMensagemPronta = "Acho melhor pular...";
+        }
+        var msg = new mensagemChat("MENSAGEM_CHAT", dadosTimes.player, ID_TEAM, Manager.sessionId, Manager.gameId, textoMensagemPronta, false);
+        cm.send(msg);
+        painelMensagensProntas.SetActive(false);
+        chatBox.ActivateInputField ();
+    }
+    
+
 
 // --------- TIMER ---------
 
@@ -1048,6 +1079,9 @@ public class Jogo : MonoBehaviour, IClient
         generalCommands.EnableAllObjectsInteractions();
         SetQntAlternatives(0);
         quadroChat.SetActive(false);
+        chatBox.gameObject.SetActive(false);
+        btnAbrirMensagensProntas.gameObject.SetActive(false);
+        painelMensagensProntas.SetActive(false);
     }
 
     public void SetGrupo()
@@ -1065,6 +1099,9 @@ public class Jogo : MonoBehaviour, IClient
         
         SetQntAlternatives(1);
         quadroChat.SetActive(true);
+        chatBox.gameObject.SetActive(true);
+        btnAbrirMensagensProntas.gameObject.SetActive(true);
+
 
         SetAlpha();
         ajudaGasta(pulou);
@@ -1103,6 +1140,8 @@ public class Jogo : MonoBehaviour, IClient
             confirmaDica.interactable = true;
             btnConfig.interactable = true;
             generalCommands.EnableInteraction(quadroChat);
+            generalCommands.EnableInteraction(chatBox.gameObject);
+            generalCommands.EnableInteraction(btnAbrirMensagensProntas.gameObject);
         }
     }
 
@@ -1309,7 +1348,15 @@ public class Jogo : MonoBehaviour, IClient
 
     }
 
-
+     private void EscondeClicandoFora(GameObject panel) {
+        if (Input.GetMouseButton(0) && panel.activeSelf && 
+            !RectTransformUtility.RectangleContainsScreenPoint(
+                panel.GetComponent<RectTransform>(), 
+                Input.mousePosition, 
+                Camera.main)) {
+            panel.SetActive(false);
+        }
+    }
 
 
 // --------- HANDLE ---------
@@ -1586,7 +1633,7 @@ public class Jogo : MonoBehaviour, IClient
         }
         else
         {
-            textoChat.texto = message.user.name + ":" + message.texto; 
+           textoChat.texto = message.user.name + ":" + message.texto; 
         }
 
         GameObject novoChat = Instantiate(painelTexto, painelChat.transform);
@@ -1633,9 +1680,16 @@ public class Jogo : MonoBehaviour, IClient
                 cm.send(msg);
                // readChat(chatBox.text);
                 chatBox.text = "";
+                chatBox.ActivateInputField ();
             }
         }
-
+        if(chatBox.isFocused == true){
+            quadroChat.SetActive(true);
+        }
+        else{
+            quadroChat.SetActive(false);
+        }
+        //EscondeClicandoFora(painelMensagensProntas);
         // if (Manager.reset_estrelas == 1){
         //     resetaEstrelas();
         //     Manager.reset_estrelas = 0;

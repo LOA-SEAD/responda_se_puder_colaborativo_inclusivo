@@ -140,6 +140,18 @@ public class profConfig : MonoBehaviour, IClient
 
         cm = ConnectionManager.getInstance();
 
+        if(!cm.isConnected()) {   
+            cm.connect();
+            Invoke("checkConnection", 2.0f);
+        }
+        
+    }
+
+    void checkConnection() {
+        if(!cm.isConnected()) {   
+            cm.connect();
+            Invoke("checkConnection", 2.0f);
+        }
     }
 
     // Update is called once per frame
