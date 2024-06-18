@@ -1352,8 +1352,7 @@ public class Jogo : MonoBehaviour, IClient
         if (Input.GetMouseButton(0) && panel.activeSelf && 
             !RectTransformUtility.RectangleContainsScreenPoint(
                 panel.GetComponent<RectTransform>(), 
-                Input.mousePosition, 
-                Camera.main)) {
+                Input.mousePosition)) {
             panel.SetActive(false);
         }
     }
@@ -1689,7 +1688,14 @@ public class Jogo : MonoBehaviour, IClient
         else{
             quadroChat.SetActive(false);
         }
-        //EscondeClicandoFora(painelMensagensProntas);
+        EscondeClicandoFora(painelMensagensProntas);
+        EscondeClicandoFora(painelDica);
+        EscondeClicandoFora(painelConfirma);
+        EscondeClicandoFora(painelAjuda5050);
+        EscondeClicandoFora(painelAjudaPular);
+        EscondeClicandoFora(painelPulou);
+
+
         // if (Manager.reset_estrelas == 1){
         //     resetaEstrelas();
         //     Manager.reset_estrelas = 0;

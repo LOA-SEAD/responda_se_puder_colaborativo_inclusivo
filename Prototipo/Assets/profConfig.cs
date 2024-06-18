@@ -36,6 +36,8 @@ public class profConfig : MonoBehaviour, IClient
 
     //Declaração do user do moderador
     public User mod;
+    public GameObject painelConexao;
+
 
     
 
@@ -119,6 +121,10 @@ public class profConfig : MonoBehaviour, IClient
     public void handle(string ms){
         Debug.Log(ms);
     }
+
+    public void connectionFail() {
+        SceneManager.LoadScene("Menu Professor");
+    }
     
     // Start is called before the first frame update
     void Start()
@@ -139,19 +145,23 @@ public class profConfig : MonoBehaviour, IClient
 
 
         cm = ConnectionManager.getInstance();
-
-        if(!cm.isConnected()) {   
+      /*  if(!cm.isConnected()) {   
             cm.connect();
             Invoke("checkConnection", 2.0f);
-        }
-        
+            painelConexao.gameObject.SetActive(true);
+        }*/
+        cm.connect();
+        Invoke("checkConnection", 2);
     }
 
     void checkConnection() {
         if(!cm.isConnected()) {   
-            cm.connect();
-            Invoke("checkConnection", 2.0f);
+          //  cm.connect();
+           // Invoke("checkConnection", 2.0f);
+            painelConexao.gameObject.SetActive(true);
         }
+        else
+            painelConexao.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -196,6 +206,7 @@ public class profConfig : MonoBehaviour, IClient
                 inputFields[0].Select();
             }
         }
+
     }
-        
+
 }
