@@ -62,6 +62,8 @@ public class Jogo : MonoBehaviour, IClient
 
     public GameObject painelMensagensProntas;
 
+    public GameObject fundoPainel;
+
 
     public GameObject painel_aguarde;
     public TMP_Text txt_painelGeral;
@@ -964,10 +966,12 @@ public class Jogo : MonoBehaviour, IClient
      public void mensagemPronta()
     {
         painelMensagensProntas.SetActive(true);
+        fundoPainel.SetActive(true);
     }
      public void fechaMensagemPronta()
     {
         painelMensagensProntas.SetActive(false);
+        fundoPainel.SetActive(false);
     }
      public void mensagemProntaBtns(int id)
     {
@@ -984,6 +988,7 @@ public class Jogo : MonoBehaviour, IClient
         var msg = new mensagemChat("MENSAGEM_CHAT", dadosTimes.player, ID_TEAM, Manager.sessionId, Manager.gameId, textoMensagemPronta, false);
         cm.send(msg);
         painelMensagensProntas.SetActive(false);
+        fundoPainel.SetActive(false);
         chatBox.ActivateInputField ();
     }
     
@@ -1354,6 +1359,7 @@ public class Jogo : MonoBehaviour, IClient
                 panel.GetComponent<RectTransform>(), 
                 Input.mousePosition)) {
             panel.SetActive(false);
+            fundoPainel.SetActive(false);
         }
     }
 

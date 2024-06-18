@@ -31,6 +31,8 @@ public class playerConfig : MonoBehaviour, IClient
     private int interact = 1;
 
     public GameObject painelConexao;
+
+    public GameObject FundoPainel;
     
     public void readName(string name){
         namePlayer = name;
@@ -166,6 +168,7 @@ public class playerConfig : MonoBehaviour, IClient
           //  cm.connect();
            // Invoke("checkConnection", 2.0f);
             painelConexao.gameObject.SetActive(true);
+            FundoPainel.SetActive(true);
         }
         else{
             painelConexao.gameObject.SetActive(false);
