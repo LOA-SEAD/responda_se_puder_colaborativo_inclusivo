@@ -793,6 +793,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: '------CANVASES------ '
       objectReference: {fileID: 0}
+    - target: {fileID: 5061726567983698307, guid: c3843995f6bdd2942895fdc78c26473c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6240331670996707134, guid: c3843995f6bdd2942895fdc78c26473c, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -10569,7 +10573,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1052.6199, y: 119.86148}
+  m_AnchoredPosition: {x: 1052.6199, y: 119.86149}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 0.95}
 --- !u!114 &1062279802
@@ -10835,7 +10839,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2025203444}
   m_HandleRect: {fileID: 2025203443}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -21322,6 +21326,10 @@ PrefabInstance:
     - target: {fileID: 5061726567983698307, guid: c3843995f6bdd2942895fdc78c26473c, type: 3}
       propertyPath: m_Name
       value: ------MANAGERS------
+      objectReference: {fileID: 0}
+    - target: {fileID: 5061726567983698307, guid: c3843995f6bdd2942895fdc78c26473c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6240331670996707134, guid: c3843995f6bdd2942895fdc78c26473c, type: 3}
       propertyPath: m_RootOrder

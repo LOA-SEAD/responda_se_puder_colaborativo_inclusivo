@@ -533,6 +533,7 @@ public class Jogo : MonoBehaviour, IClient
         }
 
         painelConfirma.SetActive(true);
+        fundoPainel.SetActive(true);
 
         answer.alternativa = tag;
     }
@@ -682,6 +683,7 @@ public class Jogo : MonoBehaviour, IClient
 
     public void ConfirmarRespostaIndividual()
     {
+        fundoPainel.SetActive(false);
         painelConfirma.SetActive(false);
 
         correct = VerificaResposta();
@@ -719,6 +721,7 @@ public class Jogo : MonoBehaviour, IClient
     public void ConfirmarRespostaFinal()
     {
         painelConfirma.SetActive(false);
+        fundoPainel.SetActive(false);
 
         correct = VerificaResposta();
         
@@ -741,6 +744,7 @@ public class Jogo : MonoBehaviour, IClient
     public void painelAguarde(string s, int btn_ok)
     {
         painel_aguarde.SetActive(true);
+        fundoPainel.SetActive(true);
         txt_painelGeral.text = "" + s;
         
         if (btn_ok == 1) btnOK_painel.gameObject.SetActive(true);
@@ -750,36 +754,44 @@ public class Jogo : MonoBehaviour, IClient
     public void fechaPainelAguarde()
     {
         painel_aguarde.SetActive(false);
+        fundoPainel.SetActive(false);
     }
 
     public void fechaConfirma()
     {
         painelConfirma.SetActive(false);
+        fundoPainel.SetActive(false);
     }
 
     public void fechaPainel5050()
     {
         painelAjuda5050.SetActive(false);
+        fundoPainel.SetActive(false);
+
     }
 
     public void fechaPainelPULAR()
     {
         painelAjudaPular.SetActive(false);
+        fundoPainel.SetActive(false);
     }
 
     public void ajudaDica()
     {
         painelDica.SetActive(true);
+        fundoPainel.SetActive(true);
     }
 
     public void confirmarDica()
     {
         painelDica.SetActive(false);
+        fundoPainel.SetActive(false);
     }
 
     public void fechaPulou()
     {
         painelPulou.SetActive(false);
+        fundoPainel.SetActive(false);
     }
 
 
@@ -802,6 +814,7 @@ public class Jogo : MonoBehaviour, IClient
 
     public void ajudaPula()
     {
+        fundoPainel.SetActive(true);
         if (Manager.MOMENTO == "INDIVIDUAL") 
         {
             // txt_geral.text = txt_pular_individual;
@@ -870,6 +883,7 @@ public class Jogo : MonoBehaviour, IClient
 
     public void ajuda5050()
     {
+        fundoPainel.SetActive(true);
         if (Manager.MOMENTO == "INDIVIDUAL") 
         {
             // txt_geral.text = txt_5050_individual;
@@ -931,8 +945,6 @@ public class Jogo : MonoBehaviour, IClient
         }
 
         ajudaGasta(pulou);
-
-
     }
 
     public void ajudaDuvida()
@@ -1054,6 +1066,7 @@ public class Jogo : MonoBehaviour, IClient
         txt_pular_individual = "PULAR só pode ser usada no momento em grupo.";
 
         fechaPainelAguarde();
+        fundoPainel.SetActive(false);
 
         btnAlternativas[0].gameObject.SetActive(true);
         btnAlternativas[1].gameObject.SetActive(true);
@@ -1115,7 +1128,7 @@ public class Jogo : MonoBehaviour, IClient
         if (Manager.leaderId == dadosTimes.player.id)
         {
             painelAguarde("Como líder, converse com sua equipe e envie a respota final do grupo.", 1);
-
+            fundoPainel.SetActive(true);
             generalCommands.EnableAllObjectsInteractions();
         
             foreach (Button btn in btnAlternativas)        
@@ -1130,6 +1143,7 @@ public class Jogo : MonoBehaviour, IClient
         {
 
             painelAguarde("Discutam a solução e aguarde a confirmação da resposta final pelo líder.", 1);
+            fundoPainel.SetActive(true);
 
             btnAlternativas[0].gameObject.SetActive(false);
             btnAlternativas[1].gameObject.SetActive(false);
@@ -1450,6 +1464,7 @@ public class Jogo : MonoBehaviour, IClient
             if (Manager.leaderId == dadosTimes.player.id)
             {
                 painelAguarde("O líder se desconectou. Você é o novo líder da equipe.", 1);
+                fundoPainel.SetActive(false);
 
                 generalCommands.EnableAllObjectsInteractions();
             
@@ -1578,6 +1593,7 @@ public class Jogo : MonoBehaviour, IClient
                 txt_geral.text = "A equipe decidiu por pular a questão.";
                 txt_geral.enabled = true;
                 painelPulou.SetActive(true);
+                fundoPainel.SetActive(true);
 
                 pulou = 1;
                 
