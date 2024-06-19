@@ -1371,7 +1371,8 @@ public class Jogo : MonoBehaviour, IClient
         if (Input.GetMouseButton(0) && panel.activeSelf && 
             !RectTransformUtility.RectangleContainsScreenPoint(
                 panel.GetComponent<RectTransform>(), 
-                Input.mousePosition)) {
+                Input.mousePosition, 
+                Camera.main)) { 
             panel.SetActive(false);
             fundoPainel.SetActive(false);
         }
