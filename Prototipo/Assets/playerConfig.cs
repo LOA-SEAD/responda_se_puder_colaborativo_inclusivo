@@ -136,7 +136,7 @@ public class playerConfig : MonoBehaviour, IClient
     }
 
     public void connectionFail() {
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("alunoEntrar");
     }
 
     void DesativaERRO()

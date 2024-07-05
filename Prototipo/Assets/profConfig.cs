@@ -123,7 +123,7 @@ public class profConfig : MonoBehaviour, IClient
     }
 
     public void connectionFail() {
-        SceneManager.LoadScene("Menu Professor");
+        SceneManager.LoadScene("profConfig");
     }
     
     // Start is called before the first frame update
