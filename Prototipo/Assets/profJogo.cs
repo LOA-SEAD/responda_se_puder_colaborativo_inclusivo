@@ -312,10 +312,10 @@ public class profJogo : MonoBehaviour, IClient
         chat_moderator = GameObject.FindGameObjectWithTag("chat_moderator");
 
         m_Itens = Manager.nrTeam;
-        for (int i = 0; i < m_Itens; i++)
+        for (int i = 0; i < 6; i++)
         {
             GameObject novaEquipe = Instantiate(prefabEquipes, transform.position, Quaternion.identity);
-            novaEquipe.transform.SetParent(ContentEquipes);
+            novaEquipe.transform.SetParent(ContentEquipes, false);
             novaEquipe.transform.localScale = new Vector3(1.894364f, 0.179433f, 0.23102f);
             notification.Add(novaEquipe.transform.Find("notification").gameObject);
            // notification[i].SetActive(true);
