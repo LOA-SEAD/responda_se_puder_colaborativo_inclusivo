@@ -47,6 +47,14 @@ public class profJogo : MonoBehaviour, IClient
     public ScrollRect scrollRect_prof;
 
     public int chatAberto = 0;
+    private int totalQuestoes;
+    private DadosJogo perguntaAtual;
+    public TMP_Text pergunta;
+    private int qst_respondidas = 0;
+    public int[] ordem_alternativas;
+    public int[] alt;
+    public TMP_Text[] alternativas; 
+
 
     [SerializeField]
     public List<GameObject> notification = new List<GameObject>();
@@ -169,6 +177,83 @@ public class profJogo : MonoBehaviour, IClient
         }
     }
 
+     public void ProximaQuestao()
+    {
+        //numeroQuestao++;
+
+        if (qst_respondidas <= Manager.nQ_total)
+        {
+            Invoke("NextQ", 3f);
+            CarregarPergunta();
+        }
+        /*else {
+            SceneManager.LoadScene("Fim");
+        }
+        zeraTimer();*/
+
+    }
+
+    void CarregarPergunta()
+    {
+        if (carregaDados.listaDados.Count > 0)
+        {
+            perguntaAtual = carregaDados.listaDados[0];
+            carregaDados.listaDados.RemoveAt(0);
+        }
+        else
+        {
+            perguntaAtual = null;
+        }
+
+        //numeroQuestaoText.text = "Questão " + (qst_respondidas+1) + " de " + Manager.nQ_total;        
+
+        if (perguntaAtual != null)
+        {
+            pergunta.text = perguntaAtual.pergunta;
+      
+
+            carregaDados.Shuffle(ref perguntaAtual, alt);
+
+            for (int i = 0; i < alternativas.Length; i++)
+            {  
+                alternativas[i].text = ObterAlternativa(i);
+               
+            }
+
+            //confirmaAlternativa.SetActive(false);
+        }
+        /*else
+        {
+
+            for (int i = 0; i < btnAlternativas.Length; i++)
+            {
+                btnAlternativas[i].gameObject.SetActive(false);
+            }
+        }*/
+    }
+
+    string ObterAlternativa(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                return perguntaAtual.resposta;
+            case 1:
+                return perguntaAtual.r2;
+            case 2:
+                return perguntaAtual.r3;
+            case 3:
+                return perguntaAtual.r4;
+            default:
+                return "";
+        }
+    }
+
+     void PrimeiraQuestao()
+    {
+        MSG_NOVA_QUESTAO(Manager.msgPrimeiraQuestao);
+    }
+
 
     private void exibir(List<msgCHAT_moderator> mensagens)
     {
@@ -217,6 +302,22 @@ public class profJogo : MonoBehaviour, IClient
     {
         GameObject imageObject = prefab_equipeJogo.transform.Find("btnDuvida").gameObject;
         imageObject.SetActive(false);
+    }
+
+    public void MSG_NOVA_QUESTAO(string msgJSON) 
+    {
+        msgNOVA_QUESTAO_MODERADOR message = JsonUtility.FromJson<msgNOVA_QUESTAO_MODERADOR>(msgJSON);
+        
+        Manager.leaderId = message.leaderId;
+        alt = message.alternativas;
+        ordem_alternativas = message.alternativas;
+        Manager.teamId = message.teamId;
+
+        if (qst_respondidas != Manager.nQ_easy && qst_respondidas != Manager.nQ_easy + Manager.nQ_medium && qst_respondidas != Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
+        {
+            ProximaQuestao();
+        }
+
     }
 
 
@@ -288,6 +389,10 @@ public class profJogo : MonoBehaviour, IClient
         {
             MSG_CHAT(ms);
         }
+        else if (messageType == "NOVA_QUESTAO") 
+        {
+            MSG_NOVA_QUESTAO(ms);
+        }
         else if(messageType == "DUVIDA")
         {
             MSG_DUVIDA(ms);
@@ -312,7 +417,7 @@ public class profJogo : MonoBehaviour, IClient
         chat_moderator = GameObject.FindGameObjectWithTag("chat_moderator");
 
         m_Itens = Manager.nrTeam;
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < m_Itens; i++)
         {
             GameObject novaEquipe = Instantiate(prefabEquipes, transform.position, Quaternion.identity);
             novaEquipe.transform.SetParent(ContentEquipes, false);
@@ -349,7 +454,12 @@ public class profJogo : MonoBehaviour, IClient
             }
         }
            scrollRect_prof.GetComponent<ScrollRect> ();
-        
+
+        carregaDados.Load();
+        carregaDados.Select();
+        totalQuestoes = carregaDados.listaDados.Count;
+
+        PrimeiraQuestao();
     }
 
     // Update is called once per frame
@@ -403,6 +513,18 @@ public class msgCHAT_moderator
     public bool moderator;
 
 }
+
+[System.Serializable]
+public class msgNOVA_QUESTAO_MODERADOR
+{
+    public string message_type;
+    public int[] alternativas;
+    public int teamId;
+    public int leaderId;
+    public int sessionId;
+    public int gameId;
+}
+
 
 [System.Serializable]
 public class msgDuvida
