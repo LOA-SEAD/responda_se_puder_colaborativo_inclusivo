@@ -2812,8 +2812,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1414973193}
   m_HandleRect: {fileID: 1414973192}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0
+  m_Size: 0.049999718
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3294,7 +3294,7 @@ MonoBehaviour:
   ContentEquipes: {fileID: 1911760261}
   ContentQuestoes: {fileID: 1414684732}
   prefabEquipes: {fileID: 4799459328417201882, guid: 296fb8b2d9ff97e45918d88d0f6594d1, type: 3}
-  prefabQuestoesTime: {fileID: 6992260278882270956, guid: 1caf52e30c209d142bdb18f0ee07d47a, type: 3}
+  prefabQuestoesTime: {fileID: 8746483987277712771, guid: a0f91dbb122daf347959620aca7f60c5, type: 3}
   m_Itens: 0
 --- !u!1 &1414684731
 GameObject:
@@ -4033,7 +4033,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1052.6199, y: 119.86152}
+  m_AnchoredPosition: {x: 1052.6199, y: 119.861534}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 0.95}
 --- !u!114 &1683960793

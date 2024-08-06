@@ -27,6 +27,9 @@ public class profJogo : MonoBehaviour, IClient
 
     public int qualTime;
 
+     [SerializeField]
+    public List<int> qualPergunta = new List<int>();
+
     // //BTN
     public Button encerrarJogo;
 
@@ -203,26 +206,30 @@ public class profJogo : MonoBehaviour, IClient
 
     void CarregarPergunta()
     {  
-        
-        if(qst_respondidas == (Manager.nQ_easy + 1) || qst_respondidas == (Manager.nQ_easy + Manager.nQ_medium + 2)){
-            carregaDados.listaDados.RemoveAt(0);
+
+        Debug.Log(Manager.nQ_easy);
+        Debug.Log(Manager.nQ_medium);
+        Debug.Log(Manager.nQ_hard);
+        if(qualPergunta[qualTime] == (Manager.nQ_easy) || qualPergunta[qualTime] == (Manager.nQ_easy + Manager.nQ_medium)){
+            qualPergunta[qualTime]++;
         }
-        qst_respondidas++;
+        
         if (carregaDados.listaDados.Count > 0)
         {
-            perguntaAtual = carregaDados.listaDados[0];
-            carregaDados.listaDados.RemoveAt(0);
+            perguntaAtual = carregaDados.listaDados[qualPergunta[qualTime]];
+            qualPergunta[qualTime]++;
         }
         else
         {
             perguntaAtual = null;
         }
+
         TMP_Text questaoTexto = questao[qualTime].GetComponent<TMP_Text>();
         TMP_Text alternativa1Texto = alternativa1[qualTime].GetComponent<TMP_Text>();
         TMP_Text alternativa2Texto = alternativa2[qualTime].GetComponent<TMP_Text>();
         TMP_Text alternativa3Texto = alternativa3[qualTime].GetComponent<TMP_Text>();
         TMP_Text alternativa4Texto = alternativa4[qualTime].GetComponent<TMP_Text>();
-        //numeroQuestaoText.text = "Questão " + (qst_respondidas+1) + " de " + Manager.nQ_total;        
+            
         if (perguntaAtual != null)
         {
             questaoTexto.text = perguntaAtual.pergunta;
@@ -317,7 +324,7 @@ public class profJogo : MonoBehaviour, IClient
         alt = message.alternativas;
         ordem_alternativas = message.alternativas;
         Manager.teamId = message.teamId;
-        qualTime = message.teamId;
+        qualTime = message.teamId - 1;
         CarregarPergunta();
        /* if (qst_respondidas != Manager.nQ_easy && qst_respondidas != Manager.nQ_easy + Manager.nQ_medium && qst_respondidas != Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
         {
@@ -446,6 +453,8 @@ public class profJogo : MonoBehaviour, IClient
             alternativa4.Add(questoesTime.transform.Find("alternativa4").gameObject);
             questoesTime.gameObject.SetActive(false);
             painelQuestoesTime.Add(questoesTime);
+
+            qualPergunta.Add(0);
         }
 
         for (int i = 0; i < quadrosEquipe.Count; i++)
@@ -476,6 +485,7 @@ public class profJogo : MonoBehaviour, IClient
         Manager.totalFacil = 0;
         Manager.totalMedio = 0;
         Manager.totalDificil = 0;
+        Manager.countQuestoesJogo();
         carregaDados.Load();
         carregaDados.Select();
         totalQuestoes = carregaDados.listaDados.Count;
