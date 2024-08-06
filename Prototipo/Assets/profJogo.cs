@@ -16,6 +16,8 @@ public class profJogo : MonoBehaviour, IClient
 
     private Dictionary<int, List<msgCHAT_moderator>> msgTeams = new Dictionary<int, List<msgCHAT_moderator>>();
 
+    private Dictionary<int, List<msgNOVA_QUESTAO_MODERADOR>> msgQuestionss = new Dictionary<int, List<msgNOVA_QUESTAO_MODERADOR>>();
+
     // private float transparencia = 0.0f;
     // private float sem_transparencia = 1.0f;
     public Image btnExclamacao;
@@ -31,8 +33,7 @@ public class profJogo : MonoBehaviour, IClient
     public GameObject painelChat;
     public GameObject prefab_equipeJogo;
     public GameObject painelEncerrar;
-
-
+    public GameObject painelQuestoesTime;
     public TMP_InputField chatBox;
 
     public TextMeshProUGUI messageText;
@@ -48,12 +49,13 @@ public class profJogo : MonoBehaviour, IClient
 
     public int chatAberto = 0;
     private int totalQuestoes;
+    
     private DadosJogo perguntaAtual;
     public TMP_Text pergunta;
-    private int qst_respondidas = 0;
+    public int qst_respondidas = 0;
     public int[] ordem_alternativas;
     public int[] alt;
-    public TMP_Text[] alternativas; 
+    public TMP_Text[] alternativas;
 
 
     [SerializeField]
@@ -165,36 +167,26 @@ public class profJogo : MonoBehaviour, IClient
         Debug.Log(Manager.teamId);
         chatAberto = teamId;
         notification[teamId].gameObject.SetActive(false);
+        painelQuestoesTime.gameObject.SetActive(true);
         if (msgTeams.ContainsKey(teamId))
         {
             List<msgCHAT_moderator> mensagensDoTime = msgTeams[teamId];
             
             exibir(mensagensDoTime);
         }
-        else
+        else 
         {
             Debug.Log("Não há mensagens no time " + teamId);
         }
     }
 
-     public void ProximaQuestao()
-    {
-        //numeroQuestao++;
-
-        if (qst_respondidas <= Manager.nQ_total)
-        {
-            Invoke("NextQ", 3f);
-            CarregarPergunta();
-        }
-        /*else {
-            SceneManager.LoadScene("Fim");
-        }
-        zeraTimer();*/
-
-    }
-
     void CarregarPergunta()
-    {
+    {  
+        
+        if(qst_respondidas == (Manager.nQ_easy + 1) || qst_respondidas == (Manager.nQ_easy + Manager.nQ_medium + 2)){
+            carregaDados.listaDados.RemoveAt(0);
+        }
+        qst_respondidas++;
         if (carregaDados.listaDados.Count > 0)
         {
             perguntaAtual = carregaDados.listaDados[0];
@@ -206,7 +198,7 @@ public class profJogo : MonoBehaviour, IClient
         }
 
         //numeroQuestaoText.text = "Questão " + (qst_respondidas+1) + " de " + Manager.nQ_total;        
-
+        char indice_alt = 'A';
         if (perguntaAtual != null)
         {
             pergunta.text = perguntaAtual.pergunta;
@@ -216,20 +208,11 @@ public class profJogo : MonoBehaviour, IClient
 
             for (int i = 0; i < alternativas.Length; i++)
             {  
-                alternativas[i].text = ObterAlternativa(i);
-               
+                alternativas[i].text = indice_alt + ". " + ObterAlternativa(i);
+                indice_alt++; 
             }
 
-            //confirmaAlternativa.SetActive(false);
         }
-        /*else
-        {
-
-            for (int i = 0; i < btnAlternativas.Length; i++)
-            {
-                btnAlternativas[i].gameObject.SetActive(false);
-            }
-        }*/
     }
 
     string ObterAlternativa(int index)
@@ -312,12 +295,12 @@ public class profJogo : MonoBehaviour, IClient
         alt = message.alternativas;
         ordem_alternativas = message.alternativas;
         Manager.teamId = message.teamId;
-
-        if (qst_respondidas != Manager.nQ_easy && qst_respondidas != Manager.nQ_easy + Manager.nQ_medium && qst_respondidas != Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
+        CarregarPergunta();
+       /* if (qst_respondidas != Manager.nQ_easy && qst_respondidas != Manager.nQ_easy + Manager.nQ_medium && qst_respondidas != Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
         {
             ProximaQuestao();
         }
-
+*/
     }
 
 
@@ -354,7 +337,10 @@ public class profJogo : MonoBehaviour, IClient
 
         }
     }
-    
+
+   
+
+
     void gera_arquivo(string json)
     {
              
@@ -405,7 +391,6 @@ public class profJogo : MonoBehaviour, IClient
         {
             MSG_CLASSF_FINAL(ms);
         }
-
     }
     
     // // Start is called before the first frame update
@@ -455,6 +440,10 @@ public class profJogo : MonoBehaviour, IClient
         }
            scrollRect_prof.GetComponent<ScrollRect> ();
 
+        Manager.totalQuestoes = 0;
+        Manager.totalFacil = 0;
+        Manager.totalMedio = 0;
+        Manager.totalDificil = 0;
         carregaDados.Load();
         carregaDados.Select();
         totalQuestoes = carregaDados.listaDados.Count;
@@ -482,6 +471,14 @@ public class profJogo : MonoBehaviour, IClient
         
     }
         
+}
+
+[System.Serializable]
+public class QuestionProf
+{
+    public int[] easy;
+    public int[] medium;
+    public int[] hard;
 }
 
 

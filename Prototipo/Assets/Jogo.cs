@@ -1578,7 +1578,6 @@ public class Jogo : MonoBehaviour, IClient
     public void MSG_AJUDA(string msgJSON)
     {
         msgAJUDA_5050 message = JsonUtility.FromJson<msgAJUDA_5050>(msgJSON);
-        
 
         if (message.help == "pular"){
 
@@ -1616,7 +1615,6 @@ public class Jogo : MonoBehaviour, IClient
 
     public void MSG_NOVA_FASE(string msgJSON)
     {
-
 
         msgPROX_FASE message = JsonUtility.FromJson<msgPROX_FASE>(msgJSON);
 

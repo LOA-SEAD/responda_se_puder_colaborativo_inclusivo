@@ -145,13 +145,23 @@ public class profEspera : MonoBehaviour, IClient
         }
     }
 
+     public void MSG_INICIA_JOGO(string msgJSON) 
+    {   
+        msgINICIA_JOGO_Prof message = JsonUtility.FromJson<msgINICIA_JOGO_Prof>(msgJSON);
+ 
+        Manager.qEasy = message.question.easy;
+        Manager.qMedium = message.question.medium;
+        Manager.qHard = message.question.hard;
+        SceneManager.LoadScene("profJogo");
+    }
+
     public void btnComecarJogo(){
 
         var msg = new ComecarJogo("COMECAR_JOGO", Manager.sessionId, Manager.gameId);
 
         cm.send(msg);
 
-        SceneManager.LoadScene("profJogo");
+       // SceneManager.LoadScene("profJogo");
 
     }
 
@@ -164,47 +174,6 @@ public class profEspera : MonoBehaviour, IClient
     //     SceneManager.LoadScene("Menu Professor");
 
     // }
-
-    public void MSG_CHAT(string msgJSON){
-            Color cor;
-            msgCHAT message = JsonUtility.FromJson<msgCHAT>(msgJSON);
-
-            if(messageList.Count >= chatMax){
-                Destroy(messageList[0].painelTexto.gameObject);
-                messageList.Remove(messageList[0]);
-            }
-
-            msgCHAT textoChat = new msgCHAT();
-            if(message.moderator)
-                textoChat.texto = message.user.name + ":" + message.texto;//falou;
-            else
-                textoChat.texto = "Equipe " + message.teamId + " / " + message.user.name + ":" + message.texto;   
-
-            GameObject novoChat = Instantiate(painelTexto, painelChat.transform);
-
-            textoChat.painelTexto = novoChat.GetComponent<Text>();
-
-            textoChat.painelTexto.text = textoChat.texto;
-
-            if(message.moderator){
-                ColorUtility.TryParseHtmlString("#f41004", out cor);
-                textoChat.painelTexto.fontStyle = FontStyle.Bold;
-            }
-            else{
-                //textoChat.painelTexto.fontStyle = FontStyle.Regular;
-                    ColorUtility.TryParseHtmlString("#112A46", out cor);
-            }
-
-            textoChat.painelTexto.color = cor;
-            messageList.Add(textoChat);
-
-            Debug.Log(textoChat.texto);
-        }
-
-
-
-
-
     public void handle(string ms){
         //string messageType = ms.messageType;
 
@@ -216,6 +185,9 @@ public class profEspera : MonoBehaviour, IClient
         // route message to handler based on message type
         Debug.Log(ms);
 
+        if (messageType == "NOVA_QUESTAO"){
+            Manager.msgPrimeiraQuestao = ms;
+        } 
         if (messageType == "SESSAO_CRIADA") 
         {
             MSG_SESSAO_CRIADA(ms);
@@ -224,9 +196,9 @@ public class profEspera : MonoBehaviour, IClient
         {
             MSG_ENTROU_SESSAO(ms);
         }
-        else if (messageType == "MENSAGEM_CHAT")
+          else if (messageType == "INICIA_JOGO") 
         {
-            MSG_CHAT(ms);
+            MSG_INICIA_JOGO(ms);
         }
 
     }
@@ -259,21 +231,23 @@ public class profEspera : MonoBehaviour, IClient
     {
        
         cm.retrieveMessages(this);
-
-         if(chatBox.text != "")
-        {
-            if(Input.GetKeyDown(KeyCode.Return)){
-               
-                var msg = new mensagemChat("MENSAGEM_CHAT", Manager.moderator, Manager.teamId, Manager.sessionId, Manager.gameId, chatBox.text, true);
-                //var msg = new mensagemChat("MENSAGEM_CHAT", dadosTimes.player, Manager.teamId, Manager.sessionId, Manager.gameId, chatBox.text, Manager.moderator);
-                cm.send(msg);
-               // readChat(chatBox.text);
-                chatBox.text = "";
-            }
-        }
         
     }
         
+}
+
+[System.Serializable]
+public class msgINICIA_JOGO_Prof
+{
+    public string messageType;
+    public int[] totalQuestion;
+    public QuestionProf question;
+    public List<User> team;
+    public int timeQuestion;
+    public int help5050;
+    public int leaderId;
+    public int sessionId;
+    public int gameId;
 }
 
 
