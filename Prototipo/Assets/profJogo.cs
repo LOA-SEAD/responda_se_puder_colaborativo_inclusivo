@@ -25,6 +25,8 @@ public class profJogo : MonoBehaviour, IClient
     public int questionAmount = Manager.nrEasy + Manager.nrMedium + Manager.nrHard;
     public int equipes_terminadas = 0;
 
+    public int qualTime;
+
     // //BTN
     public Button encerrarJogo;
 
@@ -33,13 +35,14 @@ public class profJogo : MonoBehaviour, IClient
     public GameObject painelChat;
     public GameObject prefab_equipeJogo;
     public GameObject painelEncerrar;
-    public GameObject painelQuestoesTime;
+    [SerializeField]
+    public List<GameObject> painelQuestoesTime = new List<GameObject>();
     public TMP_InputField chatBox;
 
     public TextMeshProUGUI messageText;
     // public int teamID;
     GameObject chat_moderator;
-
+ 
     [SerializeField]
     public List<msgCHAT_moderator> messageList = new List<msgCHAT_moderator>();
 
@@ -51,20 +54,30 @@ public class profJogo : MonoBehaviour, IClient
     private int totalQuestoes;
     
     private DadosJogo perguntaAtual;
-    public TMP_Text pergunta;
+    
     public int qst_respondidas = 0;
     public int[] ordem_alternativas;
     public int[] alt;
-    public TMP_Text[] alternativas;
-
-
+    [SerializeField]
+    public List<GameObject> questao = new List<GameObject>();
+    [SerializeField]
+    public List<GameObject> alternativa1 = new List<GameObject>();
+    [SerializeField]
+    public List<GameObject> alternativa2 = new List<GameObject>();
+    [SerializeField]
+    public List<GameObject> alternativa3 = new List<GameObject>();
+    [SerializeField]
+    public List<GameObject> alternativa4 = new List<GameObject>();
+    
     [SerializeField]
     public List<GameObject> notification = new List<GameObject>();
     
 
     // //Quadros em tela
     [SerializeField] private Transform ContentEquipes;
+    [SerializeField] private Transform ContentQuestoes;
     [SerializeField] private GameObject prefabEquipes;
+    [SerializeField] private GameObject prefabQuestoesTime;
     [SerializeField] private int m_Itens;
 
     private List<GameObject> quadrosEquipe = new List<GameObject>();
@@ -163,11 +176,19 @@ public class profJogo : MonoBehaviour, IClient
 
     public void btnTeamChat(int teamId)
     {
+        if(chatAberto != 0)
+            painelQuestoesTime[chatAberto].gameObject.SetActive(false);
         Manager.teamId = teamId;
         Debug.Log(Manager.teamId);
         chatAberto = teamId;
         notification[teamId].gameObject.SetActive(false);
-        painelQuestoesTime.gameObject.SetActive(true);
+     /*   for(int i = 0;i < Manager.nrTeam;i++){
+            if(i == teamId)
+                painelQuestoesTime[i].gameObject.SetActive(true);
+            else
+                painelQuestoesTime[i].gameObject.SetActive(false);
+        }*/
+        painelQuestoesTime[teamId].gameObject.SetActive(true);
         if (msgTeams.ContainsKey(teamId))
         {
             List<msgCHAT_moderator> mensagensDoTime = msgTeams[teamId];
@@ -196,22 +217,23 @@ public class profJogo : MonoBehaviour, IClient
         {
             perguntaAtual = null;
         }
-
+        TMP_Text questaoTexto = questao[qualTime].GetComponent<TMP_Text>();
+        TMP_Text alternativa1Texto = alternativa1[qualTime].GetComponent<TMP_Text>();
+        TMP_Text alternativa2Texto = alternativa2[qualTime].GetComponent<TMP_Text>();
+        TMP_Text alternativa3Texto = alternativa3[qualTime].GetComponent<TMP_Text>();
+        TMP_Text alternativa4Texto = alternativa4[qualTime].GetComponent<TMP_Text>();
         //numeroQuestaoText.text = "Questão " + (qst_respondidas+1) + " de " + Manager.nQ_total;        
-        char indice_alt = 'A';
         if (perguntaAtual != null)
         {
-            pergunta.text = perguntaAtual.pergunta;
+            questaoTexto.text = perguntaAtual.pergunta;
       
-
             carregaDados.Shuffle(ref perguntaAtual, alt);
 
-            for (int i = 0; i < alternativas.Length; i++)
-            {  
-                alternativas[i].text = indice_alt + ". " + ObterAlternativa(i);
-                indice_alt++; 
-            }
-
+            alternativa1Texto.text = "A. " + ObterAlternativa(0);
+            alternativa2Texto.text = "B. " + ObterAlternativa(1);
+            alternativa3Texto.text = "C. " + ObterAlternativa(2);
+            alternativa4Texto.text = "D. " + ObterAlternativa(3);
+    
         }
     }
 
@@ -295,6 +317,7 @@ public class profJogo : MonoBehaviour, IClient
         alt = message.alternativas;
         ordem_alternativas = message.alternativas;
         Manager.teamId = message.teamId;
+        qualTime = message.teamId;
         CarregarPergunta();
        /* if (qst_respondidas != Manager.nQ_easy && qst_respondidas != Manager.nQ_easy + Manager.nQ_medium && qst_respondidas != Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
         {
@@ -404,16 +427,25 @@ public class profJogo : MonoBehaviour, IClient
         m_Itens = Manager.nrTeam;
         for (int i = 0; i < m_Itens; i++)
         {
+            //adicionando botão de cada time na tela do professor
             GameObject novaEquipe = Instantiate(prefabEquipes, transform.position, Quaternion.identity);
             novaEquipe.transform.SetParent(ContentEquipes, false);
             novaEquipe.transform.localScale = new Vector3(1.894364f, 0.179433f, 0.23102f);
             notification.Add(novaEquipe.transform.Find("notification").gameObject);
-           // notification[i].SetActive(true);
             quadrosEquipe.Add(novaEquipe);
-
             int teamId = i+1;
             Button btn = novaEquipe.GetComponentInChildren<Button>();
             btn.onClick.AddListener(() => btnTeamChat(teamId));
+            //Adicionando perguntas para cada time
+            GameObject questoesTime = Instantiate(prefabQuestoesTime, transform.position, Quaternion.identity);
+            questoesTime.transform.SetParent(ContentQuestoes, false);
+            questao.Add(questoesTime.transform.Find("questao").gameObject);
+            alternativa1.Add(questoesTime.transform.Find("alternativa1").gameObject);
+            alternativa2.Add(questoesTime.transform.Find("alternativa2").gameObject);
+            alternativa3.Add(questoesTime.transform.Find("alternativa3").gameObject);
+            alternativa4.Add(questoesTime.transform.Find("alternativa4").gameObject);
+            questoesTime.gameObject.SetActive(false);
+            painelQuestoesTime.Add(questoesTime);
         }
 
         for (int i = 0; i < quadrosEquipe.Count; i++)
