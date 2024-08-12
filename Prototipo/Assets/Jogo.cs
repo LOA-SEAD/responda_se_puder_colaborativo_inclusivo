@@ -133,6 +133,8 @@ public class Jogo : MonoBehaviour, IClient
     private int pulou = 0;
     private int pulou_no_facil = 0;
 
+    public bool pulou_na_fase = false;
+
     private int qst;
 
     private int level_qst = 0;
@@ -1229,6 +1231,7 @@ public class Jogo : MonoBehaviour, IClient
                  cm.send(msg);
 
                  indice_qst = 0;
+                 pulou_na_fase = false;
 
             } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium)
             {
@@ -1238,6 +1241,7 @@ public class Jogo : MonoBehaviour, IClient
                 cm.send(msg);
 
                 indice_qst = 0;
+                pulou_na_fase = false;
 
             } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
             {
@@ -1275,7 +1279,7 @@ public class Jogo : MonoBehaviour, IClient
         if (Manager.leaderId == dadosTimes.player.id && (qst_respondidas != Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard))
         {
             var msg_prox = new ProxQuestao("PROXIMA_QUESTAO", dadosTimes.player, ID_TEAM, Manager.sessionId,
-                                        Manager.gameId);
+                                        Manager.gameId, pulou_na_fase);
 
             cm.send(msg_prox);
 
@@ -1596,7 +1600,7 @@ public class Jogo : MonoBehaviour, IClient
                 fundoPainel.SetActive(true);
 
                 pulou = 1;
-                
+                pulou_na_fase = true;
                 if (perguntaAtual.nivel == "facil") pulou_no_facil = 1;
 
                 indice_qst++;
@@ -1767,6 +1771,7 @@ public class msgNOVA_QUESTAO
     public int leaderId;
     public int sessionId;
     public int gameId;
+    public bool pulou_na_fase;
 }
 
 [System.Serializable]
