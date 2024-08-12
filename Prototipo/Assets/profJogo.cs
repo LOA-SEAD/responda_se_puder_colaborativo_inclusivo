@@ -23,6 +23,11 @@ public class profJogo : MonoBehaviour, IClient
     public int questionAmount = Manager.nrEasy + Manager.nrMedium + Manager.nrHard;
     public int equipes_terminadas = 0;
 
+     [SerializeField]
+    public List<int> qualPergunta = new List<int>();
+
+    public TMP_Text equipeSelecionada;
+
     // //BTN
     public Button encerrarJogo;
 
@@ -31,30 +36,37 @@ public class profJogo : MonoBehaviour, IClient
     public GameObject painelChat;
     public GameObject prefab_equipeJogo;
     public GameObject painelEncerrar;
-
-
+    [SerializeField]
+    public List<GameObject> painelQuestoesTime = new List<GameObject>();
     public TMP_InputField chatBox;
-
     public TextMeshProUGUI messageText;
     // public int teamID;
     GameObject chat_moderator;
-
-    [SerializeField]
-    public List<msgCHAT_moderator> messageList = new List<msgCHAT_moderator>();
-
-    public int chatMax = 25;
-
     public ScrollRect scrollRect_prof;
-
     public int chatAberto = 0;
-
+    private int totalQuestoes;
+    private DadosJogo perguntaAtual;
+    public int[] alt;
+    [SerializeField]
+    public List<GameObject> questao = new List<GameObject>();
+    [SerializeField]
+    public List<GameObject> alternativa1 = new List<GameObject>();
+    [SerializeField]
+    public List<GameObject> alternativa2 = new List<GameObject>();
+    [SerializeField]
+    public List<GameObject> alternativa3 = new List<GameObject>();
+    [SerializeField]
+    public List<GameObject> alternativa4 = new List<GameObject>();
+    
     [SerializeField]
     public List<GameObject> notification = new List<GameObject>();
     
 
     // //Quadros em tela
     [SerializeField] private Transform ContentEquipes;
+    [SerializeField] private Transform ContentQuestoes;
     [SerializeField] private GameObject prefabEquipes;
+    [SerializeField] private GameObject prefabQuestoesTime;
     [SerializeField] private int m_Itens;
 
     private List<GameObject> quadrosEquipe = new List<GameObject>();
@@ -153,20 +165,88 @@ public class profJogo : MonoBehaviour, IClient
 
     public void btnTeamChat(int teamId)
     {
+        if(chatAberto != 0)
+            painelQuestoesTime[chatAberto].gameObject.SetActive(false);
         Manager.teamId = teamId;
         Debug.Log(Manager.teamId);
         chatAberto = teamId;
         notification[teamId].gameObject.SetActive(false);
+     /*   for(int i = 0;i < Manager.nrTeam;i++){
+            if(i == teamId)
+                painelQuestoesTime[i].gameObject.SetActive(true);
+            else
+                painelQuestoesTime[i].gameObject.SetActive(false);
+        }*/
+        painelQuestoesTime[teamId].gameObject.SetActive(true);
+        equipeSelecionada.text = "Equipe " + teamId;
         if (msgTeams.ContainsKey(teamId))
         {
             List<msgCHAT_moderator> mensagensDoTime = msgTeams[teamId];
             
             exibir(mensagensDoTime);
         }
-        else
+        else 
         {
             Debug.Log("Não há mensagens no time " + teamId);
         }
+    }
+
+    void CarregarPergunta(int[] alter, bool pulou_na_fase, int qualTime)
+    {  
+       if((qualPergunta[qualTime] == (Manager.nQ_easy) || qualPergunta[qualTime] == (Manager.nQ_easy + Manager.nQ_medium + 1))&& !pulou_na_fase){
+            qualPergunta[qualTime]++;
+        }
+        
+        if (carregaDados.listaDados.Count > 0)
+        {
+            perguntaAtual = carregaDados.listaDados[qualPergunta[qualTime]];
+            qualPergunta[qualTime]++;
+        }
+        else
+        {
+            perguntaAtual = null;
+        }
+
+        TMP_Text questaoTexto = questao[qualTime].GetComponent<TMP_Text>();
+        TMP_Text alternativa1Texto = alternativa1[qualTime].GetComponent<TMP_Text>();
+        TMP_Text alternativa2Texto = alternativa2[qualTime].GetComponent<TMP_Text>();
+        TMP_Text alternativa3Texto = alternativa3[qualTime].GetComponent<TMP_Text>();
+        TMP_Text alternativa4Texto = alternativa4[qualTime].GetComponent<TMP_Text>();
+            
+        if (perguntaAtual != null)
+        {
+            questaoTexto.text = perguntaAtual.pergunta;
+      
+            carregaDados.Shuffle(ref perguntaAtual, alter);
+
+            alternativa1Texto.text = "A. " + ObterAlternativa(ref perguntaAtual, 0);
+            alternativa2Texto.text = "B. " + ObterAlternativa(ref perguntaAtual, 1);
+            alternativa3Texto.text = "C. " + ObterAlternativa(ref perguntaAtual, 2);
+            alternativa4Texto.text = "D. " + ObterAlternativa(ref perguntaAtual, 3);
+    
+        }
+    }
+
+    string ObterAlternativa(ref DadosJogo dados, int index)
+    {
+        switch (index)
+        {
+            case 0:
+                return dados.resposta;
+            case 1:
+                return dados.r2;
+            case 2:
+                return dados.r3;
+            case 3:
+                return dados.r4;
+            default:
+                return "";
+        }
+    }
+
+     void PrimeiraQuestao()
+    {
+        MSG_NOVA_QUESTAO(Manager.msgPrimeiraQuestao);
     }
 
 
@@ -219,6 +299,21 @@ public class profJogo : MonoBehaviour, IClient
         imageObject.SetActive(false);
     }
 
+    public void MSG_NOVA_QUESTAO(string msgJSON) 
+    {
+        msgNOVA_QUESTAO_MODERADOR message = JsonUtility.FromJson<msgNOVA_QUESTAO_MODERADOR>(msgJSON);
+        
+        Manager.leaderId = message.leaderId;
+        alt = message.alternativas;
+        Manager.teamId = message.teamId;
+        CarregarPergunta(alt, message.pulou_na_fase, message.teamId - 1);
+       /* if (qst_respondidas != Manager.nQ_easy && qst_respondidas != Manager.nQ_easy + Manager.nQ_medium && qst_respondidas != Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
+        {
+            ProximaQuestao();
+        }
+*/
+    }
+
 
     public void MSG_QUESTAO(string msgJSON)
     {
@@ -253,7 +348,6 @@ public class profJogo : MonoBehaviour, IClient
 
         }
     }
-    
     void gera_arquivo(string json)
     {
              
@@ -288,6 +382,10 @@ public class profJogo : MonoBehaviour, IClient
         {
             MSG_CHAT(ms);
         }
+        else if (messageType == "NOVA_QUESTAO") 
+        {
+            MSG_NOVA_QUESTAO(ms);
+        }
         else if(messageType == "DUVIDA")
         {
             MSG_DUVIDA(ms);
@@ -300,7 +398,6 @@ public class profJogo : MonoBehaviour, IClient
         {
             MSG_CLASSF_FINAL(ms);
         }
-
     }
     
     // // Start is called before the first frame update
@@ -314,16 +411,27 @@ public class profJogo : MonoBehaviour, IClient
         m_Itens = Manager.nrTeam;
         for (int i = 0; i < m_Itens; i++)
         {
+            //adicionando botão de cada time na tela do professor
             GameObject novaEquipe = Instantiate(prefabEquipes, transform.position, Quaternion.identity);
-            novaEquipe.transform.SetParent(ContentEquipes);
+            novaEquipe.transform.SetParent(ContentEquipes, false);
             novaEquipe.transform.localScale = new Vector3(1.894364f, 0.179433f, 0.23102f);
             notification.Add(novaEquipe.transform.Find("notification").gameObject);
-           // notification[i].SetActive(true);
             quadrosEquipe.Add(novaEquipe);
-
             int teamId = i+1;
             Button btn = novaEquipe.GetComponentInChildren<Button>();
             btn.onClick.AddListener(() => btnTeamChat(teamId));
+            //Adicionando perguntas para cada time
+            GameObject questoesTime = Instantiate(prefabQuestoesTime, transform.position, Quaternion.identity);
+            questoesTime.transform.SetParent(ContentQuestoes, false);
+            questao.Add(questoesTime.transform.Find("questao").gameObject);
+            alternativa1.Add(questoesTime.transform.Find("alternativa1").gameObject);
+            alternativa2.Add(questoesTime.transform.Find("alternativa2").gameObject);
+            alternativa3.Add(questoesTime.transform.Find("alternativa3").gameObject);
+            alternativa4.Add(questoesTime.transform.Find("alternativa4").gameObject);
+            questoesTime.gameObject.SetActive(false);
+            painelQuestoesTime.Add(questoesTime);
+
+            qualPergunta.Add(0);
         }
 
         for (int i = 0; i < quadrosEquipe.Count; i++)
@@ -349,7 +457,17 @@ public class profJogo : MonoBehaviour, IClient
             }
         }
            scrollRect_prof.GetComponent<ScrollRect> ();
-        
+
+        Manager.totalQuestoes = 0;
+        Manager.totalFacil = 0;
+        Manager.totalMedio = 0;
+        Manager.totalDificil = 0;
+        Manager.countQuestoesJogo();
+        carregaDados.Load();
+        carregaDados.Select();
+        totalQuestoes = carregaDados.listaDados.Count;
+
+        PrimeiraQuestao();
     }
 
     // Update is called once per frame
@@ -372,6 +490,14 @@ public class profJogo : MonoBehaviour, IClient
         
     }
         
+}
+
+[System.Serializable]
+public class QuestionProf
+{
+    public int[] easy;
+    public int[] medium;
+    public int[] hard;
 }
 
 
@@ -403,6 +529,19 @@ public class msgCHAT_moderator
     public bool moderator;
 
 }
+
+[System.Serializable]
+public class msgNOVA_QUESTAO_MODERADOR
+{
+    public string message_type;
+    public int[] alternativas;
+    public int teamId;
+    public int leaderId;
+    public int sessionId;
+    public int gameId;
+    public bool pulou_na_fase;
+}
+
 
 [System.Serializable]
 public class msgDuvida

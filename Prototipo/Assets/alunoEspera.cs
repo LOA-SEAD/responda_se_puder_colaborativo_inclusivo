@@ -27,6 +27,7 @@ public class alunoEspera : MonoBehaviour, IClient
         Manager.qEasy = message.question.easy;
         Manager.qMedium = message.question.medium;
         Manager.qHard = message.question.hard;
+
         
         dadosTimes.meuTime = message.team;
 
@@ -54,7 +55,7 @@ public class alunoEspera : MonoBehaviour, IClient
 
         if (messageType == "NOVA_QUESTAO"){
             Manager.msgPrimeiraQuestao = ms;
-        }
+        } 
 
     }
 

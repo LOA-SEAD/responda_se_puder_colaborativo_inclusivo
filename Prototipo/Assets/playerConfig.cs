@@ -26,7 +26,13 @@ public class playerConfig : MonoBehaviour, IClient
     //public InputField inputName;
 
     public Button btnEntrar;
+
+    public Button btnConfig;
     private int interact = 1;
+
+    public GameObject painelConexao;
+
+    public GameObject FundoPainel;
     
     public void readName(string name){
         namePlayer = name;
@@ -129,6 +135,10 @@ public class playerConfig : MonoBehaviour, IClient
 
     }
 
+    public void connectionFail() {
+        SceneManager.LoadScene("alunoEntrar");
+    }
+
     void DesativaERRO()
     {
         txt_erro.enabled = false;
@@ -147,8 +157,25 @@ public class playerConfig : MonoBehaviour, IClient
 
         carregaDados.Load();
         
-        cm = ConnectionManager.getInstance();        
+        cm = ConnectionManager.getInstance();     
+        cm.connect();
+        Invoke("checkConnection", 2);   
+        btnConfig.interactable = false;
     }
+
+    void checkConnection() {
+        if(!cm.isConnected()) {   
+          //  cm.connect();
+           // Invoke("checkConnection", 2.0f);
+            painelConexao.gameObject.SetActive(true);
+            FundoPainel.SetActive(true);
+        }
+        else{
+            painelConexao.gameObject.SetActive(false);
+            btnConfig.interactable = true;
+        }    
+    }
+
 
     // Update is called once per frame
     void Update()

@@ -10,7 +10,7 @@ public class ConnectionManager
     private WebSocket ws;
     private string gameServerURL;
 
-
+    private bool connected;
 
     private Queue<string> gameServerMessageQueue = new Queue<string>();
 
@@ -25,12 +25,21 @@ public class ConnectionManager
     private ConnectionManager(string url) {
 
         this.gameServerURL = url;
-
+        this.connected = false;
+        
         Debug.Log("gameServerURL = " + this.gameServerURL);
 
         this.InitWebSocketClient();
     }
-    
+
+    public bool isConnected() {
+        return this.connected;
+    }
+
+    public void connect() {
+        this.InitWebSocketClient();
+    }
+
     public void send(Message msg) {
         Debug.Log("Sending: " + JsonUtility.ToJson(msg));
         this.ws.SendText(JsonUtility.ToJson(msg));
@@ -76,14 +85,17 @@ public class ConnectionManager
 
         this.ws.OnOpen += () =>  {
             Debug.Log("Connection open!");
+            this.connected = true;
         };
 
         this.ws.OnError += (e) => {
             Debug.Log("Error! " + e);
+            this.connected = false;
         };
 
         this.ws.OnClose += (e) => {
             Debug.Log("Connection closed!");
+            this.connected = false;
         };
 
         // add message handler callback

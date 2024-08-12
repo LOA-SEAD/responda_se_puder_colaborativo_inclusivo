@@ -60,6 +60,10 @@ public class Jogo : MonoBehaviour, IClient
     public GameObject painelAjudaPular;
     public GameObject painelPulou;
 
+    public GameObject painelMensagensProntas;
+
+    public GameObject fundoPainel;
+
 
     public GameObject painel_aguarde;
     public TMP_Text txt_painelGeral;
@@ -78,6 +82,8 @@ public class Jogo : MonoBehaviour, IClient
     public Button btnPular;
     public Button btn5050;
     public Button btnProfessor;
+
+    public Button btnAbrirMensagensProntas;
     private float transparencia = 0.3f;
     private float sem_transparencia = 1.0f;
     private Color cor_btn_professor;
@@ -126,6 +132,8 @@ public class Jogo : MonoBehaviour, IClient
     private int correct;
     private int pulou = 0;
     private int pulou_no_facil = 0;
+
+    public bool pulou_na_fase = false;
 
     private int qst;
 
@@ -527,6 +535,7 @@ public class Jogo : MonoBehaviour, IClient
         }
 
         painelConfirma.SetActive(true);
+        fundoPainel.SetActive(true);
 
         answer.alternativa = tag;
     }
@@ -676,6 +685,7 @@ public class Jogo : MonoBehaviour, IClient
 
     public void ConfirmarRespostaIndividual()
     {
+        fundoPainel.SetActive(false);
         painelConfirma.SetActive(false);
 
         correct = VerificaResposta();
@@ -713,6 +723,7 @@ public class Jogo : MonoBehaviour, IClient
     public void ConfirmarRespostaFinal()
     {
         painelConfirma.SetActive(false);
+        fundoPainel.SetActive(false);
 
         correct = VerificaResposta();
         
@@ -735,6 +746,7 @@ public class Jogo : MonoBehaviour, IClient
     public void painelAguarde(string s, int btn_ok)
     {
         painel_aguarde.SetActive(true);
+        fundoPainel.SetActive(true);
         txt_painelGeral.text = "" + s;
         
         if (btn_ok == 1) btnOK_painel.gameObject.SetActive(true);
@@ -744,36 +756,44 @@ public class Jogo : MonoBehaviour, IClient
     public void fechaPainelAguarde()
     {
         painel_aguarde.SetActive(false);
+        fundoPainel.SetActive(false);
     }
 
     public void fechaConfirma()
     {
         painelConfirma.SetActive(false);
+        fundoPainel.SetActive(false);
     }
 
     public void fechaPainel5050()
     {
         painelAjuda5050.SetActive(false);
+        fundoPainel.SetActive(false);
+
     }
 
     public void fechaPainelPULAR()
     {
         painelAjudaPular.SetActive(false);
+        fundoPainel.SetActive(false);
     }
 
     public void ajudaDica()
     {
         painelDica.SetActive(true);
+        fundoPainel.SetActive(true);
     }
 
     public void confirmarDica()
     {
         painelDica.SetActive(false);
+        fundoPainel.SetActive(false);
     }
 
     public void fechaPulou()
     {
         painelPulou.SetActive(false);
+        fundoPainel.SetActive(false);
     }
 
 
@@ -796,6 +816,7 @@ public class Jogo : MonoBehaviour, IClient
 
     public void ajudaPula()
     {
+        fundoPainel.SetActive(true);
         if (Manager.MOMENTO == "INDIVIDUAL") 
         {
             // txt_geral.text = txt_pular_individual;
@@ -864,6 +885,7 @@ public class Jogo : MonoBehaviour, IClient
 
     public void ajuda5050()
     {
+        fundoPainel.SetActive(true);
         if (Manager.MOMENTO == "INDIVIDUAL") 
         {
             // txt_geral.text = txt_5050_individual;
@@ -925,8 +947,6 @@ public class Jogo : MonoBehaviour, IClient
         }
 
         ajudaGasta(pulou);
-
-
     }
 
     public void ajudaDuvida()
@@ -956,6 +976,36 @@ public class Jogo : MonoBehaviour, IClient
         transparencia_btn_professor = false;
         btnProfessor.interactable = true;
     }
+
+     public void mensagemPronta()
+    {
+        painelMensagensProntas.SetActive(true);
+        fundoPainel.SetActive(true);
+    }
+     public void fechaMensagemPronta()
+    {
+        painelMensagensProntas.SetActive(false);
+        fundoPainel.SetActive(false);
+    }
+     public void mensagemProntaBtns(int id)
+    {
+        string textoMensagemPronta;
+        if(id == 0){
+            textoMensagemPronta = "Vamos com a maioria!";
+        }
+        else if(id == 1){
+            textoMensagemPronta = "Vamos usar ajuda 50/50!";
+        }
+        else{
+            textoMensagemPronta = "Acho melhor pular...";
+        }
+        var msg = new mensagemChat("MENSAGEM_CHAT", dadosTimes.player, ID_TEAM, Manager.sessionId, Manager.gameId, textoMensagemPronta, false);
+        cm.send(msg);
+        painelMensagensProntas.SetActive(false);
+        fundoPainel.SetActive(false);
+        chatBox.ActivateInputField ();
+    }
+    
 
 
 // --------- TIMER ---------
@@ -1018,6 +1068,7 @@ public class Jogo : MonoBehaviour, IClient
         txt_pular_individual = "PULAR só pode ser usada no momento em grupo.";
 
         fechaPainelAguarde();
+        fundoPainel.SetActive(false);
 
         btnAlternativas[0].gameObject.SetActive(true);
         btnAlternativas[1].gameObject.SetActive(true);
@@ -1048,6 +1099,9 @@ public class Jogo : MonoBehaviour, IClient
         generalCommands.EnableAllObjectsInteractions();
         SetQntAlternatives(0);
         quadroChat.SetActive(false);
+        chatBox.gameObject.SetActive(false);
+        btnAbrirMensagensProntas.gameObject.SetActive(false);
+        painelMensagensProntas.SetActive(false);
     }
 
     public void SetGrupo()
@@ -1065,6 +1119,9 @@ public class Jogo : MonoBehaviour, IClient
         
         SetQntAlternatives(1);
         quadroChat.SetActive(true);
+        chatBox.gameObject.SetActive(true);
+        btnAbrirMensagensProntas.gameObject.SetActive(true);
+
 
         SetAlpha();
         ajudaGasta(pulou);
@@ -1073,7 +1130,7 @@ public class Jogo : MonoBehaviour, IClient
         if (Manager.leaderId == dadosTimes.player.id)
         {
             painelAguarde("Como líder, converse com sua equipe e envie a respota final do grupo.", 1);
-
+            fundoPainel.SetActive(true);
             generalCommands.EnableAllObjectsInteractions();
         
             foreach (Button btn in btnAlternativas)        
@@ -1088,6 +1145,7 @@ public class Jogo : MonoBehaviour, IClient
         {
 
             painelAguarde("Discutam a solução e aguarde a confirmação da resposta final pelo líder.", 1);
+            fundoPainel.SetActive(true);
 
             btnAlternativas[0].gameObject.SetActive(false);
             btnAlternativas[1].gameObject.SetActive(false);
@@ -1103,6 +1161,8 @@ public class Jogo : MonoBehaviour, IClient
             confirmaDica.interactable = true;
             btnConfig.interactable = true;
             generalCommands.EnableInteraction(quadroChat);
+            generalCommands.EnableInteraction(chatBox.gameObject);
+            generalCommands.EnableInteraction(btnAbrirMensagensProntas.gameObject);
         }
     }
 
@@ -1171,6 +1231,7 @@ public class Jogo : MonoBehaviour, IClient
                  cm.send(msg);
 
                  indice_qst = 0;
+                 pulou_na_fase = false;
 
             } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium)
             {
@@ -1180,6 +1241,7 @@ public class Jogo : MonoBehaviour, IClient
                 cm.send(msg);
 
                 indice_qst = 0;
+                pulou_na_fase = false;
 
             } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
             {
@@ -1217,7 +1279,7 @@ public class Jogo : MonoBehaviour, IClient
         if (Manager.leaderId == dadosTimes.player.id && (qst_respondidas != Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard))
         {
             var msg_prox = new ProxQuestao("PROXIMA_QUESTAO", dadosTimes.player, ID_TEAM, Manager.sessionId,
-                                        Manager.gameId);
+                                        Manager.gameId, pulou_na_fase);
 
             cm.send(msg_prox);
 
@@ -1309,7 +1371,16 @@ public class Jogo : MonoBehaviour, IClient
 
     }
 
-
+     private void EscondeClicandoFora(GameObject panel) {
+        if (Input.GetMouseButton(0) && panel.activeSelf && 
+            !RectTransformUtility.RectangleContainsScreenPoint(
+                panel.GetComponent<RectTransform>(), 
+                Input.mousePosition, 
+                Camera.main)) { 
+            panel.SetActive(false);
+            fundoPainel.SetActive(false);
+        }
+    }
 
 
 // --------- HANDLE ---------
@@ -1398,6 +1469,7 @@ public class Jogo : MonoBehaviour, IClient
             if (Manager.leaderId == dadosTimes.player.id)
             {
                 painelAguarde("O líder se desconectou. Você é o novo líder da equipe.", 1);
+                fundoPainel.SetActive(false);
 
                 generalCommands.EnableAllObjectsInteractions();
             
@@ -1510,7 +1582,6 @@ public class Jogo : MonoBehaviour, IClient
     public void MSG_AJUDA(string msgJSON)
     {
         msgAJUDA_5050 message = JsonUtility.FromJson<msgAJUDA_5050>(msgJSON);
-        
 
         if (message.help == "pular"){
 
@@ -1526,9 +1597,10 @@ public class Jogo : MonoBehaviour, IClient
                 txt_geral.text = "A equipe decidiu por pular a questão.";
                 txt_geral.enabled = true;
                 painelPulou.SetActive(true);
+                fundoPainel.SetActive(true);
 
                 pulou = 1;
-                
+                pulou_na_fase = true;
                 if (perguntaAtual.nivel == "facil") pulou_no_facil = 1;
 
                 indice_qst++;
@@ -1547,7 +1619,6 @@ public class Jogo : MonoBehaviour, IClient
 
     public void MSG_NOVA_FASE(string msgJSON)
     {
-
 
         msgPROX_FASE message = JsonUtility.FromJson<msgPROX_FASE>(msgJSON);
 
@@ -1586,7 +1657,7 @@ public class Jogo : MonoBehaviour, IClient
         }
         else
         {
-            textoChat.texto = message.user.name + ":" + message.texto; 
+           textoChat.texto = message.user.name + ":" + message.texto; 
         }
 
         GameObject novoChat = Instantiate(painelTexto, painelChat.transform);
@@ -1633,8 +1704,22 @@ public class Jogo : MonoBehaviour, IClient
                 cm.send(msg);
                // readChat(chatBox.text);
                 chatBox.text = "";
+                chatBox.ActivateInputField ();
             }
         }
+        if(chatBox.isFocused == true){
+            quadroChat.SetActive(true);
+        }
+        else{
+            quadroChat.SetActive(false);
+        }
+        EscondeClicandoFora(painelMensagensProntas);
+        EscondeClicandoFora(painelDica);
+        EscondeClicandoFora(painelConfirma);
+        EscondeClicandoFora(painelAjuda5050);
+        EscondeClicandoFora(painelAjudaPular);
+        EscondeClicandoFora(painelPulou);
+
 
         // if (Manager.reset_estrelas == 1){
         //     resetaEstrelas();
@@ -1686,6 +1771,7 @@ public class msgNOVA_QUESTAO
     public int leaderId;
     public int sessionId;
     public int gameId;
+    public bool pulou_na_fase;
 }
 
 [System.Serializable]
