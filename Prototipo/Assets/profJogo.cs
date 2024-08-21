@@ -191,11 +191,8 @@ public class profJogo : MonoBehaviour, IClient
         }
     }
 
-    void CarregarPergunta(int[] alter, bool pulou_na_fase, int qualTime)
+    void CarregarPergunta(int[] alter,  int qualTime)
     {  
-       if((qualPergunta[qualTime] == (Manager.nQ_easy) || qualPergunta[qualTime] == (Manager.nQ_easy + Manager.nQ_medium + 1))&& !pulou_na_fase){
-            qualPergunta[qualTime]++;
-        }
         
         if (carregaDados.listaDados.Count > 0)
         {
@@ -306,7 +303,7 @@ public class profJogo : MonoBehaviour, IClient
         Manager.leaderId = message.leaderId;
         alt = message.alternativas;
         Manager.teamId = message.teamId;
-        CarregarPergunta(alt, message.pulou_na_fase, message.teamId - 1);
+        CarregarPergunta(alt, message.teamId - 1);
        /* if (qst_respondidas != Manager.nQ_easy && qst_respondidas != Manager.nQ_easy + Manager.nQ_medium && qst_respondidas != Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
         {
             ProximaQuestao();
@@ -347,6 +344,20 @@ public class profJogo : MonoBehaviour, IClient
             SceneManager.LoadScene("profFim");    
 
         }
+    }
+
+    public void MSG_NOVA_FASE(string msgJSON)
+    {
+
+        msgPROX_FASE_prof message = JsonUtility.FromJson<msgPROX_FASE_prof>(msgJSON);
+        Debug.Log("time " + message.teamId + "entrou proxima fase");
+        Debug.Log("pergunta " + qualPergunta[message.teamId-1]); 
+        Debug.Log(Manager.nQ_easy);
+        Debug.Log(Manager.nQ_medium);
+        if((qualPergunta[message.teamId-1] == (Manager.nQ_easy)+1 || qualPergunta[message.teamId-1] == (Manager.nQ_easy + Manager.nQ_medium + 1))){
+            qualPergunta[message.teamId-1]++;
+        }
+
     }
     void gera_arquivo(string json)
     {
@@ -398,6 +409,9 @@ public class profJogo : MonoBehaviour, IClient
         {
             MSG_CLASSF_FINAL(ms);
         }
+         else if (messageType == "INICIA_NOVA_FASE"){
+            MSG_NOVA_FASE(ms);
+        } 
     }
     
     // // Start is called before the first frame update
@@ -493,6 +507,16 @@ public class profJogo : MonoBehaviour, IClient
 }
 
 [System.Serializable]
+public class msgPROX_FASE_prof
+{
+    public string message_type;
+    public int teamId;
+    public int leaderId;
+    public int sessionId;
+    public int gameId;
+}
+
+[System.Serializable]
 public class QuestionProf
 {
     public int[] easy;
@@ -539,7 +563,6 @@ public class msgNOVA_QUESTAO_MODERADOR
     public int leaderId;
     public int sessionId;
     public int gameId;
-    public bool pulou_na_fase;
 }
 
 
