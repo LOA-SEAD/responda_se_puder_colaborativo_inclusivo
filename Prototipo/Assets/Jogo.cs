@@ -1227,7 +1227,7 @@ public class Jogo : MonoBehaviour, IClient
                                                             Manager.gameId);
 
                  cm.send(msg);
-
+                 StartCoroutine(ExampleCoroutine());
                  indice_qst = 0;
 
             } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium)
@@ -1236,7 +1236,7 @@ public class Jogo : MonoBehaviour, IClient
                                                             Manager.gameId);
 
                 cm.send(msg);
-
+                StartCoroutine(ExampleCoroutine());
                 indice_qst = 0;
 
             } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
@@ -1284,6 +1284,18 @@ public class Jogo : MonoBehaviour, IClient
         } else {
             indice_qst++;
         }
+    }
+
+     IEnumerator ExampleCoroutine()
+    {
+        //Print the time of when the function is first called.
+        Debug.Log("Started Coroutine at timestamp : " + Time.time);
+
+        //yield on a new YieldInstruction that waits for 5 seconds.
+        yield return new WaitForSeconds(10);
+
+        //After we have waited 5 seconds print the time again.
+        Debug.Log("Finished Coroutine at timestamp : " + Time.time);
     }
 
 // --------- CONFIRMA AVALIAÇÃO ---------

@@ -354,9 +354,9 @@ public class profJogo : MonoBehaviour, IClient
         Debug.Log("pergunta " + qualPergunta[message.teamId-1]); 
         Debug.Log(Manager.nQ_easy);
         Debug.Log(Manager.nQ_medium);
-        if((qualPergunta[message.teamId-1] == (Manager.nQ_easy)+1 || qualPergunta[message.teamId-1] == (Manager.nQ_easy + Manager.nQ_medium + 1))){
+      /*  if((qualPergunta[message.teamId-1] == (Manager.nQ_easy)+1 || qualPergunta[message.teamId-1] == (Manager.nQ_easy + Manager.nQ_medium + 1))){
             qualPergunta[message.teamId-1]++;
-        }
+        }*/
 
     }
     void gera_arquivo(string json)
