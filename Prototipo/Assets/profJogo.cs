@@ -45,7 +45,6 @@ public class profJogo : MonoBehaviour, IClient
     public ScrollRect scrollRect_prof;
     public int chatAberto = 0;
     private int totalQuestoes;
-    private DadosJogo perguntaAtual;
     public int[] alt;
     [SerializeField]
     public List<GameObject> questao = new List<GameObject>();
@@ -191,8 +190,12 @@ public class profJogo : MonoBehaviour, IClient
         }
     }
 
-    void CarregarPergunta(int[] alter,  int qualTime)
+    void CarregarPergunta(int[] alter,  int qualTime, bool pulou_na_fase)
     {  
+        DadosJogo perguntaAtual;
+        if((qualPergunta[qualTime] == (Manager.nQ_easy) || qualPergunta[qualTime] == (Manager.nQ_easy + Manager.nQ_medium + 1))&& (!pulou_na_fase)){
+            qualPergunta[qualTime]++;
+        }
         
         if (carregaDados.listaDados.Count > 0)
         {
@@ -214,17 +217,20 @@ public class profJogo : MonoBehaviour, IClient
         {
             questaoTexto.text = perguntaAtual.pergunta;
       
+            Debug.Log(alter[0] + "," + alter[1]  + ","  + alter[2] + ","  + alter[3] + " time " + qualTime);
             carregaDados.Shuffle(ref perguntaAtual, alter);
-
-            alternativa1Texto.text = "A. " + ObterAlternativa(ref perguntaAtual, 0);
-            alternativa2Texto.text = "B. " + ObterAlternativa(ref perguntaAtual, 1);
-            alternativa3Texto.text = "C. " + ObterAlternativa(ref perguntaAtual, 2);
-            alternativa4Texto.text = "D. " + ObterAlternativa(ref perguntaAtual, 3);
+            Debug.Log(alter[0] + "," + alter[1]  + ","  + alter[2] + ","  + alter[3] + " time " + qualTime);
+            alternativa1Texto.text = "A. " + ObterAlternativa( perguntaAtual, 0);
+            alternativa2Texto.text = "B. " + ObterAlternativa( perguntaAtual, 1);
+            alternativa3Texto.text = "C. " + ObterAlternativa( perguntaAtual, 2);
+            alternativa4Texto.text = "D. " + ObterAlternativa( perguntaAtual, 3);
     
         }
+
+        
     }
 
-    string ObterAlternativa(ref DadosJogo dados, int index)
+    string ObterAlternativa( DadosJogo dados, int index)
     {
         switch (index)
         {
@@ -303,7 +309,7 @@ public class profJogo : MonoBehaviour, IClient
         Manager.leaderId = message.leaderId;
         alt = message.alternativas;
         Manager.teamId = message.teamId;
-        CarregarPergunta(alt, message.teamId - 1);
+        CarregarPergunta(alt, message.teamId - 1, message.pulou_na_fase);
        /* if (qst_respondidas != Manager.nQ_easy && qst_respondidas != Manager.nQ_easy + Manager.nQ_medium && qst_respondidas != Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
         {
             ProximaQuestao();
@@ -346,7 +352,7 @@ public class profJogo : MonoBehaviour, IClient
         }
     }
 
-    public void MSG_NOVA_FASE(string msgJSON)
+    /*public void MSG_NOVA_FASE(string msgJSON)
     {
 
         msgPROX_FASE_prof message = JsonUtility.FromJson<msgPROX_FASE_prof>(msgJSON);
@@ -354,11 +360,11 @@ public class profJogo : MonoBehaviour, IClient
         Debug.Log("pergunta " + qualPergunta[message.teamId-1]); 
         Debug.Log(Manager.nQ_easy);
         Debug.Log(Manager.nQ_medium);
-      /*  if((qualPergunta[message.teamId-1] == (Manager.nQ_easy)+1 || qualPergunta[message.teamId-1] == (Manager.nQ_easy + Manager.nQ_medium + 1))){
+        if((qualPergunta[message.teamId-1] == (Manager.nQ_easy)+1 || qualPergunta[message.teamId-1] == (Manager.nQ_easy + Manager.nQ_medium + 1))){
             qualPergunta[message.teamId-1]++;
-        }*/
+        }
 
-    }
+    }*/
     void gera_arquivo(string json)
     {
              
@@ -409,9 +415,9 @@ public class profJogo : MonoBehaviour, IClient
         {
             MSG_CLASSF_FINAL(ms);
         }
-         else if (messageType == "INICIA_NOVA_FASE"){
+      /*   else if (messageType == "INICIA_NOVA_FASE"){
             MSG_NOVA_FASE(ms);
-        } 
+        } */
     }
     
     // // Start is called before the first frame update
@@ -506,7 +512,7 @@ public class profJogo : MonoBehaviour, IClient
         
 }
 
-[System.Serializable]
+/*[System.Serializable]
 public class msgPROX_FASE_prof
 {
     public string message_type;
@@ -514,7 +520,7 @@ public class msgPROX_FASE_prof
     public int leaderId;
     public int sessionId;
     public int gameId;
-}
+}*/
 
 [System.Serializable]
 public class QuestionProf
@@ -563,6 +569,7 @@ public class msgNOVA_QUESTAO_MODERADOR
     public int leaderId;
     public int sessionId;
     public int gameId;
+    public bool pulou_na_fase;
 }
 
 

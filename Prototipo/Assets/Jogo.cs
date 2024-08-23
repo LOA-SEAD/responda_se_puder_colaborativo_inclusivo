@@ -132,6 +132,7 @@ public class Jogo : MonoBehaviour, IClient
     private int correct;
     private int pulou = 0;
     private int pulou_no_facil = 0;
+    public bool pulou_na_fase = false;
 
     private int qst;
 
@@ -1227,7 +1228,7 @@ public class Jogo : MonoBehaviour, IClient
                                                             Manager.gameId);
 
                  cm.send(msg);
-                 StartCoroutine(ExampleCoroutine());
+                  pulou_na_fase = false;
                  indice_qst = 0;
 
             } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium)
@@ -1236,7 +1237,7 @@ public class Jogo : MonoBehaviour, IClient
                                                             Manager.gameId);
 
                 cm.send(msg);
-                StartCoroutine(ExampleCoroutine());
+                 pulou_na_fase = false;
                 indice_qst = 0;
 
             } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
@@ -1245,7 +1246,7 @@ public class Jogo : MonoBehaviour, IClient
                 // var msg = new FimDeJogo("FIM_DE_JOGO", dadosTimes.player, ID_TEAM, Manager.sessionId,
                 //                                             Manager.gameId, Manager.grpScore, Manager.gameTime);
 
-                
+                pulou_na_fase = false;
 
                 // cm.send(msg);    
 
@@ -1259,7 +1260,7 @@ public class Jogo : MonoBehaviour, IClient
 
                 // var msg = new FimDeJogo("FIM_DE_JOGO", dadosTimes.player, ID_TEAM, Manager.sessionId,
                 //                                             Manager.gameId, Manager.grpScore, Manager.gameTime);
-
+                pulou_na_fase = false;
                 // cm.send(msg);
 
                 // Invoke("AtivarTelaFimDeJogo", 5f);
@@ -1275,7 +1276,7 @@ public class Jogo : MonoBehaviour, IClient
         if (Manager.leaderId == dadosTimes.player.id && (qst_respondidas != Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard))
         {
             var msg_prox = new ProxQuestao("PROXIMA_QUESTAO", dadosTimes.player, ID_TEAM, Manager.sessionId,
-                                        Manager.gameId);
+                                        Manager.gameId, pulou_na_fase);
 
             cm.send(msg_prox);
 
@@ -1284,18 +1285,6 @@ public class Jogo : MonoBehaviour, IClient
         } else {
             indice_qst++;
         }
-    }
-
-     IEnumerator ExampleCoroutine()
-    {
-        //Print the time of when the function is first called.
-        Debug.Log("Started Coroutine at timestamp : " + Time.time);
-
-        //yield on a new YieldInstruction that waits for 5 seconds.
-        yield return new WaitForSeconds(10);
-
-        //After we have waited 5 seconds print the time again.
-        Debug.Log("Finished Coroutine at timestamp : " + Time.time);
     }
 
 // --------- CONFIRMA AVALIAÇÃO ---------
@@ -1512,6 +1501,7 @@ public class Jogo : MonoBehaviour, IClient
 
         if (qst_respondidas != Manager.nQ_easy && qst_respondidas != Manager.nQ_easy + Manager.nQ_medium && qst_respondidas != Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
         {
+            Debug.Log("entrou if pular");
             ProximaQuestao();
         }
 
@@ -1608,6 +1598,7 @@ public class Jogo : MonoBehaviour, IClient
                 fundoPainel.SetActive(true);
 
                 pulou = 1;
+                pulou_na_fase = true;
                 if (perguntaAtual.nivel == "facil") pulou_no_facil = 1;
 
                 indice_qst++;
@@ -1634,7 +1625,6 @@ public class Jogo : MonoBehaviour, IClient
 
         indice_qst = 0;
         level_qst++;
-
         MOMENTO_AVALIACAO();
 
     }
@@ -1778,6 +1768,7 @@ public class msgNOVA_QUESTAO
     public int leaderId;
     public int sessionId;
     public int gameId;
+    public bool pulou_na_fase;
 }
 
 [System.Serializable]
