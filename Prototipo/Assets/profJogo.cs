@@ -192,18 +192,20 @@ public class profJogo : MonoBehaviour, IClient
 
     void CarregarPergunta(int[] alter,  int qualTime, bool pulou_na_fase)
     {  
-        DadosJogo perguntaAtual;
+        Questao perguntaAtual;
         if((qualPergunta[qualTime] == (Manager.nQ_easy) || qualPergunta[qualTime] == (Manager.nQ_easy + Manager.nQ_medium + 1))&& (!pulou_na_fase)){
             qualPergunta[qualTime]++;
         }
         
         if (carregaDados.listaDados.Count > 0)
         {
-            perguntaAtual = carregaDados.listaDados[qualPergunta[qualTime]];
+            Debug.Log("qualPergunta[qualTime] = " + qualPergunta[qualTime]);
+            perguntaAtual = new Questao(qualTime, carregaDados.listaDados[qualPergunta[qualTime]]);
             qualPergunta[qualTime]++;
         }
         else
         {
+            Debug.Log("(" + qualTime + ") Entrou no if perguntaAtual = null");
             perguntaAtual = null;
         }
 
@@ -218,8 +220,10 @@ public class profJogo : MonoBehaviour, IClient
             questaoTexto.text = perguntaAtual.pergunta;
       
             Debug.Log(alter[0] + "," + alter[1]  + ","  + alter[2] + ","  + alter[3] + " time " + qualTime);
-            carregaDados.Shuffle(ref perguntaAtual, alter);
-            Debug.Log(alter[0] + "," + alter[1]  + ","  + alter[2] + ","  + alter[3] + " time " + qualTime);
+            Debug.Log(perguntaAtual);
+            perguntaAtual.Shuffle(alter);
+            Debug.Log(perguntaAtual);
+
             alternativa1Texto.text = "A. " + ObterAlternativa( perguntaAtual, 0);
             alternativa2Texto.text = "B. " + ObterAlternativa( perguntaAtual, 1);
             alternativa3Texto.text = "C. " + ObterAlternativa( perguntaAtual, 2);
@@ -230,7 +234,7 @@ public class profJogo : MonoBehaviour, IClient
         
     }
 
-    string ObterAlternativa( DadosJogo dados, int index)
+    string ObterAlternativa(Questao dados, int index)
     {
         switch (index)
         {
@@ -423,6 +427,9 @@ public class profJogo : MonoBehaviour, IClient
     // // Start is called before the first frame update
     void Start()
     {
+        carregaDados.Load();
+        carregaDados.Select();
+        
         // Manager.moderator.id = 1;
         Manager.teamId = 0;
 
@@ -483,8 +490,8 @@ public class profJogo : MonoBehaviour, IClient
         Manager.totalMedio = 0;
         Manager.totalDificil = 0;
         Manager.countQuestoesJogo();
-        carregaDados.Load();
-        carregaDados.Select();
+        //carregaDados.Load();
+        //carregaDados.Select();
         totalQuestoes = carregaDados.listaDados.Count;
 
         PrimeiraQuestao();
@@ -570,6 +577,7 @@ public class msgNOVA_QUESTAO_MODERADOR
     public int sessionId;
     public int gameId;
     public bool pulou_na_fase;
+    public bool entrou_nova_fase;
 }
 
 

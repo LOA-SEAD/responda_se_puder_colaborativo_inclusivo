@@ -134,6 +134,8 @@ public class Jogo : MonoBehaviour, IClient
     private int pulou_no_facil = 0;
     public bool pulou_na_fase = false;
 
+    public bool entrou_nova_fase = false;
+
     private int qst;
 
     private int level_qst = 0;
@@ -161,7 +163,6 @@ public class Jogo : MonoBehaviour, IClient
     private int m_Itens;
 
     public static List<GameObject> quadrosPlayerAval = new List<GameObject>();
-    private bool primeira_avaliacao = true;
 
     //Fila de desconexão
     private Queue<int> filaDesconexao = new Queue<int>();
@@ -188,8 +189,6 @@ public class Jogo : MonoBehaviour, IClient
 
         SetAlpha();
         SetQntAlternatives(0);
-
-        // setTelaAvaliacao();
 
         painelDica.gameObject.SetActive(false);
         painelConfirma.gameObject.SetActive(false);
@@ -559,7 +558,6 @@ public class Jogo : MonoBehaviour, IClient
     public void ProximaQuestao()
     {
         numeroQuestao++;
-
         if (qst_respondidas <= Manager.nQ_total)
         {
             SetIndividual();
@@ -1105,6 +1103,7 @@ public class Jogo : MonoBehaviour, IClient
 
     public void SetGrupo()
     {
+        entrou_nova_fase = false;
         zeraTimer();
         tempoQuestao.enabled = false;
         
@@ -1167,16 +1166,14 @@ public class Jogo : MonoBehaviour, IClient
 
     void MOMENTO_AVALIACAO()
     {
-            CanvasRCerta.SetActive(false);
-            CanvasRErrada.SetActive(false);
-            CanvasJogo.SetActive(false);
-            CanvasFase.SetActive(false);
-            CanvasAvaliacao.SetActive(true);
+        CanvasRCerta.SetActive(false);
+        CanvasRErrada.SetActive(false);
+        CanvasJogo.SetActive(false);
+        CanvasFase.SetActive(false);
+        CanvasAvaliacao.SetActive(true);
 
-        if (primeira_avaliacao == true) {
-            setTelaAvaliacao();
-            primeira_avaliacao = false;
-        }
+        setTelaAvaliacao();
+
 
         atualizaTelaAvaliacao();                  
     }
@@ -1224,6 +1221,7 @@ public class Jogo : MonoBehaviour, IClient
 
             if (qst_respondidas == Manager.nQ_easy)
             {
+                entrou_nova_fase = true;
                 var msg = new ProxFase("PROXIMA_FASE", dadosTimes.player, ID_TEAM, Manager.sessionId,
                                                             Manager.gameId);
 
@@ -1233,11 +1231,12 @@ public class Jogo : MonoBehaviour, IClient
 
             } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium)
             {
+                entrou_nova_fase = true;
                 var msg = new ProxFase("PROXIMA_FASE", dadosTimes.player, ID_TEAM, Manager.sessionId,
                                                             Manager.gameId);
 
                 cm.send(msg);
-                 pulou_na_fase = false;
+                pulou_na_fase = false;
                 indice_qst = 0;
 
             } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
@@ -1245,7 +1244,7 @@ public class Jogo : MonoBehaviour, IClient
 
                 // var msg = new FimDeJogo("FIM_DE_JOGO", dadosTimes.player, ID_TEAM, Manager.sessionId,
                 //                                             Manager.gameId, Manager.grpScore, Manager.gameTime);
-
+                entrou_nova_fase = true;
                 pulou_na_fase = false;
 
                 // cm.send(msg);    
@@ -1260,6 +1259,7 @@ public class Jogo : MonoBehaviour, IClient
 
                 // var msg = new FimDeJogo("FIM_DE_JOGO", dadosTimes.player, ID_TEAM, Manager.sessionId,
                 //                                             Manager.gameId, Manager.grpScore, Manager.gameTime);
+                entrou_nova_fase = true;
                 pulou_na_fase = false;
                 // cm.send(msg);
 
@@ -1276,7 +1276,7 @@ public class Jogo : MonoBehaviour, IClient
         if (Manager.leaderId == dadosTimes.player.id && (qst_respondidas != Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard))
         {
             var msg_prox = new ProxQuestao("PROXIMA_QUESTAO", dadosTimes.player, ID_TEAM, Manager.sessionId,
-                                        Manager.gameId, pulou_na_fase);
+                                        Manager.gameId, pulou_na_fase, entrou_nova_fase);
 
             cm.send(msg_prox);
 
@@ -1306,7 +1306,7 @@ public class Jogo : MonoBehaviour, IClient
 
         CanvasAvaliacao.SetActive(false);
 
-        if (qst_respondidas == Manager.nQ_easy)
+    /*    if (qst_respondidas == Manager.nQ_easy)
         {
             if (pulou == 0)
             {
@@ -1349,7 +1349,7 @@ public class Jogo : MonoBehaviour, IClient
 
 
         } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
-        {
+        {*/
 
             Manager.teamId = ID_TEAM;
             var msg = new FimDeJogo("FIM_DE_JOGO", dadosTimes.player, ID_TEAM, Manager.sessionId,
@@ -1363,8 +1363,8 @@ public class Jogo : MonoBehaviour, IClient
             SceneManager.LoadScene("Fim");    
 
         
-        }
-        ProximaQuestao();
+       /* }
+        ProximaQuestao();*/
 
     }
 
@@ -1499,7 +1499,7 @@ public class Jogo : MonoBehaviour, IClient
 
         SetIndividual();
 
-        if (qst_respondidas != Manager.nQ_easy && qst_respondidas != Manager.nQ_easy + Manager.nQ_medium && qst_respondidas != Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
+        if (!message.entrou_nova_fase)
         {
             Debug.Log("entrou if pular");
             ProximaQuestao();
@@ -1625,7 +1625,53 @@ public class Jogo : MonoBehaviour, IClient
 
         indice_qst = 0;
         level_qst++;
-        MOMENTO_AVALIACAO();
+        
+        if (qst_respondidas == Manager.nQ_easy)
+        {
+            Debug.Log("valor pulou = " + pulou);
+            if (pulou == 0)
+            {
+                //SetIndividual();
+                //CarregarPergunta();
+                carregaDados.listaDados.RemoveAt(0);
+            }
+
+            qst = Manager.nQ_easy + 1;
+            Manager.FASE = "Nível Médio";
+
+            CanvasRCerta.SetActive(false);
+            CanvasRErrada.SetActive(false);
+            CanvasJogo.SetActive(false);
+            CanvasFase.SetActive(true);
+            SetLevelText();
+            SetLeaderText();
+            Invoke("NextQ", 10f);
+            // CanvasJogo.SetActive(true);
+
+
+        } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium)
+        {
+
+            if (pulou == 0 || pulou_no_facil == 1)
+            {
+                //SetIndividual();
+                //CarregarPergunta();
+                carregaDados.listaDados.RemoveAt(0);
+            }
+
+            qst = Manager.nQ_easy + Manager.nQ_medium + 2;
+            Manager.FASE = "Nível Difícil";
+            CanvasRCerta.SetActive(false);
+            CanvasRErrada.SetActive(false);
+            CanvasJogo.SetActive(false);
+            CanvasFase.SetActive(true);
+            SetLevelText();
+            SetLeaderText();
+            Invoke("NextQ", 10f);
+
+        }
+        
+        ProximaQuestao();
 
     }
 
@@ -1769,6 +1815,8 @@ public class msgNOVA_QUESTAO
     public int sessionId;
     public int gameId;
     public bool pulou_na_fase;
+
+    public bool entrou_nova_fase;
 }
 
 [System.Serializable]

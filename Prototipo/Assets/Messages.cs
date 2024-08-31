@@ -144,7 +144,8 @@ public class ProxQuestao : Message
     public int sessionId;
     public int gameId;
     public bool pulou_na_fase;
-    public ProxQuestao(string messageType, User user, int teamId, int sessionId, int gameId, bool pulou_na_fase)
+    public bool entrou_nova_fase;
+    public ProxQuestao(string messageType, User user, int teamId, int sessionId, int gameId, bool pulou_na_fase, bool entrou_nova_fase)
     {
         this.user = user;
         this.teamId = teamId;
@@ -152,6 +153,7 @@ public class ProxQuestao : Message
         this.gameId = gameId;
         this.messageType = messageType;
         this.pulou_na_fase = pulou_na_fase;
+        this.entrou_nova_fase = entrou_nova_fase;
 
     }
 }

@@ -147,3 +147,56 @@ public class DadosJogo
     public string nivel;
         
 }
+
+public class Questao{
+    public int time;
+    public string pergunta;
+    public string resposta;
+    public string r2;
+    public string r3;
+    public string r4;
+
+    public Questao(int time, DadosJogo dados) {
+        this.time = time;
+        this.pergunta = dados.pergunta;
+        this.resposta = dados.resposta;
+        this.r2 = dados.r2;
+        this.r3 = dados.r3;
+        this.r4 = dados.r4;
+    }
+
+    public virtual string ToString () {
+        string retorno = "[" + time;
+        retorno += ", " + pergunta;
+        retorno += ", " + resposta;
+        retorno += ", " + resposta;
+        retorno += ", " + r2;
+        retorno += ", " + r3;
+        retorno += ", " + r4 + "]";
+        return retorno;
+    }
+
+    public void Shuffle(int[] p)
+    {
+        string[] alt = {this.resposta, this.r2, this.r3, this.r4};
+        List<string> novaOrdem = new List<string>();
+
+        foreach (int i in p)
+        {
+            if (i >= 0 && i < alt.Length)
+            {
+                novaOrdem.Add(alt[i]);
+            }
+        }
+
+        if (novaOrdem.Count == alt.Length)
+        {
+            this.resposta = novaOrdem[0];
+            this.r2 = novaOrdem[1];
+            this.r3 = novaOrdem[2];
+            this.r4 = novaOrdem[3];
+        }
+
+        
+    }
+}

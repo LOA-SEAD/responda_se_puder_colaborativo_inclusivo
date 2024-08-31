@@ -29,7 +29,7 @@ public class ConnectionManager
         
         Debug.Log("gameServerURL = " + this.gameServerURL);
 
-        this.InitWebSocketClient();
+        // this.InitWebSocketClient();
     }
 
     public bool isConnected() {
