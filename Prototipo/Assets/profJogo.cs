@@ -59,6 +59,8 @@ public class profJogo : MonoBehaviour, IClient
     
     [SerializeField]
     public List<GameObject> notification = new List<GameObject>();
+    [SerializeField]
+    public List<Outline> outlineComponent = new List<Outline>();
     
 
     // //Quadros em tela
@@ -69,48 +71,6 @@ public class profJogo : MonoBehaviour, IClient
     [SerializeField] private int m_Itens;
 
     private List<GameObject> quadrosEquipe = new List<GameObject>();
-
-    // public Vector3 escalaDesejada;
-
-    // public GameObject painelChat;
-
-    // public void MSG_CHAT(string msgJSON){
-
-    //         Color cor;
-    //         msgCHAT_moderator message = JsonUtility.FromJson<msgCHAT_moderator>(msgJSON);
-
-
-    //         if(messageList.Count >= chatMax){
-    //             // Destroy(messageList[0].painelTexto.gameObject);
-    //             // messageList.Remove(messageList[0]);
-    //         }
-
-    //         msgCHAT_moderator textoChat = new msgCHAT_moderator();
-    //         if(message.moderator)
-    //             textoChat.texto = message.user.name + ": " + message.texto;//falou;
-    //         else
-    //             textoChat.texto = "Equipe " + message.teamId + " / " + message.user.name + ": " + message.texto;   
-
-    //         GameObject novoChat = Instantiate(painelTexto, painelChat.transform);
-
-    //         textoChat.painelTexto = novoChat.GetComponent<Text>();
-
-    //         textoChat.painelTexto.text = textoChat.texto;
-
-    //         if(message.moderator){
-    //             ColorUtility.TryParseHtmlString("#f41004", out cor);
-    //             textoChat.painelTexto.fontStyle = FontStyle.Bold;
-    //         }
-    //         else{
-    //             //textoChat.painelTexto.fontStyle = FontStyle.Regular;
-    //                 ColorUtility.TryParseHtmlString("#112A46", out cor);
-    //         }
-
-    //         textoChat.painelTexto.color = cor;
-    //         messageList.Add(textoChat);
-
-    //         Debug.Log(textoChat.texto);
-    //     }
     
     public void MSG_CHAT(string msgJSON)
     {
@@ -164,18 +124,15 @@ public class profJogo : MonoBehaviour, IClient
 
     public void btnTeamChat(int teamId)
     {
-        if(chatAberto != 0)
+        if(chatAberto != 0){
             painelQuestoesTime[chatAberto].gameObject.SetActive(false);
+            outlineComponent[chatAberto-1].effectColor = Color.black; 
+        }
         Manager.teamId = teamId;
         Debug.Log(Manager.teamId);
         chatAberto = teamId;
         notification[teamId].gameObject.SetActive(false);
-     /*   for(int i = 0;i < Manager.nrTeam;i++){
-            if(i == teamId)
-                painelQuestoesTime[i].gameObject.SetActive(true);
-            else
-                painelQuestoesTime[i].gameObject.SetActive(false);
-        }*/
+        outlineComponent[teamId-1].effectColor = Color.red; 
         painelQuestoesTime[teamId].gameObject.SetActive(true);
         equipeSelecionada.text = "Equipe " + teamId;
         if (msgTeams.ContainsKey(teamId))
@@ -444,6 +401,7 @@ public class profJogo : MonoBehaviour, IClient
             novaEquipe.transform.localScale = new Vector3(1.894364f, 0.179433f, 0.23102f);
             notification.Add(novaEquipe.transform.Find("notification").gameObject);
             quadrosEquipe.Add(novaEquipe);
+            outlineComponent.Add(novaEquipe.GetComponent<Outline>());
             int teamId = i+1;
             Button btn = novaEquipe.GetComponentInChildren<Button>();
             btn.onClick.AddListener(() => btnTeamChat(teamId));
