@@ -149,6 +149,7 @@ public class profJogo : MonoBehaviour, IClient
 
     void CarregarPergunta(int[] alter,  int qualTime, bool pulou_na_fase)
     {  
+        StartCoroutine(waiter());
         Questao perguntaAtual;
         if((qualPergunta[qualTime] == (Manager.nQ_easy) || qualPergunta[qualTime] == (Manager.nQ_easy + Manager.nQ_medium + 1))&& (!pulou_na_fase)){
             qualPergunta[qualTime]++;
@@ -212,6 +213,15 @@ public class profJogo : MonoBehaviour, IClient
     {
         MSG_NOVA_QUESTAO(Manager.msgPrimeiraQuestao);
     }
+
+    IEnumerator waiter()
+{
+
+    //Wait for 2 seconds
+    yield return new WaitForSeconds(2);
+
+  
+}
 
 
     private void exibir(List<msgCHAT_moderator> mensagens)
