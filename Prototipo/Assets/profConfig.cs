@@ -27,6 +27,7 @@ public class profConfig : MonoBehaviour, IClient
     public TMP_Text txt_MaxFacil;
     public TMP_Text txt_MaxMedio;
     public TMP_Text txt_MaxDificil;
+    public TMP_Text txt_erro_numero_qst;
 
 
 
@@ -109,14 +110,39 @@ public class profConfig : MonoBehaviour, IClient
         int[] vetorQuestions = new int[3] {Manager.totalFacil, Manager.totalMedio, Manager.totalDificil};
         int[] questionAmount = new int[3] {this.nrEasy, this.nrMedium, this.nrHard};
 
-        var msg = new CadastraSessao("CADASTRAR_SESSAO", this.nrTeam, this.nrPlayerTeam, this.nrHelp5050, this.time,
-                                        vetorQuestions, questionAmount, this.mod, Manager.gameId);
+         if (questionAmount[0]>(Manager.totalFacil-1))
+        {
+            txt_erro_numero_qst.text = "O número de questões 'FÁCIL' escolhido está acima do possível.";
+            txt_erro_numero_qst.gameObject.SetActive(true);
+            Invoke("desativaTXT", 5f);
 
-        cm.send(msg);
+         }
+        else if (questionAmount[1]>(Manager.totalMedio-1))
+        {
+            txt_erro_numero_qst.text = "O número de questões 'MÉDIO' escolhido está acima do possível.";
+            txt_erro_numero_qst.gameObject.SetActive(true);
+            Invoke("desativaTXT", 5f);
+        }
+        else if (questionAmount[2]>(Manager.totalDificil-1))
+        {
+            txt_erro_numero_qst.text = "O número de questões 'DIFÍCIL' escolhido está acima do possível.";
+            txt_erro_numero_qst.gameObject.SetActive(true);
+            Invoke("desativaTXT", 5f);
+        }
+        else {
+            var msg = new CadastraSessao("CADASTRAR_SESSAO", this.nrTeam, this.nrPlayerTeam, this.nrHelp5050, this.time,
+                                            vetorQuestions, questionAmount, this.mod, Manager.gameId);
+
+            cm.send(msg);
 
         SceneManager.LoadScene("profEspera");
+        }    
     }
 
+    public void desativaTXT()
+    {
+            txt_erro_numero_qst.gameObject.SetActive(false);
+    }
 
     public void handle(string ms){
         Debug.Log(ms);
