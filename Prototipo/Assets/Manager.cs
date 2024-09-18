@@ -7,11 +7,11 @@ public static class Manager
 {
 
     //URL
-   // public static string serverURL;
+    public static string serverURL;
 
 
 //TESTES
-    public static string serverURL = "ws://localhost:5000";
+    //public static string serverURL = "ws://localhost:5000";
     // public static int[] qEasy = {0, 4, 1};
     // public static int[] qMedium = {3, 2, 4};
     // public static int[] qHard = {2, 0};
