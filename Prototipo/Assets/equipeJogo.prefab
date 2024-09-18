@@ -53,21 +53,30 @@ MonoBehaviour:
   id_team: 0
   questionAmount: 0
   equipes_terminadas: 0
+  qualPergunta: 
+  equipeSelecionada: {fileID: 0}
   encerrarJogo: {fileID: 0}
   quadroChat: {fileID: 0}
   painelTexto: {fileID: 0}
   painelChat: {fileID: 0}
   prefab_equipeJogo: {fileID: 4799459328417201882}
   painelEncerrar: {fileID: 0}
+  painelQuestoesTime: []
   chatBox: {fileID: 0}
   messageText: {fileID: 0}
-  messageList: []
-  chatMax: 25
   scrollRect_prof: {fileID: 0}
   chatAberto: 0
+  alt: 
+  questao: []
+  alternativa1: []
+  alternativa2: []
+  alternativa3: []
+  alternativa4: []
   notification: []
   ContentEquipes: {fileID: 0}
+  ContentQuestoes: {fileID: 0}
   prefabEquipes: {fileID: 0}
+  prefabQuestoesTime: {fileID: 0}
   m_Itens: 0
 --- !u!1 &1658635416767842128
 GameObject:

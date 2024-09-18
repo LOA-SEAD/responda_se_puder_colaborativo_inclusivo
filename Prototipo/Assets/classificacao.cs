@@ -158,10 +158,12 @@ public class classificacao : MonoBehaviour, IClient
 
     public void setEstrelasAvaliadas()
     {
-        elogio_comunicativo = (float)dadosTimes.player.elogio1 / (3.0f * (float)Manager.nrPlayerTeam);
-        elogio_engajado = (float)dadosTimes.player.elogio2 / (3.0f * (float)Manager.nrPlayerTeam);
-        elogio_gentil = (float)dadosTimes.player.elogio3 / (3.0f * (float)Manager.nrPlayerTeam);
-
+        elogio_comunicativo = (float)dadosTimes.player.elogio1 / (1.0f * (float)Manager.nrPlayerTeam);
+        elogio_engajado = (float)dadosTimes.player.elogio2 / (1.0f * (float)Manager.nrPlayerTeam);
+        elogio_gentil = (float)dadosTimes.player.elogio3 / (1.0f * (float)Manager.nrPlayerTeam);
+        Debug.Log("elogio1: " + elogio_comunicativo);
+        Debug.Log("elogio2: " + elogio_engajado);
+        Debug.Log("elogio3: " + elogio_gentil);
         setEstrelaComunicativo(elogio_comunicativo);
         setEstrelaEngajado(elogio_engajado);
         setEstrelaGentil(elogio_gentil);

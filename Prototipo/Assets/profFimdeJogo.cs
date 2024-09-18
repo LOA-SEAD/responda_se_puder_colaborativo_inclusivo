@@ -6,8 +6,7 @@ using UnityEngine.SceneManagement;
 using NativeWebSocket;
 using System.IO;
 using TMPro;
-using SFB;
-
+using System.Diagnostics;
 
 public class profFimdeJogo : MonoBehaviour
 {
@@ -18,11 +17,7 @@ public class profFimdeJogo : MonoBehaviour
     public Button openFileButton;
     public Text filePathText;
     public Text fileContentText; 
-
-    public void DisplayTeamInformation(arqLido message)
-    {
-
-    }
+    string filePath;
 
 
     // Start is called before the first frame update
@@ -30,7 +25,7 @@ public class profFimdeJogo : MonoBehaviour
     {
         string executablePath = Application.dataPath;
         string directoryPath = Directory.GetParent(executablePath).FullName;
-        string filePath = Path.Combine(directoryPath, "resultados.txt");
+        filePath = Path.Combine(directoryPath, "resultados.txt");
 
         resultado.text = "O arquivo com os resultados individuais foi gravado na pasta do jogo ("+filePath+").";
 
@@ -40,7 +35,6 @@ public class profFimdeJogo : MonoBehaviour
 
         for (int i = 0; i < message.teams.Length; i++)
         {
-            Debug.Log("Entrou aqui");
             arqTime team = message.teams[i];
 
             string teamInfo = string.Format("{0}) Equipe {1} - Pontuação: {2}\n", team.ranking, team.idTeam, team.point);
@@ -52,11 +46,25 @@ public class profFimdeJogo : MonoBehaviour
         string outputFilePath = Path.Combine(directoryPath, "resultados.txt");
         File.WriteAllText(outputFilePath, formattedText);
 
+        openFileButton.onClick.AddListener(OpenTextFile);
             // Acessar a propriedade sessionId
-        Debug.Log("Session ID lido do arquivo: " + message.sessionId);
+    }
 
-        openFileButton.onClick.AddListener(OpenFileDialog);
-
+    void OpenTextFile()
+    {
+        if (!string.IsNullOrEmpty(filePath))
+        {
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = filePath,
+                UseShellExecute = true,
+                Verb = "open"
+            });
+        }
+        else
+        {
+            UnityEngine.Debug.LogError("Caminho do arquivo não está definido ou está vazio.");
+        }
     }
 
     string FormatData(arqLido data)
@@ -76,36 +84,12 @@ public class profFimdeJogo : MonoBehaviour
         sb.AppendLine("INDIVIDUAL");
         foreach (var user in data.user)
         {
-            sb.AppendLine($"\"name\":\"{user.name}\",\"teamId\":{user.teamId},\"indScore\":{user.indScore},\"interaction\":{user.interaction},\"elogio1\":{user.elogio1},\"elogio2\":{user.elogio2},\"elogio3\":{user.elogio3}");
+            sb.AppendLine($"\"nome\":\"{user.name}\",\n \"equipe\":{user.teamId},\n \"pontuação individual\":{user.indScore},\n \"interações no chat\":{user.interaction},\n \"comunicativo\":{user.elogio1},\"engajado\":{user.elogio2},\"gentil\":{user.elogio3} \n\n");
         }
 
         return sb.ToString();
     }
 
-    void OpenFileDialog()
-    {
-        var paths = StandaloneFileBrowser.OpenFilePanel("Open File", "", "txt", false);
-        if (paths.Length > 0)
-        {
-            string filePath = paths[0];
-            filePathText.text = filePath;
-            ReadAndDisplayFile(filePath);
-        }
-    }
-
-    void ReadAndDisplayFile(string filePath)
-    {
-        if (File.Exists(filePath))
-        {
-            string fileContent = File.ReadAllText(filePath);
-            fileContentText.text = fileContent;
-            Debug.Log("Arquivo lido: " + fileContent);
-        }
-        else
-        {
-            Debug.LogError("Arquivo não encontrado: " + filePath);
-        }
-    }
 
     // Update is called once per frame
     void Update()

@@ -45,7 +45,6 @@ public class profJogo : MonoBehaviour, IClient
     public ScrollRect scrollRect_prof;
     public int chatAberto = 0;
     private int totalQuestoes;
-    private DadosJogo perguntaAtual;
     public int[] alt;
     [SerializeField]
     public List<GameObject> questao = new List<GameObject>();
@@ -60,6 +59,8 @@ public class profJogo : MonoBehaviour, IClient
     
     [SerializeField]
     public List<GameObject> notification = new List<GameObject>();
+    [SerializeField]
+    public List<Outline> outlineComponent = new List<Outline>();
     
 
     // //Quadros em tela
@@ -70,48 +71,6 @@ public class profJogo : MonoBehaviour, IClient
     [SerializeField] private int m_Itens;
 
     private List<GameObject> quadrosEquipe = new List<GameObject>();
-
-    // public Vector3 escalaDesejada;
-
-    // public GameObject painelChat;
-
-    // public void MSG_CHAT(string msgJSON){
-
-    //         Color cor;
-    //         msgCHAT_moderator message = JsonUtility.FromJson<msgCHAT_moderator>(msgJSON);
-
-
-    //         if(messageList.Count >= chatMax){
-    //             // Destroy(messageList[0].painelTexto.gameObject);
-    //             // messageList.Remove(messageList[0]);
-    //         }
-
-    //         msgCHAT_moderator textoChat = new msgCHAT_moderator();
-    //         if(message.moderator)
-    //             textoChat.texto = message.user.name + ": " + message.texto;//falou;
-    //         else
-    //             textoChat.texto = "Equipe " + message.teamId + " / " + message.user.name + ": " + message.texto;   
-
-    //         GameObject novoChat = Instantiate(painelTexto, painelChat.transform);
-
-    //         textoChat.painelTexto = novoChat.GetComponent<Text>();
-
-    //         textoChat.painelTexto.text = textoChat.texto;
-
-    //         if(message.moderator){
-    //             ColorUtility.TryParseHtmlString("#f41004", out cor);
-    //             textoChat.painelTexto.fontStyle = FontStyle.Bold;
-    //         }
-    //         else{
-    //             //textoChat.painelTexto.fontStyle = FontStyle.Regular;
-    //                 ColorUtility.TryParseHtmlString("#112A46", out cor);
-    //         }
-
-    //         textoChat.painelTexto.color = cor;
-    //         messageList.Add(textoChat);
-
-    //         Debug.Log(textoChat.texto);
-    //     }
     
     public void MSG_CHAT(string msgJSON)
     {
@@ -165,18 +124,15 @@ public class profJogo : MonoBehaviour, IClient
 
     public void btnTeamChat(int teamId)
     {
-        if(chatAberto != 0)
+        if(chatAberto != 0){
             painelQuestoesTime[chatAberto].gameObject.SetActive(false);
+            outlineComponent[chatAberto-1].effectColor = Color.black; 
+        }
         Manager.teamId = teamId;
         Debug.Log(Manager.teamId);
         chatAberto = teamId;
         notification[teamId].gameObject.SetActive(false);
-     /*   for(int i = 0;i < Manager.nrTeam;i++){
-            if(i == teamId)
-                painelQuestoesTime[i].gameObject.SetActive(true);
-            else
-                painelQuestoesTime[i].gameObject.SetActive(false);
-        }*/
+        outlineComponent[teamId-1].effectColor = Color.red; 
         painelQuestoesTime[teamId].gameObject.SetActive(true);
         equipeSelecionada.text = "Equipe " + teamId;
         if (msgTeams.ContainsKey(teamId))
@@ -191,19 +147,23 @@ public class profJogo : MonoBehaviour, IClient
         }
     }
 
-    void CarregarPergunta(int[] alter, bool pulou_na_fase, int qualTime)
+    void CarregarPergunta(int[] alter,  int qualTime, bool pulou_na_fase)
     {  
-       if((qualPergunta[qualTime] == (Manager.nQ_easy) || qualPergunta[qualTime] == (Manager.nQ_easy + Manager.nQ_medium + 1))&& !pulou_na_fase){
+        StartCoroutine(waiter());
+        Questao perguntaAtual;
+        if((qualPergunta[qualTime] == (Manager.nQ_easy) || qualPergunta[qualTime] == (Manager.nQ_easy + Manager.nQ_medium + 1))&& (!pulou_na_fase)){
             qualPergunta[qualTime]++;
         }
         
         if (carregaDados.listaDados.Count > 0)
         {
-            perguntaAtual = carregaDados.listaDados[qualPergunta[qualTime]];
+            Debug.Log("qualPergunta[qualTime] = " + qualPergunta[qualTime]);
+            perguntaAtual = new Questao(qualTime, carregaDados.listaDados[qualPergunta[qualTime]]);
             qualPergunta[qualTime]++;
         }
         else
         {
+            Debug.Log("(" + qualTime + ") Entrou no if perguntaAtual = null");
             perguntaAtual = null;
         }
 
@@ -217,17 +177,22 @@ public class profJogo : MonoBehaviour, IClient
         {
             questaoTexto.text = perguntaAtual.pergunta;
       
-            carregaDados.Shuffle(ref perguntaAtual, alter);
+            Debug.Log(alter[0] + "," + alter[1]  + ","  + alter[2] + ","  + alter[3] + " time " + qualTime);
+            Debug.Log(perguntaAtual);
+            perguntaAtual.Shuffle(alter);
+            Debug.Log(perguntaAtual);
 
-            alternativa1Texto.text = "A. " + ObterAlternativa(ref perguntaAtual, 0);
-            alternativa2Texto.text = "B. " + ObterAlternativa(ref perguntaAtual, 1);
-            alternativa3Texto.text = "C. " + ObterAlternativa(ref perguntaAtual, 2);
-            alternativa4Texto.text = "D. " + ObterAlternativa(ref perguntaAtual, 3);
+            alternativa1Texto.text = "A. " + ObterAlternativa( perguntaAtual, 0);
+            alternativa2Texto.text = "B. " + ObterAlternativa( perguntaAtual, 1);
+            alternativa3Texto.text = "C. " + ObterAlternativa( perguntaAtual, 2);
+            alternativa4Texto.text = "D. " + ObterAlternativa( perguntaAtual, 3);
     
         }
+
+        
     }
 
-    string ObterAlternativa(ref DadosJogo dados, int index)
+    string ObterAlternativa(Questao dados, int index)
     {
         switch (index)
         {
@@ -248,6 +213,15 @@ public class profJogo : MonoBehaviour, IClient
     {
         MSG_NOVA_QUESTAO(Manager.msgPrimeiraQuestao);
     }
+
+    IEnumerator waiter()
+{
+
+    //Wait for 2 seconds
+    yield return new WaitForSeconds(2);
+
+  
+}
 
 
     private void exibir(List<msgCHAT_moderator> mensagens)
@@ -306,7 +280,7 @@ public class profJogo : MonoBehaviour, IClient
         Manager.leaderId = message.leaderId;
         alt = message.alternativas;
         Manager.teamId = message.teamId;
-        CarregarPergunta(alt, message.pulou_na_fase, message.teamId - 1);
+        CarregarPergunta(alt, message.teamId - 1, message.pulou_na_fase);
        /* if (qst_respondidas != Manager.nQ_easy && qst_respondidas != Manager.nQ_easy + Manager.nQ_medium && qst_respondidas != Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
         {
             ProximaQuestao();
@@ -348,6 +322,20 @@ public class profJogo : MonoBehaviour, IClient
 
         }
     }
+
+    /*public void MSG_NOVA_FASE(string msgJSON)
+    {
+
+        msgPROX_FASE_prof message = JsonUtility.FromJson<msgPROX_FASE_prof>(msgJSON);
+        Debug.Log("time " + message.teamId + "entrou proxima fase");
+        Debug.Log("pergunta " + qualPergunta[message.teamId-1]); 
+        Debug.Log(Manager.nQ_easy);
+        Debug.Log(Manager.nQ_medium);
+        if((qualPergunta[message.teamId-1] == (Manager.nQ_easy)+1 || qualPergunta[message.teamId-1] == (Manager.nQ_easy + Manager.nQ_medium + 1))){
+            qualPergunta[message.teamId-1]++;
+        }
+
+    }*/
     void gera_arquivo(string json)
     {
              
@@ -398,11 +386,17 @@ public class profJogo : MonoBehaviour, IClient
         {
             MSG_CLASSF_FINAL(ms);
         }
+      /*   else if (messageType == "INICIA_NOVA_FASE"){
+            MSG_NOVA_FASE(ms);
+        } */
     }
     
     // // Start is called before the first frame update
     void Start()
     {
+        carregaDados.Load();
+        carregaDados.Select();
+        
         // Manager.moderator.id = 1;
         Manager.teamId = 0;
 
@@ -417,6 +411,7 @@ public class profJogo : MonoBehaviour, IClient
             novaEquipe.transform.localScale = new Vector3(1.894364f, 0.179433f, 0.23102f);
             notification.Add(novaEquipe.transform.Find("notification").gameObject);
             quadrosEquipe.Add(novaEquipe);
+            outlineComponent.Add(novaEquipe.GetComponent<Outline>());
             int teamId = i+1;
             Button btn = novaEquipe.GetComponentInChildren<Button>();
             btn.onClick.AddListener(() => btnTeamChat(teamId));
@@ -463,8 +458,8 @@ public class profJogo : MonoBehaviour, IClient
         Manager.totalMedio = 0;
         Manager.totalDificil = 0;
         Manager.countQuestoesJogo();
-        carregaDados.Load();
-        carregaDados.Select();
+        //carregaDados.Load();
+        //carregaDados.Select();
         totalQuestoes = carregaDados.listaDados.Count;
 
         PrimeiraQuestao();
@@ -491,6 +486,16 @@ public class profJogo : MonoBehaviour, IClient
     }
         
 }
+
+/*[System.Serializable]
+public class msgPROX_FASE_prof
+{
+    public string message_type;
+    public int teamId;
+    public int leaderId;
+    public int sessionId;
+    public int gameId;
+}*/
 
 [System.Serializable]
 public class QuestionProf
@@ -540,6 +545,7 @@ public class msgNOVA_QUESTAO_MODERADOR
     public int sessionId;
     public int gameId;
     public bool pulou_na_fase;
+    public bool entrou_nova_fase;
 }
 
 
