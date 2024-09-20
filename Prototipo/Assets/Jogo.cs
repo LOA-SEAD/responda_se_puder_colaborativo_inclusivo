@@ -996,8 +996,11 @@ public class Jogo : MonoBehaviour, IClient
         else if(id == 1){
             textoMensagemPronta = "Vamos usar ajuda 50/50!";
         }
-        else{
+        else if(id == 2){
             textoMensagemPronta = "Acho melhor pular...";
+        }
+         else {
+            textoMensagemPronta = "Vamos chamar o professor";
         }
         var msg = new mensagemChat("MENSAGEM_CHAT", dadosTimes.player, ID_TEAM, Manager.sessionId, Manager.gameId, textoMensagemPronta, false);
         cm.send(msg);
