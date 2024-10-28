@@ -55,6 +55,7 @@ public class Jogo : MonoBehaviour, IClient
 
     public GameObject confirmaAlternativa;
     public GameObject painelDica;
+    public GameObject painelLider;
     public GameObject painelConfirma;
     public GameObject painelAjuda5050;
     public GameObject painelAjudaPular;
@@ -136,6 +137,8 @@ public class Jogo : MonoBehaviour, IClient
 
     public bool entrou_nova_fase = false;
 
+    public bool primeira_questao = false;
+
     private int qst;
 
     private int level_qst = 0;
@@ -216,9 +219,9 @@ public class Jogo : MonoBehaviour, IClient
         SetLevelText();
         SetLeaderText();
         Invoke("NextQ", sec);
-
+        primeira_questao = true;
         PrimeiraQuestao();
-
+    
     }
 
 // --------- SETUPS ---------
@@ -748,6 +751,18 @@ public class Jogo : MonoBehaviour, IClient
         
         if (btn_ok == 1) btnOK_painel.gameObject.SetActive(true);
         else btnOK_painel.gameObject.SetActive(false);
+    }
+
+    public void painelLiderResposta(bool aceitaLider)
+    {
+        if(aceitaLider){
+            painelLider.SetActive(false);
+            fundoPainel.SetActive(false);
+        }
+        else{
+            painelLider.SetActive(false);
+            fundoPainel.SetActive(false);
+        }
     }
     
     public void fechaPainelAguarde()
@@ -1507,6 +1522,15 @@ public class Jogo : MonoBehaviour, IClient
             Debug.Log("entrou if pular");
             ProximaQuestao();
         }
+        if (message.entrou_nova_fase || primeira_questao)
+        {
+            if (Manager.leaderId == dadosTimes.player.id)
+            {
+                painelLider.SetActive(true);
+                fundoPainel.SetActive(true);
+            }
+        }
+        primeira_questao = false;
 
     }
 
