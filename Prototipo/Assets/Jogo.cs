@@ -83,20 +83,17 @@ public class Jogo : MonoBehaviour, IClient
     public Button btnPular;
     public Button btn5050;
     public Button btnProfessor;
+    public Button btnVotar;
 
     public Button btnAbrirMensagensProntas;
     private float transparencia = 0.3f;
     private float sem_transparencia = 1.0f;
     private Color cor_btn_professor;
     private bool transparencia_btn_professor = false;
-
     public int[] ordem_alternativas;
     public int[] alt;
     public int[] alt5050;
-
     private int[] indice_5050;
-
-
     private DadosJogo perguntaAtual;
     private int numeroQuestao = 0;
     private int totalQuestoes;
@@ -105,27 +102,16 @@ public class Jogo : MonoBehaviour, IClient
     bool houveConsenso;
     bool houveInteracao;
     bool acertaramQuestao;
-
     static List<int> listaInteracoes = new List<int>();
-
     private Dictionary<int, int> enviouMSG = new Dictionary<int, int>();
-
     public Scrollbar bar;
-
     int zerouTimer = 0;
-
     int ID_TEAM;
-
-
     private string correctAnswer;
-
     [SerializeField]
     public List<msgCHAT> messageList = new List<msgCHAT>();
-
     public int chatMax = 25;
-
     public ScrollRect scrollRect;
-
     public ans answer;
     private int level;
     private int nrQuestion;
@@ -502,6 +488,19 @@ public class Jogo : MonoBehaviour, IClient
                 btnAlternativas[i].gameObject.SetActive(false);
             }
         }
+        if (entrou_nova_fase || primeira_questao)
+        {
+            if (Manager.leaderId == dadosTimes.player.id)
+            {
+                painelLider.SetActive(true);
+                fundoPainel.SetActive(true);
+            }
+        }
+        Debug.Log("entrou na fase = " + entrou_nova_fase);
+        Debug.Log("primeira questao = " + primeira_questao);
+        Debug.Log("Manager.leaderid = " + Manager.leaderId);
+        Debug.Log("dadosTimes.player.id = " + dadosTimes.player.id);
+        primeira_questao = false;
     }
 
     // Marca a alternativa e seleciona ela como resposta
@@ -1020,8 +1019,10 @@ public class Jogo : MonoBehaviour, IClient
         fundoPainel.SetActive(false);
         chatBox.ActivateInputField ();
     }
-    
-
+    public void btnVotacao()
+    {
+        btnVotar.gameObject.SetActive(false);
+    }
 
 // --------- TIMER ---------
 
@@ -1116,6 +1117,7 @@ public class Jogo : MonoBehaviour, IClient
         quadroChat.SetActive(false);
         chatBox.gameObject.SetActive(false);
         btnAbrirMensagensProntas.gameObject.SetActive(false);
+        btnVotar.gameObject.SetActive(false);
         painelMensagensProntas.SetActive(false);
     }
 
@@ -1148,7 +1150,7 @@ public class Jogo : MonoBehaviour, IClient
             painelAguarde("Como líder, converse com sua equipe e envie a respota final do grupo.", 1);
             fundoPainel.SetActive(true);
             generalCommands.EnableAllObjectsInteractions();
-        
+            btnVotar.gameObject.SetActive(true);
             foreach (Button btn in btnAlternativas)        
             {
                 btn.gameObject.SetActive(true);
@@ -1179,6 +1181,7 @@ public class Jogo : MonoBehaviour, IClient
             generalCommands.EnableInteraction(quadroChat);
             generalCommands.EnableInteraction(chatBox.gameObject);
             generalCommands.EnableInteraction(btnAbrirMensagensProntas.gameObject);
+            generalCommands.EnableInteraction(btnVotar.gameObject);
         }
     }
 
@@ -1522,15 +1525,7 @@ public class Jogo : MonoBehaviour, IClient
             Debug.Log("entrou if pular");
             ProximaQuestao();
         }
-        if (message.entrou_nova_fase || primeira_questao)
-        {
-            if (Manager.leaderId == dadosTimes.player.id)
-            {
-                painelLider.SetActive(true);
-                fundoPainel.SetActive(true);
-            }
-        }
-        primeira_questao = false;
+        
 
     }
 
