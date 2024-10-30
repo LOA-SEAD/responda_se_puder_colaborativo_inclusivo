@@ -236,8 +236,9 @@ public class RespostaFinal : Message
     public string finalAnswer;
     public int correct; 
     public int interaction;
+    public bool isLeader;
 
-    public RespostaFinal(string messageType, User user, int teamId, int sessionId, int gameId, string finalAnswer, int correct, int interaction)
+    public RespostaFinal(string messageType, User user, int teamId, int sessionId, int gameId, string finalAnswer, int correct, int interaction, bool isLeader)
     {
         this.messageType = messageType;
         this.user = user;
@@ -247,6 +248,7 @@ public class RespostaFinal : Message
         this.finalAnswer = finalAnswer;
         this.correct = correct;
         this.interaction = interaction;
+        this.isLeader = isLeader;
 
     }
 }

@@ -32,15 +32,12 @@ public class Jogo : MonoBehaviour, IClient
     public TMP_Text numeroQuestaoText;
     public TMP_Text nivel;
     public TMP_Text pontuacao; 
-
     public TMP_Text txt_geral; 
     public TMP_Text equipe_players;
     public TMP_Text equipe_nr;
 
     public string txt_5050_individual;
     public string txt_pular_individual;
-
-
     public TMP_Text tempoQuestao; 
     public float timer = 20f;
 
@@ -49,8 +46,6 @@ public class Jogo : MonoBehaviour, IClient
     public GameObject CanvasRErrada;
     public GameObject CanvasFase;
     public GameObject CanvasAvaliacao;
-
-
     public GameObject[] qntAlternatives;
 
     public GameObject confirmaAlternativa;
@@ -124,9 +119,6 @@ public class Jogo : MonoBehaviour, IClient
     public bool entrou_nova_fase = false;
 
     public bool primeira_questao = false;
-
-    public bool momento_voto = false;
-
     private int qst;
 
     private int level_qst = 0;
@@ -199,7 +191,6 @@ public class Jogo : MonoBehaviour, IClient
         carregaDados.Load();
         carregaDados.Select();
         totalQuestoes = carregaDados.listaDados.Count;
-
         Manager.countQuestoesJogo();
 
         CanvasJogo.SetActive(false);
@@ -563,7 +554,7 @@ public class Jogo : MonoBehaviour, IClient
     {
         numeroQuestao++;
         if (qst_respondidas <= Manager.nQ_total)
-        {
+        {   
             SetIndividual();
             Invoke("NextQ", 3f);
             CarregarPergunta();
@@ -572,7 +563,7 @@ public class Jogo : MonoBehaviour, IClient
             SceneManager.LoadScene("Fim");
         }
         zeraTimer();
-
+        
     }
 
 // --------- CONFIRMAÇÃO DAS RESPOSTAS E PONTUAÇÃO ---------
@@ -729,17 +720,24 @@ public class Jogo : MonoBehaviour, IClient
         correct = VerificaResposta();
         
         // Debug.Log("Pessoas que enviaram msg: " + interaction);
+        if (Manager.leaderId == dadosTimes.player.id){
+            var msg = new RespostaFinal("RESPOSTA_FINAL", dadosTimes.player, ID_TEAM, Manager.sessionId, 
+                                    Manager.gameId, answer.alternativa, correct, interaction, true);
 
-        var msg = new RespostaFinal("RESPOSTA_FINAL", dadosTimes.player, ID_TEAM, Manager.sessionId, 
-                                    Manager.gameId, answer.alternativa, correct, interaction);
-
-        cm.send(msg);
+            cm.send(msg);
+        }
+        else{
+            var msg = new RespostaFinal("RESPOSTA_FINAL", dadosTimes.player, ID_TEAM, Manager.sessionId, 
+                                    Manager.gameId, answer.alternativa, correct, interaction, false);
+        }
 
         btnAlternativas[0].gameObject.SetActive(false);
         btnAlternativas[1].gameObject.SetActive(false);
         btnAlternativas[2].gameObject.SetActive(false);
         btnAlternativas[3].gameObject.SetActive(false);
 
+        //painelAguarde("Aguarde até que todos enviem suas respostas.", 0);
+        painelAguarde("Aguarde até que todos enviem suas respostas.", 1);
     }
 
 // --------- ATIVAÇÃO E DESATIVAÇÃO DE PAINEIS ---------
@@ -1023,7 +1021,6 @@ public class Jogo : MonoBehaviour, IClient
     }
     public void btnVotacao()
     {
-        btnVotar.gameObject.SetActive(false);
         var msg = new MomentoVotacao("MOMENTO_VOTACAO", dadosTimes.player, ID_TEAM, Manager.sessionId,  Manager.gameId, answer.level, answer.nrQ);
         cm.send(msg);
     }
@@ -1080,6 +1077,7 @@ public class Jogo : MonoBehaviour, IClient
 
     public void SetIndividual()
     {
+        painelAguarde("MOMENTO INDIVIDUAL \n", 1);
         Manager.MOMENTO = "INDIVIDUAL";
         txt_geral.enabled = false;
         tempoQuestao.enabled = true;
@@ -1151,7 +1149,7 @@ public class Jogo : MonoBehaviour, IClient
 
         if (Manager.leaderId == dadosTimes.player.id)
         {
-            painelAguarde("Como líder, converse com sua equipe e, quando estiverem prontos, começe a votação.", 1);
+            painelAguarde("MOMENTO GRUPO \nComo líder, converse com sua equipe e, quando estiverem prontos, começe a votação.", 1);
             fundoPainel.SetActive(true);
             generalCommands.EnableAllObjectsInteractions();
             btnVotar.gameObject.SetActive(true);
@@ -1166,7 +1164,7 @@ public class Jogo : MonoBehaviour, IClient
         if (dadosTimes.player.id != Manager.leaderId)
         {
 
-            painelAguarde("Discutam a solução e aguarde o líder para ir para a tela de votação.", 1);
+            painelAguarde("MOMENTO GRUPO \nDiscutam a solução e aguarde o líder para ir para a tela de votação.", 1);
             fundoPainel.SetActive(true);
 
             btnAlternativas[0].gameObject.SetActive(false);
@@ -1195,7 +1193,7 @@ public class Jogo : MonoBehaviour, IClient
         txt_geral.enabled = false;
         SetAlpha();
         ajudaGasta(pulou);
-        painelAguarde("Em conjunto tentem chegar a resposta da pergunta, em caso de empate, o voto do líder tem peso maior.", 1);
+        painelAguarde("MOMENTO VOTAÇÃO \nEm conjunto tentem chegar a resposta da pergunta, em caso de empate, o voto do líder tem peso maior.", 1);
         fundoPainel.SetActive(true);
         generalCommands.EnableAllObjectsInteractions();
 
@@ -1204,7 +1202,7 @@ public class Jogo : MonoBehaviour, IClient
         btnAlternativas[2].gameObject.SetActive(true);
         btnAlternativas[3].gameObject.SetActive(true);
         SetQntAlternatives(0);
-       /* generalCommands.DisableAllObjectsInteractions();
+       /*generalCommands.DisableAllObjectsInteractions();
         btnDica.interactable = true;
         btnOK.interactable = true;
         btn5050.interactable = true;
@@ -1610,16 +1608,9 @@ public class Jogo : MonoBehaviour, IClient
 
      public void MSG_MOMENTO_VOTACAO(string msgJSON)
     {
-        msgMOMENTO_GRUPO message = JsonUtility.FromJson<msgMOMENTO_GRUPO>(msgJSON);
+        msgMOMENTO_VOTACAO message = JsonUtility.FromJson<msgMOMENTO_VOTACAO>(msgJSON);
 
-        listaInteracoes.Clear();
-        interaction = 0;
-
-        Manager.leaderId = message.leaderId;
-        altA.text = "" + message.answer.A;
-        altB.text = "" + message.answer.B;
-        altC.text = "" + message.answer.C;
-        altD.text = "" + message.answer.D;
+        btnVotar.gameObject.SetActive(false);
         SetVotacao();
     }
 
@@ -1932,7 +1923,17 @@ public class msgMOMENTO_GRUPO
     public int gameId;
     public RespostasGrupo answer;
 }
-
+[System.Serializable]
+public class msgMOMENTO_VOTACAO
+{
+    public string message_type;
+    public int teamId;
+    public int leaderId;
+    public string sessionId;
+    public int gameId;
+    public int level;
+    public int nrQ;
+}
 [System.Serializable]
 public class RespostasGrupo
 {

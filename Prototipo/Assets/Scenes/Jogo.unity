@@ -160,7 +160,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -9.777222, y: -7.9915466}
+  m_AnchoredPosition: {x: -9.777222, y: -7.991516}
   m_SizeDelta: {x: -561.60974, y: -299.57}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3412432
@@ -2280,7 +2280,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -9.777222, y: -7.9915466}
+  m_AnchoredPosition: {x: -9.777222, y: -7.991516}
   m_SizeDelta: {x: -561.60974, y: -299.57}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &212103833
@@ -4213,7 +4213,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -9.777222, y: -7.9915466}
+  m_AnchoredPosition: {x: -9.777222, y: -7.991516}
   m_SizeDelta: {x: -561.60974, y: -299.57}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &423900318
@@ -11714,7 +11714,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.4392157}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -11774,7 +11774,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1052.6199, y: 119.86151}
+  m_AnchoredPosition: {x: 1052.6199, y: 119.861496}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 0.95}
 --- !u!114 &1062279802
@@ -14854,7 +14854,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -9.777222, y: -7.9915466}
+  m_AnchoredPosition: {x: -9.777222, y: -7.991516}
   m_SizeDelta: {x: -561.60974, y: -299.57}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1348795847
@@ -15740,6 +15740,7 @@ MonoBehaviour:
   numeroQuestaoText: {fileID: 1860898305}
   nivel: {fileID: 1613068503}
   pontuacao: {fileID: 1114134267}
+  text_momento: {fileID: 0}
   txt_geral: {fileID: 120153577}
   equipe_players: {fileID: 870854825}
   equipe_nr: {fileID: 985966197}
@@ -15760,6 +15761,7 @@ MonoBehaviour:
   confirmaAlternativa: {fileID: 1874705306}
   painelDica: {fileID: 1874705306}
   painelLider: {fileID: 483530513}
+  painelMomento: {fileID: 0}
   painelConfirma: {fileID: 1348795845}
   painelAjuda5050: {fileID: 212103831}
   painelAjudaPular: {fileID: 1969703394}
@@ -22531,7 +22533,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -9.777222, y: -7.9915466}
+  m_AnchoredPosition: {x: -9.777222, y: -7.991516}
   m_SizeDelta: {x: -561.60974, y: -299.57}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1969703396
@@ -26017,7 +26019,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -30.999878, y: -46.00699}
+  m_AnchoredPosition: {x: -30.999878, y: -46.00702}
   m_SizeDelta: {x: 1717.9, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2118867042
