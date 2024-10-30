@@ -125,6 +125,8 @@ public class Jogo : MonoBehaviour, IClient
 
     public bool primeira_questao = false;
 
+    public bool momento_voto = false;
+
     private int qst;
 
     private int level_qst = 0;
@@ -362,7 +364,7 @@ public class Jogo : MonoBehaviour, IClient
             corAtualProf.a = transparencia;
             btnProfessorImage.color = corAtualProf;
         }
-        if (Manager.MOMENTO == "GRUPO") {
+        if (Manager.MOMENTO == "GRUPO" || Manager.MOMENTO == "VOTACAO") {
             Color corAtual5050 = btn5050Image.color;
             corAtual5050.a = sem_transparencia;
             btn5050Image.color = corAtual5050;
@@ -676,7 +678,7 @@ public class Jogo : MonoBehaviour, IClient
         {
             ConfirmarRespostaIndividual();
         }
-        if (Manager.MOMENTO == "GRUPO")
+        if (Manager.MOMENTO == "VOTACAO")
         {
             ConfirmarRespostaFinal();
         }
@@ -1022,6 +1024,8 @@ public class Jogo : MonoBehaviour, IClient
     public void btnVotacao()
     {
         btnVotar.gameObject.SetActive(false);
+        var msg = new MomentoVotacao("MOMENTO_VOTACAO", dadosTimes.player, ID_TEAM, Manager.sessionId,  Manager.gameId, answer.level, answer.nrQ);
+        cm.send(msg);
     }
 
 // --------- TIMER ---------
@@ -1147,14 +1151,14 @@ public class Jogo : MonoBehaviour, IClient
 
         if (Manager.leaderId == dadosTimes.player.id)
         {
-            painelAguarde("Como líder, converse com sua equipe e envie a respota final do grupo.", 1);
+            painelAguarde("Como líder, converse com sua equipe e, quando estiverem prontos, começe a votação.", 1);
             fundoPainel.SetActive(true);
             generalCommands.EnableAllObjectsInteractions();
             btnVotar.gameObject.SetActive(true);
-            foreach (Button btn in btnAlternativas)        
+            /*foreach (Button btn in btnAlternativas)        
             {
                 btn.gameObject.SetActive(true);
-            }
+            }*/
 
         }
         // Debug.Log("ID JOGADOR: " + dadosTimes.player.id);
@@ -1162,7 +1166,7 @@ public class Jogo : MonoBehaviour, IClient
         if (dadosTimes.player.id != Manager.leaderId)
         {
 
-            painelAguarde("Discutam a solução e aguarde a confirmação da resposta final pelo líder.", 1);
+            painelAguarde("Discutam a solução e aguarde o líder para ir para a tela de votação.", 1);
             fundoPainel.SetActive(true);
 
             btnAlternativas[0].gameObject.SetActive(false);
@@ -1183,6 +1187,35 @@ public class Jogo : MonoBehaviour, IClient
             generalCommands.EnableInteraction(btnAbrirMensagensProntas.gameObject);
             generalCommands.EnableInteraction(btnVotar.gameObject);
         }
+    }
+    public void SetVotacao()
+    {
+        
+        Manager.MOMENTO = "VOTACAO";
+        txt_geral.enabled = false;
+        SetAlpha();
+        ajudaGasta(pulou);
+        painelAguarde("Em conjunto tentem chegar a resposta da pergunta, em caso de empate, o voto do líder tem peso maior.", 1);
+        fundoPainel.SetActive(true);
+        generalCommands.EnableAllObjectsInteractions();
+
+        btnAlternativas[0].gameObject.SetActive(true);
+        btnAlternativas[1].gameObject.SetActive(true);
+        btnAlternativas[2].gameObject.SetActive(true);
+        btnAlternativas[3].gameObject.SetActive(true);
+        SetQntAlternatives(0);
+       /* generalCommands.DisableAllObjectsInteractions();
+        btnDica.interactable = true;
+        btnOK.interactable = true;
+        btn5050.interactable = true;
+        btnPular.interactable = true;
+        btnProfessor.interactable = true;
+        confirmaDica.interactable = true;
+        btnConfig.interactable = true;
+        generalCommands.EnableInteraction(quadroChat);
+        generalCommands.EnableInteraction(chatBox.gameObject);
+        generalCommands.EnableInteraction(btnAbrirMensagensProntas.gameObject);
+        generalCommands.EnableInteraction(btnVotar.gameObject);*/
     }
 
     void MOMENTO_AVALIACAO()
@@ -1423,6 +1456,10 @@ public class Jogo : MonoBehaviour, IClient
         {
             MSG_MOMENTO_GRUPO(ms);
         }
+        else if (messageType == "MOMENTO_VOTACAO")
+        {
+            MSG_MOMENTO_VOTACAO(ms);
+        }
         else if (messageType == "FINAL_QUESTAO")
         {
             MSG_FINAL_QUESTAO(ms);
@@ -1533,6 +1570,7 @@ public class Jogo : MonoBehaviour, IClient
     {
         msgMOMENTO_GRUPO message = JsonUtility.FromJson<msgMOMENTO_GRUPO>(msgJSON);
 
+        listaInteracoes.Clear();
         interaction = 0;
 
         Manager.leaderId = message.leaderId;
@@ -1567,11 +1605,22 @@ public class Jogo : MonoBehaviour, IClient
         {
             houveConsenso = false;
         }
+        SetGrupo();
+    }
+
+     public void MSG_MOMENTO_VOTACAO(string msgJSON)
+    {
+        msgMOMENTO_GRUPO message = JsonUtility.FromJson<msgMOMENTO_GRUPO>(msgJSON);
 
         listaInteracoes.Clear();
-        
-        SetGrupo();
+        interaction = 0;
 
+        Manager.leaderId = message.leaderId;
+        altA.text = "" + message.answer.A;
+        altB.text = "" + message.answer.B;
+        altC.text = "" + message.answer.C;
+        altD.text = "" + message.answer.D;
+        SetVotacao();
     }
 
     public void MSG_FINAL_QUESTAO(string msgJSON)

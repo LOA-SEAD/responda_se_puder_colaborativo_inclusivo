@@ -202,6 +202,29 @@ public class RespostaIndividual : Message
 
     }
 }
+[Serializable]
+public class MomentoVotacao : Message
+{
+    public User user;
+    public int teamId;
+    public int sessionId;
+    public int gameId;
+    public int level;
+    public int nrQuestion;
+
+    public MomentoVotacao(string messageType, User user, int teamId, int sessionId, 
+                             int gameId, int level, int nrQuestion)
+    {
+        this.user = user;
+        this.teamId = teamId;
+        this.sessionId = sessionId;
+        this.gameId = gameId;
+        this.messageType = messageType;
+        this.level = level;
+        this.nrQuestion = nrQuestion;
+
+    }
+}
 
 [Serializable]
 public class RespostaFinal : Message
