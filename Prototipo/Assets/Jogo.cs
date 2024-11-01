@@ -309,7 +309,7 @@ public class Jogo : MonoBehaviour, IClient
     {
         string t = dadosTimes.GetUser(Manager.leaderId);
 
-        txt_lider.text = "Líder da fase: " + t;
+        //txt_lider.text = "Líder da fase: " + t;
         txt_lider_jogo.text = "Líder da fase: " + t;
     }
 
@@ -1114,7 +1114,6 @@ public class Jogo : MonoBehaviour, IClient
 
         // btn5050.gameObject.SetActive(false);
         // btnPular.gameObject.SetActive(false);
-        
         btn5050.interactable = true;
         btnPular.interactable = true;    
         btnProfessor.interactable = false;
@@ -1150,7 +1149,8 @@ public class Jogo : MonoBehaviour, IClient
         btnPular.gameObject.SetActive(true);
         btnProfessor.gameObject.SetActive(true);
         Debug.Log("PULOS: " + pulou);
-        
+        txt_lider_jogo.gameObject.SetActive(true);
+        SetLeaderText();
         SetQntAlternatives(1);
         quadroChat.SetActive(true);
         chatBox.gameObject.SetActive(true);
@@ -1650,7 +1650,6 @@ public class Jogo : MonoBehaviour, IClient
         qst_respondidas++;
         EncerraQuestao(answer.alternativa, correct);
         pontuacao.text = "Pontuação:" + Manager.grpScore;
-
     }
 
     public void MSG_AJUDA(string msgJSON)
@@ -1720,7 +1719,7 @@ public class Jogo : MonoBehaviour, IClient
             CanvasJogo.SetActive(false);
             CanvasFase.SetActive(true);
             SetLevelText();
-            SetLeaderText();
+            //SetLeaderText();
             Invoke("NextQ", 10f);
             // CanvasJogo.SetActive(true);
 
@@ -1746,7 +1745,7 @@ public class Jogo : MonoBehaviour, IClient
             Invoke("NextQ", 10f);
 
         }
-        
+        txt_lider_jogo.gameObject.SetActive(false);
         ProximaQuestao();
 
     }

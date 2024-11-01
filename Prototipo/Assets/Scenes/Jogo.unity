@@ -1510,7 +1510,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &143986070
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3704,7 +3704,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 541.86, y: -78.22914}
+  m_AnchoredPosition: {x: 541.86, y: -78.229126}
   m_SizeDelta: {x: -1220.6, y: -534.9136}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &376655253
@@ -11774,7 +11774,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1052.6199, y: 119.861496}
+  m_AnchoredPosition: {x: 1052.6199, y: 119.86148}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 0.95}
 --- !u!114 &1062279802
@@ -15740,12 +15740,12 @@ MonoBehaviour:
   numeroQuestaoText: {fileID: 1860898305}
   nivel: {fileID: 1613068503}
   pontuacao: {fileID: 1114134267}
-  text_momento: {fileID: 0}
   txt_geral: {fileID: 120153577}
   equipe_players: {fileID: 870854825}
   equipe_nr: {fileID: 985966197}
   txt_5050_individual: 
   txt_pular_individual: 
+  alternativaCorreta: 
   tempoQuestao: {fileID: 1673195052}
   timer: 100
   CanvasJogo: {fileID: 779118917}
@@ -15761,7 +15761,6 @@ MonoBehaviour:
   confirmaAlternativa: {fileID: 1874705306}
   painelDica: {fileID: 1874705306}
   painelLider: {fileID: 483530513}
-  painelMomento: {fileID: 0}
   painelConfirma: {fileID: 1348795845}
   painelAjuda5050: {fileID: 212103831}
   painelAjudaPular: {fileID: 1969703394}
@@ -16826,7 +16825,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1520154973
 RectTransform:
   m_ObjectHideFlags: 0
