@@ -73,6 +73,7 @@ public class User
 {
     public int id;
     public string name;
+    public bool rejectLeadership;
     public int indScore = 0;
     public int elogio1;
     public int elogio2;

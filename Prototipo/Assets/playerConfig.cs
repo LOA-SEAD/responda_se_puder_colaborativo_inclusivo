@@ -14,6 +14,7 @@ public class playerConfig : MonoBehaviour, IClient
 
     private string namePlayer;
     private string secret;
+    private bool querLider;
     public string reason;
     public User user;
 
@@ -45,10 +46,20 @@ public class playerConfig : MonoBehaviour, IClient
         Debug.Log(secret);
     }
 
+    public void readWantLeader(bool wantLeader){
+        querLider = wantLeader;
+        if(querLider)
+            user.rejectLeadership = true;
+        else
+            user.rejectLeadership = false;
+        Debug.Log(querLider);
+        Debug.Log(user.rejectLeadership);
+    }
+
 //Envio da mensagem para servidor quando clicar no botao
     public void btnEntrarJogo(){
 
-        var msg = new EntrarSessao("ENTRAR_SESSAO", this.user, this.secret);
+        var msg = new EntrarSessao("ENTRAR_SESSAO", this.user, this.secret, this.querLider);
 
         txt_erro.enabled = false;
 

@@ -17,11 +17,13 @@ public class EntrarSessao : Message
 {
     public User user;
     public string secret;
+    public bool rejectLeadership;
 
-    public EntrarSessao( string messageType, User user, string secret){
+    public EntrarSessao( string messageType, User user, string secret, bool rejectLeadership){
         this.user = user;
         this.secret = secret;
         this.messageType = messageType;
+        this.rejectLeadership = rejectLeadership;
         
     }
 

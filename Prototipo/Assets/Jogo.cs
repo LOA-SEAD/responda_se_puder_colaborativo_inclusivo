@@ -51,7 +51,6 @@ public class Jogo : MonoBehaviour, IClient
 
     public GameObject confirmaAlternativa;
     public GameObject painelDica;
-    public GameObject painelLider;
     public GameObject painelConfirma;
     public GameObject painelAjuda5050;
     public GameObject painelAjudaPular;
@@ -112,14 +111,12 @@ public class Jogo : MonoBehaviour, IClient
     private int level;
     private int nrQuestion;
     private RespostasGrupo ansGroup;
-    private int correct;
+    private bool correct;
     private int pulou = 0;
     private int pulou_no_facil = 0;
     public bool pulou_na_fase = false;
 
     public bool entrou_nova_fase = false;
-
-    public bool primeira_questao = false;
     private int qst;
 
     private int level_qst = 0;
@@ -137,8 +134,6 @@ public class Jogo : MonoBehaviour, IClient
 
     public int pontuacao_equipe;
     int bonusInteracao;
-
-
     public TMP_Text txt_pontuacao_correto;
     public TMP_Text txt_pontuacao_errada;
 
@@ -199,7 +194,6 @@ public class Jogo : MonoBehaviour, IClient
         SetLevelText();
         SetLeaderText();
         Invoke("NextQ", sec);
-        primeira_questao = true;
         PrimeiraQuestao();
     
     }
@@ -482,19 +476,6 @@ public class Jogo : MonoBehaviour, IClient
                 btnAlternativas[i].gameObject.SetActive(false);
             }
         }
-        if (entrou_nova_fase || primeira_questao)
-        {
-            if (Manager.leaderId == dadosTimes.player.id)
-            {
-                painelLider.SetActive(true);
-                fundoPainel.SetActive(true);
-            }
-        }
-        Debug.Log("entrou na fase = " + entrou_nova_fase);
-        Debug.Log("primeira questao = " + primeira_questao);
-        Debug.Log("Manager.leaderid = " + Manager.leaderId);
-        Debug.Log("dadosTimes.player.id = " + dadosTimes.player.id);
-        primeira_questao = false;
     }
 
     // Marca a alternativa e seleciona ela como resposta
@@ -654,10 +635,10 @@ public class Jogo : MonoBehaviour, IClient
         }
     }
 
-    public int VerificaResposta()
+    public bool VerificaResposta()
     {
-        if (correctAnswer == answer.s) return 1;
-        else return 0;
+        if (correctAnswer == answer.s) return true;
+        else return false;
 
     }
 
@@ -683,7 +664,7 @@ public class Jogo : MonoBehaviour, IClient
 
         correct = VerificaResposta();
         
-        if (correct == 1) {
+        if (correct == true) {
             dadosTimes.player.indScore += 10;
         }
 
@@ -764,18 +745,6 @@ public class Jogo : MonoBehaviour, IClient
         
         if (btn_ok == 1) btnOK_painel.gameObject.SetActive(true);
         else btnOK_painel.gameObject.SetActive(false);
-    }
-
-    public void painelLiderResposta(bool aceitaLider)
-    {
-        if(aceitaLider){
-            painelLider.SetActive(false);
-            fundoPainel.SetActive(false);
-        }
-        else{
-            painelLider.SetActive(false);
-            fundoPainel.SetActive(false); 
-        }
     }
     
     public void fechaPainelAguarde()
@@ -1247,10 +1216,10 @@ public class Jogo : MonoBehaviour, IClient
 // --------- ENCERRAMENTO DAS QUESTÕES ---------
 
 
-    public void EncerraQuestao(string ans, int correct) 
+    public void EncerraQuestao(string ans, bool correct) 
     {
         
-        if (correct == 1) {
+        if (correct) {
             CanvasJogo.SetActive(false);
             CanvasRCerta.SetActive(true);
             txt_correto_resposta.text = "" + correctAnswer;
@@ -1636,7 +1605,7 @@ public class Jogo : MonoBehaviour, IClient
         answer.s = message.finalAnswer;
         correct = message.correct;
 
-        if (correct == 1) acertaramQuestao = true;
+        if (correct) acertaramQuestao = true;
         else acertaramQuestao = false;
 
         if (interaction == 0) houveInteracao = false;
@@ -1964,7 +1933,7 @@ public class msgFINAL_QUESTAO
     public string sessionId;
     public int gameId;
     public string finalAnswer;
-    public int correct;
+    public bool correct;
 }
 
 [System.Serializable]
