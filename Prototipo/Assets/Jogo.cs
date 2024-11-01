@@ -736,12 +736,12 @@ public class Jogo : MonoBehaviour, IClient
         // Debug.Log("Pessoas que enviaram msg: " + interaction);
         if (Manager.leaderId == dadosTimes.player.id){
             var msg = new RespostaFinal("RESPOSTA_FINAL", dadosTimes.player, ID_TEAM, Manager.sessionId, 
-                                    Manager.gameId, answer.alternativa, alternativaCorreta, interaction, true);
+                                    Manager.gameId, answer.alternativa, alternativaCorreta, interaction, true, answer.level, answer.nrQ);
             cm.send(msg);
         }
         else{
             var msg = new RespostaFinal("RESPOSTA_FINAL", dadosTimes.player, ID_TEAM, Manager.sessionId, 
-                                    Manager.gameId, answer.alternativa, alternativaCorreta, interaction, false);
+                                    Manager.gameId, answer.alternativa, alternativaCorreta, interaction, false, answer.level, answer.nrQ);
             cm.send(msg);
         }
 

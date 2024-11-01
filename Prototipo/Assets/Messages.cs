@@ -237,8 +237,10 @@ public class RespostaFinal : Message
     public string correct; 
     public int interaction;
     public bool isLeader;
+    public int level;
+    public int nrQuestion;
 
-    public RespostaFinal(string messageType, User user, int teamId, int sessionId, int gameId, string finalAnswer, string correct, int interaction, bool isLeader)
+    public RespostaFinal(string messageType, User user, int teamId, int sessionId, int gameId, string finalAnswer, string correct, int interaction, bool isLeader, int level, int nrQuestion)
     {
         this.messageType = messageType;
         this.user = user;
@@ -249,6 +251,8 @@ public class RespostaFinal : Message
         this.correct = correct;
         this.interaction = interaction;
         this.isLeader = isLeader;
+        this.level = level;
+        this.nrQuestion = nrQuestion;
 
     }
 }
