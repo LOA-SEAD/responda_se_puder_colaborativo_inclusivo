@@ -38,6 +38,7 @@ public class Jogo : MonoBehaviour, IClient
 
     public string txt_5050_individual;
     public string txt_pular_individual;
+    public string alternativaCorreta;
     public TMP_Text tempoQuestao; 
     public float timer = 20f;
 
@@ -718,17 +719,30 @@ public class Jogo : MonoBehaviour, IClient
         fundoPainel.SetActive(false);
 
         correct = VerificaResposta();
-        
+       
+        if(correctAnswer == perguntaAtual.resposta){
+            alternativaCorreta = "A";
+        }
+        else if(correctAnswer == perguntaAtual.r2){
+            alternativaCorreta = "B";
+        }
+        else if(correctAnswer == perguntaAtual.r3){
+            alternativaCorreta = "C";
+        }
+        else if(correctAnswer == perguntaAtual.r4){
+            alternativaCorreta = "D";
+        }
+           
         // Debug.Log("Pessoas que enviaram msg: " + interaction);
         if (Manager.leaderId == dadosTimes.player.id){
             var msg = new RespostaFinal("RESPOSTA_FINAL", dadosTimes.player, ID_TEAM, Manager.sessionId, 
-                                    Manager.gameId, answer.alternativa, correct, interaction, true);
-
+                                    Manager.gameId, answer.alternativa, alternativaCorreta, interaction, true);
             cm.send(msg);
         }
         else{
             var msg = new RespostaFinal("RESPOSTA_FINAL", dadosTimes.player, ID_TEAM, Manager.sessionId, 
-                                    Manager.gameId, answer.alternativa, correct, interaction, false);
+                                    Manager.gameId, answer.alternativa, alternativaCorreta, interaction, false);
+            cm.send(msg);
         }
 
         btnAlternativas[0].gameObject.SetActive(false);
@@ -760,7 +774,7 @@ public class Jogo : MonoBehaviour, IClient
         }
         else{
             painelLider.SetActive(false);
-            fundoPainel.SetActive(false);
+            fundoPainel.SetActive(false); 
         }
     }
     
