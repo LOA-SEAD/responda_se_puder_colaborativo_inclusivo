@@ -2047,7 +2047,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd16c26c22f25494a93b393d36d49ef8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  painelConfig: {fileID: 0}
+  painelConfig: {fileID: 1621515822}
 --- !u!114 &1382524658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2060,9 +2060,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df217ff2d74d39d4890b6a036a30c570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  painelInstrucoes: {fileID: 0}
-  instrucoesText: {fileID: 0}
-  paginaText: {fileID: 0}
+  painelInstrucoes: {fileID: 1843655273}
+  instrucoesText: {fileID: 780429700}
+  paginaText: {fileID: 626524178}
   instrLista: []
   btnProximo: {fileID: 0}
   btnAnterior: {fileID: 0}
@@ -2078,12 +2078,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 628e26bef1e3b244d8407442f8da3f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  painelInstrucoes: {fileID: 0}
-  instrucoesText: {fileID: 0}
-  paginaText: {fileID: 0}
+  painelInstrucoes: {fileID: 1843655273}
+  instrucoesText: {fileID: 780429700}
+  paginaText: {fileID: 626524178}
   instrLista: []
-  btnProximo: {fileID: 0}
-  btnAnterior: {fileID: 0}
+  btnProximo: {fileID: 65961973}
+  btnAnterior: {fileID: 410293383}
 --- !u!1 &1438245551
 GameObject:
   m_ObjectHideFlags: 0
@@ -2791,7 +2791,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1843655274
 RectTransform:
   m_ObjectHideFlags: 0
