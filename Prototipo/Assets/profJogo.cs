@@ -304,7 +304,7 @@ public class profJogo : MonoBehaviour, IClient
                 Transform txt_qst = equipe.transform.Find("txt_qst_respondidas");
                 TMP_Text tmpText_qst = txt_qst.GetComponent<TMP_Text>();
                 equipe.GetComponent<id_equipejogo>().qst += 1;
-                tmpText_qst.text = equipe.GetComponent<id_equipejogo>().qst+"/"+questionAmount;
+                tmpText_qst.text = (equipe.GetComponent<id_equipejogo>().qst+1)+"/"+questionAmount;
                 
                 break;
             }
