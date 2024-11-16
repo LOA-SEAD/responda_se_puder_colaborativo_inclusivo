@@ -31,19 +31,13 @@ public class EntrarSessao : Message
 
 public class mensagemChat : ServerMessage
 {
- //   public User user;
     public string texto;
     public int sessionId;
     public int gameId;
-
     public User user;
-
     public bool moderator;
     public int teamId;
-
-    //public mensagemChat( string messageType, User user, int teamId, int sessionId, int gameId, string texto){
     public mensagemChat( string messageType, User user, int teamId, int sessionId, int gameId, string texto, bool moderator){
-     //   this.user = user;
         this.texto = texto;
         this.messageType = messageType;
         this.teamId = teamId;
@@ -52,7 +46,6 @@ public class mensagemChat : ServerMessage
         this.user = user;
         this.moderator = moderator;
     }
-
 }
 
 

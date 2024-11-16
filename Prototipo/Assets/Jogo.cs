@@ -1787,7 +1787,6 @@ public class Jogo : MonoBehaviour, IClient
         {
             if(Input.GetKeyDown(KeyCode.Return)){
                 var msg = new mensagemChat("MENSAGEM_CHAT", dadosTimes.player, ID_TEAM, Manager.sessionId, Manager.gameId, chatBox.text, false);
-                //var msg = new mensagemChat("MENSAGEM_CHAT", dadosTimes.player, Manager.teamId, Manager.sessionId, Manager.gameId, chatBox.text, Manager.moderator);
                 cm.send(msg);
                // readChat(chatBox.text);
                 chatBox.text = "";
