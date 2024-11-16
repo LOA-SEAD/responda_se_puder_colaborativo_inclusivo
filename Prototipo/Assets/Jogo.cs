@@ -350,13 +350,26 @@ public class Jogo : MonoBehaviour, IClient
             corAtualProf.a = transparencia;
             btnProfessorImage.color = corAtualProf;
         }
-        if (Manager.MOMENTO == "GRUPO" || Manager.MOMENTO == "VOTACAO") {
+        if (Manager.MOMENTO == "GRUPO") {
             Color corAtual5050 = btn5050Image.color;
             corAtual5050.a = sem_transparencia;
             btn5050Image.color = corAtual5050;
 
             Color corAtualPular = btnPularImage.color;
             corAtualPular.a = sem_transparencia;
+            btnPularImage.color = corAtualPular;
+
+            Color corAtualProf = btnProfessorImage.color;
+            corAtualProf.a = sem_transparencia;
+            btnProfessorImage.color = corAtualProf;
+        }
+        if (Manager.MOMENTO == "VOTACAO") {
+            Color corAtual5050 = btn5050Image.color;
+            corAtual5050.a = transparencia;
+            btn5050Image.color = corAtual5050;
+
+            Color corAtualPular = btnPularImage.color;
+            corAtualPular.a = transparencia;
             btnPularImage.color = corAtualPular;
 
             Color corAtualProf = btnProfessorImage.color;
@@ -811,7 +824,7 @@ public class Jogo : MonoBehaviour, IClient
     public void ajudaPula()
     {
         fundoPainel.SetActive(true);
-        if (Manager.MOMENTO == "INDIVIDUAL") 
+        if (Manager.MOMENTO == "INDIVIDUAL" || Manager.MOMENTO == "VOTACAO") 
         {
             // txt_geral.text = txt_pular_individual;
             // txt_geral.enabled = true;
@@ -880,7 +893,7 @@ public class Jogo : MonoBehaviour, IClient
     public void ajuda5050()
     {
         fundoPainel.SetActive(true);
-        if (Manager.MOMENTO == "INDIVIDUAL") 
+        if (Manager.MOMENTO == "INDIVIDUAL" || Manager.MOMENTO == "VOTACAO") 
         {
             // txt_geral.text = txt_5050_individual;
             // txt_geral.enabled = true;
@@ -1174,16 +1187,25 @@ public class Jogo : MonoBehaviour, IClient
         
         Manager.MOMENTO = "VOTACAO";
         txt_geral.enabled = false;
+        txt_5050_individual = "50/50 só pode ser usada no momento em grupo.";
+        txt_pular_individual = "PULAR só pode ser usada no momento em grupo.";
         SetAlpha();
         ajudaGasta(pulou);
         painelAguarde("MOMENTO VOTAÇÃO \nEm conjunto tentem chegar a resposta da pergunta, em caso de empate, o voto do líder tem peso maior.", 1);
         fundoPainel.SetActive(true);
         generalCommands.EnableAllObjectsInteractions();
-
-        btnAlternativas[0].gameObject.SetActive(true);
-        btnAlternativas[1].gameObject.SetActive(true);
-        btnAlternativas[2].gameObject.SetActive(true);
-        btnAlternativas[3].gameObject.SetActive(true);
+        if(alternativas[0].enabled){
+            btnAlternativas[0].gameObject.SetActive(true);
+        }
+        if(alternativas[1].enabled){
+            btnAlternativas[1].gameObject.SetActive(true);
+        }
+        if(alternativas[2].enabled){
+            btnAlternativas[2].gameObject.SetActive(true);
+        }
+        if(alternativas[3].enabled){
+            btnAlternativas[3].gameObject.SetActive(true);
+        }
         SetQntAlternatives(0);
        /*generalCommands.DisableAllObjectsInteractions();
         btnDica.interactable = true;
