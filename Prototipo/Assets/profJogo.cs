@@ -61,8 +61,6 @@ public class profJogo : MonoBehaviour, IClient
     public List<GameObject> notification = new List<GameObject>();
     [SerializeField]
     public List<Outline> outlineComponent = new List<Outline>();
-    
-
     // //Quadros em tela
     [SerializeField] private Transform ContentEquipes;
     [SerializeField] private Transform ContentQuestoes;
@@ -304,8 +302,9 @@ public class profJogo : MonoBehaviour, IClient
                 Transform txt_qst = equipe.transform.Find("txt_qst_respondidas");
                 TMP_Text tmpText_qst = txt_qst.GetComponent<TMP_Text>();
                 equipe.GetComponent<id_equipejogo>().qst += 1;
-                tmpText_qst.text = (equipe.GetComponent<id_equipejogo>().qst+1)+"/"+questionAmount;
-                
+                if((equipe.GetComponent<id_equipejogo>().qst+1) <= questionAmount){
+                    tmpText_qst.text = (equipe.GetComponent<id_equipejogo>().qst+1)+"/"+questionAmount;
+                }
                 break;
             }
         }
@@ -445,7 +444,7 @@ public class profJogo : MonoBehaviour, IClient
                         Transform txt_qst = equipe.transform.Find("txt_qst_respondidas");
                         TMP_Text tmpText_qst = txt_qst.GetComponent<TMP_Text>();
                         questionAmount = Manager.nrEasy + Manager.nrMedium + Manager.nrHard;
-                        tmpText_qst.text = "0/"+questionAmount;
+                        tmpText_qst.text = "1/"+questionAmount;
                     }
                     break;
                 }

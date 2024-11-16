@@ -73,6 +73,7 @@ MonoBehaviour:
   alternativa3: []
   alternativa4: []
   notification: []
+  outlineComponent: []
   ContentEquipes: {fileID: 0}
   ContentQuestoes: {fileID: 0}
   prefabEquipes: {fileID: 0}

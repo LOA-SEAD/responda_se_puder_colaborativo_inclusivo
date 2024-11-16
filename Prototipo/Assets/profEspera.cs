@@ -12,15 +12,8 @@ public class profEspera : MonoBehaviour, IClient
 {
 
     private ConnectionManager cm = ConnectionManager.getInstance();
-
     //BTN
     public Button btnIniciarSessao;
-
-    public GameObject quadroChat;
-    public GameObject painelTexto;
-    public GameObject painelChat;
-
-    public InputField chatBox;
 
     [SerializeField]
     public List<msgCHAT> messageList = new List<msgCHAT>();
@@ -156,7 +149,7 @@ public class profEspera : MonoBehaviour, IClient
     }
 
     public void btnComecarJogo(){
-
+        btnIniciarSessao.interactable = false;
         var msg = new ComecarJogo("COMECAR_JOGO", Manager.sessionId, Manager.gameId);
 
         cm.send(msg);

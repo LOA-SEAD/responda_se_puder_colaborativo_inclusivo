@@ -1109,8 +1109,6 @@ RectTransform:
   - {fileID: 61310253}
   - {fileID: 1285794117}
   - {fileID: 1154204936}
-  - {fileID: 2077924139}
-  - {fileID: 507484686}
   - {fileID: 1233383319}
   m_Father: {fileID: 779118921}
   m_RootOrder: 1
@@ -4392,7 +4390,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -5093,7 +5091,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 170938004}
-  m_RootOrder: 17
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6689,6 +6687,7 @@ MonoBehaviour:
   mod:
     id: 0
     name: 
+    rejectLeadership: 0
     indScore: 0
     elogio1: 0
     elogio2: 0
