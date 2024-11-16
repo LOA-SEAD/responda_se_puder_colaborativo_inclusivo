@@ -2780,12 +2780,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df217ff2d74d39d4890b6a036a30c570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  painelInstrucoes: {fileID: 0}
-  instrucoesText: {fileID: 0}
-  paginaText: {fileID: 0}
+  painelInstrucoes: {fileID: 546003539}
+  instrucoesText: {fileID: 560548327}
+  paginaText: {fileID: 179314149}
   instrLista: []
-  btnProximo: {fileID: 0}
-  btnAnterior: {fileID: 0}
+  btnProximo: {fileID: 463025199}
+  btnAnterior: {fileID: 94412805}
 --- !u!114 &1382524659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2959,7 +2959,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4290510849
+    rgba: 4278190080
   m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -3166,7 +3166,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1711784808
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3176,7 +3176,7 @@ RectTransform:
   m_GameObject: {fileID: 1711784807}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.77019, y: 0.77019, z: 0.77019}
+  m_LocalScale: {x: 0.76991177, y: 0.76991177, z: 0.76991177}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2131949309}
@@ -3187,8 +3187,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 27.039978}
-  m_SizeDelta: {x: -225.92, y: -252.49}
+  m_AnchoredPosition: {x: 0.000061035156, y: 0.9988098}
+  m_SizeDelta: {x: -109.63, y: -188.86}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1711784809
 MonoBehaviour:

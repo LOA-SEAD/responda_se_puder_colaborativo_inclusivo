@@ -1927,10 +1927,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   painelInstrucoes: {fileID: 1604309606}
   instrucoesText: {fileID: 1768956767}
-  paginaText: {fileID: 0}
+  paginaText: {fileID: 1532126969}
   instrLista: []
-  btnProximo: {fileID: 0}
-  btnAnterior: {fileID: 0}
+  btnProximo: {fileID: 1293879507}
+  btnAnterior: {fileID: 974951150}
 --- !u!114 &1382524659
 MonoBehaviour:
   m_ObjectHideFlags: 0

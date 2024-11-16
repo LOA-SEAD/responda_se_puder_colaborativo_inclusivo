@@ -149,6 +149,7 @@ public class profConfig : MonoBehaviour, IClient
     }
 
     public void connectionFail() {
+        Debug.Log("clicou conexao");
         SceneManager.LoadScene("profConfig");
     }
     
