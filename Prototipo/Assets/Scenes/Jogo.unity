@@ -990,7 +990,7 @@ GameObject:
   - component: {fileID: 120153578}
   - component: {fileID: 120153577}
   m_Layer: 5
-  m_Name: txtGeral
+  m_Name: txtMomento
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1036,7 +1036,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Texto
+  m_text: Momento
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1510,7 +1510,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &143986070
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11486,7 +11486,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1052.6199, y: 119.86151}
+  m_AnchoredPosition: {x: 1052.6199, y: 119.86152}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 0.95}
 --- !u!114 &1062279802
@@ -15318,7 +15318,7 @@ MonoBehaviour:
   numeroQuestaoText: {fileID: 1860898305}
   nivel: {fileID: 1613068503}
   pontuacao: {fileID: 1114134267}
-  txt_geral: {fileID: 120153577}
+  txt_momento: {fileID: 120153577}
   equipe_players: {fileID: 870854825}
   equipe_nr: {fileID: 985966197}
   txt_5050_individual: 
@@ -16266,7 +16266,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1520154973
 RectTransform:
   m_ObjectHideFlags: 0

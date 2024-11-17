@@ -32,7 +32,7 @@ public class Jogo : MonoBehaviour, IClient
     public TMP_Text numeroQuestaoText;
     public TMP_Text nivel;
     public TMP_Text pontuacao; 
-    public TMP_Text txt_geral; 
+    public TMP_Text txt_momento; 
     public TMP_Text equipe_players;
     public TMP_Text equipe_nr;
 
@@ -161,8 +161,6 @@ public class Jogo : MonoBehaviour, IClient
         pontuacao.text = "Pontuação: ";
         pontuacao.text = pontuacao.text + "0";
 
-        txt_geral.enabled = false;
-
         dadosTimes.SetEquipe();
         SetQuadroEquipe();
 
@@ -195,7 +193,6 @@ public class Jogo : MonoBehaviour, IClient
         SetLeaderText();
         Invoke("NextQ", sec);
         PrimeiraQuestao();
-    
     }
 
 // --------- SETUPS ---------
@@ -303,13 +300,8 @@ public class Jogo : MonoBehaviour, IClient
     {
         string t = dadosTimes.GetUser(Manager.leaderId);
 
-        //txt_lider.text = "Líder da fase: " + t;
+        txt_lider.text = "Líder da fase: " + t;
         txt_lider_jogo.text = "Líder da fase: " + t;
-    }
-
-    void DesativaTXT()
-    {
-        txt_geral.enabled = false;
     }
 
     public void SetQntAlternatives(int i)
@@ -700,9 +692,6 @@ public class Jogo : MonoBehaviour, IClient
         btnAlternativas[2].gameObject.SetActive(false);
         btnAlternativas[3].gameObject.SetActive(false);
 
-
-        // txt_geral.enabled = true;
-        // txt_geral.text = "Aguarde até que todos enviem suas respostas.";
         painelAguarde("Aguarde até que todos enviem suas respostas.", 0);
 
     }
@@ -815,9 +804,6 @@ public class Jogo : MonoBehaviour, IClient
                 cm.send(msg);
 
                 painelAjudaPular.SetActive(false);
-                // txt_geral.text = "Computando ajuda...";
-                // txt_geral.enabled = true;
-                // Invoke("DesativaTXT", 3f);
                 painelAguarde("Computando ajuda...", 1);
     }
 
@@ -826,9 +812,6 @@ public class Jogo : MonoBehaviour, IClient
         fundoPainel.SetActive(true);
         if (Manager.MOMENTO == "INDIVIDUAL" || Manager.MOMENTO == "VOTACAO") 
         {
-            // txt_geral.text = txt_pular_individual;
-            // txt_geral.enabled = true;
-            // Invoke("DesativaTXT", 5f);
             painelAguarde("PULAR só pode ser usada no momento em grupo.", 1);
 
         }
@@ -843,9 +826,6 @@ public class Jogo : MonoBehaviour, IClient
                     painelAjudaPular.SetActive(true);
 
                 }else {
-                    // txt_geral.text = "Somente o líder pode solicitar esse tipo de ajuda. Converse com ele via chat para usá-la.";
-                    // txt_geral.enabled = true;
-                    // Invoke("DesativaTXT", 5f);
                     painelAguarde("Somente o líder pode solicitar esse tipo de ajuda. Converse com ele via chat para usá-la.", 1);
                 }
             }
@@ -880,14 +860,7 @@ public class Jogo : MonoBehaviour, IClient
                 cm.send(msg);
 
                 painelAjuda5050.SetActive(false);
-
-                
-                // txt_geral.text = "Computando ajuda...";
-                // txt_geral.enabled = true;
-                // Invoke("DesativaTXT", 3f);
                 painelAguarde("Computando ajuda...", 1);
-
-                
     }
 
     public void ajuda5050()
@@ -895,9 +868,6 @@ public class Jogo : MonoBehaviour, IClient
         fundoPainel.SetActive(true);
         if (Manager.MOMENTO == "INDIVIDUAL" || Manager.MOMENTO == "VOTACAO") 
         {
-            // txt_geral.text = txt_5050_individual;
-            // txt_geral.enabled = true;
-            // Invoke("DesativaTXT", 5f);
             painelAguarde("50/50 só pode ser usada no momento em grupo.", 1);
 
         }
@@ -912,9 +882,6 @@ public class Jogo : MonoBehaviour, IClient
                     painelAjuda5050.SetActive(true);
 
                 } else {
-                    // txt_geral.text = "Somente o líder pode solicitar esse tipo de ajuda. Converse com ele via chat para usá-la.";
-                    // txt_geral.enabled = true;
-                    // Invoke("DesativaTXT", 5f);
                     painelAguarde("Somente o líder pode solicitar esse tipo de ajuda. Converse com ele via chat para usá-la.", 1);
 
                 }
@@ -1073,9 +1040,9 @@ public class Jogo : MonoBehaviour, IClient
 
     public void SetIndividual()
     {
-        painelAguarde("MOMENTO INDIVIDUAL \n", 1);
         Manager.MOMENTO = "INDIVIDUAL";
-        txt_geral.enabled = false;
+        painelAguarde("MOMENTO INDIVIDUAL \n", 1);
+        txt_momento.text = "Momento Individual";
         tempoQuestao.enabled = true;
 
         txt_5050_individual = "50/50 só pode ser usada no momento em grupo.";
@@ -1125,14 +1092,11 @@ public class Jogo : MonoBehaviour, IClient
         tempoQuestao.enabled = false;
         
         Manager.MOMENTO = "GRUPO";
-        txt_geral.enabled = false;
-
+        txt_momento.text = "Momento Grupo";
         btn5050.gameObject.SetActive(true);
         btnPular.gameObject.SetActive(true);
         btnProfessor.gameObject.SetActive(true);
         Debug.Log("PULOS: " + pulou);
-        txt_lider_jogo.gameObject.SetActive(true);
-        SetLeaderText();
         SetQntAlternatives(1);
         quadroChat.SetActive(true);
         chatBox.gameObject.SetActive(true);
@@ -1186,7 +1150,7 @@ public class Jogo : MonoBehaviour, IClient
     {
         
         Manager.MOMENTO = "VOTACAO";
-        txt_geral.enabled = false;
+        txt_momento.text = "Momento Votação";
         txt_5050_individual = "50/50 só pode ser usada no momento em grupo.";
         txt_pular_individual = "PULAR só pode ser usada no momento em grupo.";
         SetAlpha();
@@ -1363,51 +1327,6 @@ public class Jogo : MonoBehaviour, IClient
 
         CanvasAvaliacao.SetActive(false);
 
-    /*    if (qst_respondidas == Manager.nQ_easy)
-        {
-            if (pulou == 0)
-            {
-                SetIndividual();
-                CarregarPergunta();
-            }
-
-            qst = Manager.nQ_easy + 1;
-            Manager.FASE = "Nível Médio";
-
-            CanvasRCerta.SetActive(false);
-            CanvasRErrada.SetActive(false);
-            CanvasJogo.SetActive(false);
-            CanvasFase.SetActive(true);
-            SetLevelText();
-            SetLeaderText();
-            Invoke("NextQ", 10f);
-            // CanvasJogo.SetActive(true);
-
-
-        } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium)
-        {
-
-            if (pulou == 0 || pulou_no_facil == 1)
-            {
-                SetIndividual();
-                CarregarPergunta();
-            }
-
-            qst = Manager.nQ_easy + Manager.nQ_medium + 2;
-            Manager.FASE = "Nível Difícil";
-            CanvasRCerta.SetActive(false);
-            CanvasRErrada.SetActive(false);
-            CanvasJogo.SetActive(false);
-            CanvasFase.SetActive(true);
-            SetLevelText();
-            SetLeaderText();
-            Invoke("NextQ", 10f);
-                // CanvasJogo.SetActive(true);
-
-
-        } else if (qst_respondidas == Manager.nQ_easy + Manager.nQ_medium + Manager.nQ_hard)
-        {*/
-
             Manager.teamId = ID_TEAM;
             var msg = new FimDeJogo("FIM_DE_JOGO", dadosTimes.player, ID_TEAM, Manager.sessionId,
                                                             Manager.gameId, Manager.grpScore, Manager.gameTime);
@@ -1417,12 +1336,7 @@ public class Jogo : MonoBehaviour, IClient
             cm.send(msg);    
 
             Invoke("AtivarTelaFimDeJogo", 5f);
-            SceneManager.LoadScene("Fim");    
-
-        
-       /* }
-        ProximaQuestao();*/
-
+            SceneManager.LoadScene("Fim");   
     }
 
      private void EscondeClicandoFora(GameObject panel) {
@@ -1435,8 +1349,6 @@ public class Jogo : MonoBehaviour, IClient
             fundoPainel.SetActive(false);
         }
     }
-
-
 // --------- HANDLE ---------
 
     public void handle(string ms)   
@@ -1651,15 +1563,12 @@ public class Jogo : MonoBehaviour, IClient
 
             if(pulou == 1)
             {
-                txt_geral.text = "A equipe já utilizou a ajuda PULAR (Máximo por equipe: 1).";
-                txt_geral.enabled = true;
-                Invoke("DesativaTXT", 5f);
+                painelAguarde("A equipe utilizou todos os pulos (1).", 1);
 
             }
             else {
 
-                txt_geral.text = "A equipe decidiu por pular a questão.";
-                txt_geral.enabled = true;
+                painelAguarde("A equipe decidiu pular a questão.", 1);
                 painelPulou.SetActive(true);
                 fundoPainel.SetActive(true);
 
@@ -1670,7 +1579,6 @@ public class Jogo : MonoBehaviour, IClient
                 indice_qst++;
                 SetIndividual();
 
-                Invoke("DesativaTXT", 5f);
             }
         } else {
             alt5050 = message.alternativa;
@@ -1710,7 +1618,7 @@ public class Jogo : MonoBehaviour, IClient
             CanvasJogo.SetActive(false);
             CanvasFase.SetActive(true);
             SetLevelText();
-            //SetLeaderText();
+            SetLeaderText();
             Invoke("NextQ", 10f);
             // CanvasJogo.SetActive(true);
 
@@ -1736,7 +1644,6 @@ public class Jogo : MonoBehaviour, IClient
             Invoke("NextQ", 10f);
 
         }
-        txt_lider_jogo.gameObject.SetActive(false);
         ProximaQuestao();
 
     }
