@@ -60,3 +60,6 @@ TagManager:
   - name: "Painel Instru\xE7\xF5es"
     uniqueID: 1770092537
     locked: 0
+  - name: Sprite
+    uniqueID: 2456099865
+    locked: 0

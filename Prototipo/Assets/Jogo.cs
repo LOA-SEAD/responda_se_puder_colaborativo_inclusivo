@@ -193,6 +193,7 @@ public class Jogo : MonoBehaviour, IClient
         SetLeaderText();
         Invoke("NextQ", sec);
         PrimeiraQuestao();
+        painelAguarde("MOMENTO INDIVIDUAL \n", 1);
     }
 
 // --------- SETUPS ---------
