@@ -52,6 +52,7 @@ public class Jogo : MonoBehaviour, IClient
     public GameObject confirmaAlternativa;
     public GameObject painelDica;
     public GameObject painelConfirma;
+    public GameObject painelConfirmaVotacao;
     public GameObject painelAjuda5050;
     public GameObject painelAjudaPular;
     public GameObject painelPulou;
@@ -193,7 +194,8 @@ public class Jogo : MonoBehaviour, IClient
         SetLeaderText();
         Invoke("NextQ", sec);
         PrimeiraQuestao();
-        painelAguarde("MOMENTO INDIVIDUAL \n", 1);
+        painelAguarde("MOMENTO INDIVIDUAL \n", 0);
+        Invoke("fechaPainelAguarde", 4f);
     }
 
 // --------- SETUPS ---------
@@ -526,13 +528,13 @@ public class Jogo : MonoBehaviour, IClient
         switch (index)
         {
             case 0:
-                return perguntaAtual.resposta;
+                return "A. " + perguntaAtual.resposta;
             case 1:
-                return perguntaAtual.r2;
+                return "B. " + perguntaAtual.r2;
             case 2:
-                return perguntaAtual.r3;
+                return "C. " + perguntaAtual.r3;
             case 3:
-                return perguntaAtual.r4;
+                return "D. " + perguntaAtual.r4;
             default:
                 return "";
         }
@@ -663,6 +665,13 @@ public class Jogo : MonoBehaviour, IClient
         }
     }
 
+    public void ConfirmarVotacao()
+    {
+       var msg = new MomentoVotacao("MOMENTO_VOTACAO", dadosTimes.player, ID_TEAM, Manager.sessionId,  Manager.gameId, answer.level, answer.nrQ);
+       cm.send(msg);
+       painelConfirmaVotacao.SetActive(false);
+    }
+
     public void ConfirmarRespostaIndividual()
     {
         fundoPainel.SetActive(false);
@@ -735,7 +744,7 @@ public class Jogo : MonoBehaviour, IClient
         btnAlternativas[3].gameObject.SetActive(false);
 
         //painelAguarde("Aguarde até que todos enviem suas respostas.", 0);
-        painelAguarde("Aguarde até que todos enviem suas respostas.", 1);
+        painelAguarde("Aguarde até que todos enviem suas respostas.", 0);
     }
 
 // --------- ATIVAÇÃO E DESATIVAÇÃO DE PAINEIS ---------
@@ -759,6 +768,12 @@ public class Jogo : MonoBehaviour, IClient
     public void fechaConfirma()
     {
         painelConfirma.SetActive(false);
+        fundoPainel.SetActive(false);
+    }
+
+    public void fechaConfirmaVotacao()
+    {
+        painelConfirmaVotacao.SetActive(false);
         fundoPainel.SetActive(false);
     }
 
@@ -985,8 +1000,8 @@ public class Jogo : MonoBehaviour, IClient
     }
     public void btnVotacao()
     {
-        var msg = new MomentoVotacao("MOMENTO_VOTACAO", dadosTimes.player, ID_TEAM, Manager.sessionId,  Manager.gameId, answer.level, answer.nrQ);
-        cm.send(msg);
+        painelConfirmaVotacao.SetActive(true);
+        fundoPainel.SetActive(true);
     }
 
 // --------- TIMER ---------
@@ -1042,14 +1057,15 @@ public class Jogo : MonoBehaviour, IClient
     public void SetIndividual()
     {
         Manager.MOMENTO = "INDIVIDUAL";
-        painelAguarde("MOMENTO INDIVIDUAL \n", 1);
+        painelAguarde("MOMENTO INDIVIDUAL \n", 0);
+        Invoke("fechaPainelAguarde", 4f);
         txt_momento.text = "Momento Individual";
         tempoQuestao.enabled = true;
 
         txt_5050_individual = "50/50 só pode ser usada no momento em grupo.";
         txt_pular_individual = "PULAR só pode ser usada no momento em grupo.";
 
-        fechaPainelAguarde();
+        //fechaPainelAguarde();
         fundoPainel.SetActive(false);
 
         btnAlternativas[0].gameObject.SetActive(true);
@@ -1082,6 +1098,7 @@ public class Jogo : MonoBehaviour, IClient
         quadroChat.SetActive(false);
         chatBox.gameObject.SetActive(false);
         btnAbrirMensagensProntas.gameObject.SetActive(false);
+        btnProfessor.gameObject.SetActive(false);
         btnVotar.gameObject.SetActive(false);
         painelMensagensProntas.SetActive(false);
     }
@@ -1110,7 +1127,8 @@ public class Jogo : MonoBehaviour, IClient
 
         if (Manager.leaderId == dadosTimes.player.id)
         {
-            painelAguarde("MOMENTO GRUPO \nComo líder, converse com sua equipe e, quando estiverem prontos, começe a votação.", 1);
+            painelAguarde("MOMENTO GRUPO \nComo líder, converse com sua equipe e, quando estiverem prontos, começe a votação.", 0);
+            Invoke("fechaPainelAguarde", 4f);
             fundoPainel.SetActive(true);
             generalCommands.EnableAllObjectsInteractions();
             btnVotar.gameObject.SetActive(true);
@@ -1125,7 +1143,8 @@ public class Jogo : MonoBehaviour, IClient
         if (dadosTimes.player.id != Manager.leaderId)
         {
 
-            painelAguarde("MOMENTO GRUPO \nDiscutam a solução e aguarde o líder para ir para a tela de votação.", 1);
+            painelAguarde("MOMENTO GRUPO \nDiscutam a solução e aguarde o líder para ir para a tela de votação.", 0);
+            Invoke("fechaPainelAguarde", 4f);
             fundoPainel.SetActive(true);
 
             btnAlternativas[0].gameObject.SetActive(false);
@@ -1156,7 +1175,8 @@ public class Jogo : MonoBehaviour, IClient
         txt_pular_individual = "PULAR só pode ser usada no momento em grupo.";
         SetAlpha();
         ajudaGasta(pulou);
-        painelAguarde("MOMENTO VOTAÇÃO \nEm conjunto tentem chegar a resposta da pergunta, em caso de empate, o voto do líder tem peso maior.", 1);
+        painelAguarde("MOMENTO VOTAÇÃO \nEm conjunto tentem chegar a resposta da pergunta, em caso de empate, o voto do líder tem peso maior.", 0);
+        Invoke("fechaPainelAguarde", 4f);
         fundoPainel.SetActive(true);
         generalCommands.EnableAllObjectsInteractions();
         if(alternativas[0].enabled){
