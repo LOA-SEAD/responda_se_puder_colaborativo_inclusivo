@@ -1015,20 +1015,20 @@ public class Jogo : MonoBehaviour, IClient
         {
             if (timer <= 0f)
             {
-            zerouTimer = 1;
-            
-            if (Manager.MOMENTO == "INDIVIDUAL") 
-            {
-                    if (level_qst == 0) answer.nrQ = Manager.qEasy[indice_qst];
-                    else if (level_qst == 1) answer.nrQ = Manager.qMedium[indice_qst];
-                    else if (level_qst == 2) answer.nrQ = Manager.qHard[indice_qst];
+                zerouTimer = 1;
+                
+                if (Manager.MOMENTO == "INDIVIDUAL") 
+                {
+                        if (level_qst == 0) answer.nrQ = Manager.qEasy[indice_qst];
+                        else if (level_qst == 1) answer.nrQ = Manager.qMedium[indice_qst];
+                        else if (level_qst == 2) answer.nrQ = Manager.qHard[indice_qst];
 
-                    Debug.Log("NUMERO QUESTAO: " + answer.nrQ);
-                    var msg = new RespostaIndividual("RESPOSTA_INDIVIDUAL", dadosTimes.player, ID_TEAM, Manager.sessionId,
-                                            Manager.gameId, "", answer.level, answer.nrQ);
+                        Debug.Log("NUMERO QUESTAO: " + answer.nrQ);
+                        var msg = new RespostaIndividual("RESPOSTA_INDIVIDUAL", dadosTimes.player, ID_TEAM, Manager.sessionId,
+                                                Manager.gameId, "", answer.level, answer.nrQ);
 
-                    cm.send(msg);
-            }
+                        cm.send(msg);
+                }
             }
 
             int min = Mathf.FloorToInt(timer / 60f);
@@ -1147,10 +1147,10 @@ public class Jogo : MonoBehaviour, IClient
             Invoke("fechaPainelAguarde", 4f);
             fundoPainel.SetActive(true);
 
-            btnAlternativas[0].gameObject.SetActive(false);
+           /* btnAlternativas[0].gameObject.SetActive(false);
             btnAlternativas[1].gameObject.SetActive(false);
             btnAlternativas[2].gameObject.SetActive(false);
-            btnAlternativas[3].gameObject.SetActive(false);
+            btnAlternativas[3].gameObject.SetActive(false);*/
             
             generalCommands.DisableAllObjectsInteractions();
             btnDica.interactable = true;
@@ -1164,6 +1164,10 @@ public class Jogo : MonoBehaviour, IClient
             generalCommands.EnableInteraction(chatBox.gameObject);
             generalCommands.EnableInteraction(btnAbrirMensagensProntas.gameObject);
             generalCommands.EnableInteraction(btnVotar.gameObject);
+        }
+        foreach (Button btn in btnAlternativas)        
+        {
+            btn.gameObject.SetActive(false);
         }
     }
     public void SetVotacao()
@@ -1181,15 +1185,19 @@ public class Jogo : MonoBehaviour, IClient
         generalCommands.EnableAllObjectsInteractions();
         if(alternativas[0].enabled){
             btnAlternativas[0].gameObject.SetActive(true);
+            generalCommands.EnableInteraction(btnAlternativas[0].gameObject);
         }
         if(alternativas[1].enabled){
             btnAlternativas[1].gameObject.SetActive(true);
+            generalCommands.EnableInteraction(btnAlternativas[1].gameObject);
         }
         if(alternativas[2].enabled){
             btnAlternativas[2].gameObject.SetActive(true);
+            generalCommands.EnableInteraction(btnAlternativas[2].gameObject);
         }
         if(alternativas[3].enabled){
             btnAlternativas[3].gameObject.SetActive(true);
+            generalCommands.EnableInteraction(btnAlternativas[3].gameObject);
         }
         SetQntAlternatives(0);
        /*generalCommands.DisableAllObjectsInteractions();
