@@ -75,10 +75,10 @@ public class profJogo : MonoBehaviour, IClient
         Color cor;
         msgCHAT_moderator message = JsonUtility.FromJson<msgCHAT_moderator>(msgJSON);
 
-        if (!msgTeams.ContainsKey(message.teamId))
+        /*if (!msgTeams.ContainsKey(message.teamId))
         {
             msgTeams[message.teamId] = new List<msgCHAT_moderator>();
-        }
+        }*/
 
         msgCHAT_moderator textoChat = new msgCHAT_moderator();
         if (message.moderator)
@@ -142,6 +142,33 @@ public class profJogo : MonoBehaviour, IClient
         else 
         {
             Debug.Log("Não há mensagens no time " + teamId);
+        }
+    }
+
+      private void exibir(List<msgCHAT_moderator> mensagens)
+    {
+        Color cor;
+        foreach (Transform child in painelChat.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        foreach (msgCHAT_moderator mensagem in mensagens)
+        {
+            GameObject novoChat = Instantiate(painelTexto, painelChat.transform);
+            Text texto = novoChat.GetComponentInChildren<Text>();
+            texto.text = mensagem.texto;
+            //texto.color = mensagem.moderator ? Color.red : Color.black;
+            if (mensagem.moderator)
+            {
+                ColorUtility.TryParseHtmlString("#f41004", out cor);
+                texto.fontStyle = FontStyle.Bold;
+            }
+            else
+            {
+                ColorUtility.TryParseHtmlString("#112A46", out cor);
+            }
+            texto.color = cor;
         }
     }
 
@@ -220,23 +247,6 @@ public class profJogo : MonoBehaviour, IClient
 
   
 }
-
-
-    private void exibir(List<msgCHAT_moderator> mensagens)
-    {
-        foreach (Transform child in painelChat.transform)
-        {
-            Destroy(child.gameObject);
-        }
-
-        foreach (msgCHAT_moderator mensagem in mensagens)
-        {
-            GameObject novoChat = Instantiate(painelTexto, painelChat.transform);
-            Text texto = novoChat.GetComponentInChildren<Text>();
-            texto.text = mensagem.texto;
-            texto.color = mensagem.moderator ? Color.red : Color.black;
-        }
-    }
 
     public void encerrar(){
         var msg = new EncerrarJogo("ENCERRAR_JOGO", Manager.sessionId, Manager.gameId);
@@ -424,8 +434,8 @@ public class profJogo : MonoBehaviour, IClient
             alternativa4.Add(questoesTime.transform.Find("alternativa4").gameObject);
             questoesTime.gameObject.SetActive(false);
             painelQuestoesTime.Add(questoesTime);
-
             qualPergunta.Add(0);
+            msgTeams[i+1] = new List<msgCHAT_moderator>();
         }
 
         for (int i = 0; i < quadrosEquipe.Count; i++)

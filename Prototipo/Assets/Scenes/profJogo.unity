@@ -2911,7 +2911,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1414973193}
   m_HandleRect: {fileID: 1414973192}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3588,7 +3588,7 @@ MonoBehaviour:
   questionAmount: 3
   equipes_terminadas: 0
   qualPergunta: 
-  equipeSelecionada: {fileID: 0}
+  equipeSelecionada: {fileID: 1663341573}
   encerrarJogo: {fileID: 0}
   quadroChat: {fileID: 1761406062}
   painelTexto: {fileID: 913663327811833547, guid: a3dbaadb5e440f042b97bc897f07b1a8, type: 3}
@@ -4487,7 +4487,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1052.6199, y: 119.86148}
+  m_AnchoredPosition: {x: 1052.6199, y: 119.86154}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 0.95}
 --- !u!114 &1683960793
