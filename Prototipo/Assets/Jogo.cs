@@ -471,7 +471,8 @@ public class Jogo : MonoBehaviour, IClient
             for (int i = 0; i < btnAlternativas.Length; i++)
             {  
                 alternativas[i].text = ObterAlternativa(i);
-                btnAlternativas[i].gameObject.SetActive(true);
+                //btnAlternativas[i].gameObject.SetActive(true);
+                btnAlternativas[i].interactable = true;
             }
 
             confirmaAlternativa.SetActive(false);
@@ -481,7 +482,8 @@ public class Jogo : MonoBehaviour, IClient
 
             for (int i = 0; i < btnAlternativas.Length; i++)
             {
-                btnAlternativas[i].gameObject.SetActive(false);
+                //btnAlternativas[i].gameObject.SetActive(false);
+                btnAlternativas[i].interactable = false;
             }
         }
     }
@@ -528,13 +530,13 @@ public class Jogo : MonoBehaviour, IClient
         switch (index)
         {
             case 0:
-                return "A. " + perguntaAtual.resposta;
+                return perguntaAtual.resposta;
             case 1:
-                return "B. " + perguntaAtual.r2;
+                return perguntaAtual.r2;
             case 2:
-                return "C. " + perguntaAtual.r3;
+                return perguntaAtual.r3;
             case 3:
-                return "D. " + perguntaAtual.r4;
+                return perguntaAtual.r4;
             default:
                 return "";
         }
@@ -697,10 +699,14 @@ public class Jogo : MonoBehaviour, IClient
 
         cm.send(msg);
 
-        btnAlternativas[0].gameObject.SetActive(false);
+        /*btnAlternativas[0].gameObject.SetActive(false);
         btnAlternativas[1].gameObject.SetActive(false);
         btnAlternativas[2].gameObject.SetActive(false);
-        btnAlternativas[3].gameObject.SetActive(false);
+        btnAlternativas[3].gameObject.SetActive(false);*/
+        btnAlternativas[0].interactable = false;
+        btnAlternativas[1].interactable = false;
+        btnAlternativas[2].interactable = false;
+        btnAlternativas[3].interactable = false;
 
         painelAguarde("Aguarde até que todos enviem suas respostas.", 0);
 
@@ -738,10 +744,14 @@ public class Jogo : MonoBehaviour, IClient
             cm.send(msg);
         }
 
-        btnAlternativas[0].gameObject.SetActive(false);
+        /*btnAlternativas[0].gameObject.SetActive(false);
         btnAlternativas[1].gameObject.SetActive(false);
         btnAlternativas[2].gameObject.SetActive(false);
-        btnAlternativas[3].gameObject.SetActive(false);
+        btnAlternativas[3].gameObject.SetActive(false);*/
+        btnAlternativas[0].interactable = false;
+        btnAlternativas[1].interactable = false;
+        btnAlternativas[2].interactable = false;
+        btnAlternativas[3].interactable = false;
 
         //painelAguarde("Aguarde até que todos enviem suas respostas.", 0);
         painelAguarde("Aguarde até que todos enviem suas respostas.", 0);
@@ -930,7 +940,8 @@ public class Jogo : MonoBehaviour, IClient
         {
            if (ordem_alternativas[k] != -1)
            {
-                btnAlternativas[k].gameObject.SetActive(false);
+                //btnAlternativas[k].gameObject.SetActive(false);
+                btnAlternativas[k].interactable = false;
                 alternativas[k].enabled = false;
                 qntAlternatives[k].gameObject.SetActive(false);
            }
@@ -1068,10 +1079,14 @@ public class Jogo : MonoBehaviour, IClient
         //fechaPainelAguarde();
         fundoPainel.SetActive(false);
 
-        btnAlternativas[0].gameObject.SetActive(true);
+        /*btnAlternativas[0].gameObject.SetActive(true);
         btnAlternativas[1].gameObject.SetActive(true);
         btnAlternativas[2].gameObject.SetActive(true);
-        btnAlternativas[3].gameObject.SetActive(true);
+        btnAlternativas[3].gameObject.SetActive(true);*/
+        btnAlternativas[0].interactable = true;
+        btnAlternativas[1].interactable = true;
+        btnAlternativas[2].interactable = true;
+        btnAlternativas[3].interactable = true;
         alternativas[0].enabled = true;
         alternativas[1].enabled = true;
         alternativas[2].enabled = true;
@@ -1090,7 +1105,8 @@ public class Jogo : MonoBehaviour, IClient
            
         foreach (Button btn in btnAlternativas)        
         {
-            btn.gameObject.SetActive(true);
+            //btn.gameObject.SetActive(true);
+            btn.interactable = true;
         }
 
         generalCommands.EnableAllObjectsInteractions();
@@ -1167,7 +1183,8 @@ public class Jogo : MonoBehaviour, IClient
         }
         foreach (Button btn in btnAlternativas)        
         {
-            btn.gameObject.SetActive(false);
+            //btn.gameObject.SetActive(false);
+            btn.interactable = false;
         }
     }
     public void SetVotacao()
@@ -1184,19 +1201,23 @@ public class Jogo : MonoBehaviour, IClient
         fundoPainel.SetActive(true);
         generalCommands.EnableAllObjectsInteractions();
         if(alternativas[0].enabled){
-            btnAlternativas[0].gameObject.SetActive(true);
+            //btnAlternativas[0].gameObject.SetActive(true);
+            btnAlternativas[0].interactable = true;
             generalCommands.EnableInteraction(btnAlternativas[0].gameObject);
         }
         if(alternativas[1].enabled){
-            btnAlternativas[1].gameObject.SetActive(true);
+            //btnAlternativas[1].gameObject.SetActive(true);
+            btnAlternativas[1].interactable = true;
             generalCommands.EnableInteraction(btnAlternativas[1].gameObject);
         }
         if(alternativas[2].enabled){
-            btnAlternativas[2].gameObject.SetActive(true);
+            //btnAlternativas[2].gameObject.SetActive(true);
+            btnAlternativas[2].interactable = true;
             generalCommands.EnableInteraction(btnAlternativas[2].gameObject);
         }
         if(alternativas[3].enabled){
-            btnAlternativas[3].gameObject.SetActive(true);
+            //btnAlternativas[3].gameObject.SetActive(true);
+            btnAlternativas[3].interactable = true;
             generalCommands.EnableInteraction(btnAlternativas[3].gameObject);
         }
         SetQntAlternatives(0);
@@ -1476,7 +1497,8 @@ public class Jogo : MonoBehaviour, IClient
                 {
                     foreach (Button btn in btnAlternativas)        
                     {
-                        btn.gameObject.SetActive(true);
+                        btn.interactable = true;
+                        //btn.gameObject.SetActive(true);
                     }
                 }
 
