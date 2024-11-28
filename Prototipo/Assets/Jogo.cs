@@ -25,6 +25,11 @@ public class Jogo : MonoBehaviour, IClient
     public TMP_Text altC;
     public TMP_Text altD;
 
+    public TMP_Text letraAAlt;
+    public TMP_Text letraBAlt;
+    public TMP_Text letraCAlt;
+    public TMP_Text letraDAlt;
+
     public TMP_Text txt_correto_resposta;
     public TMP_Text txt_errado_resposta;
     public TMP_Text txt_errado_resposta_dada;
@@ -940,8 +945,8 @@ public class Jogo : MonoBehaviour, IClient
         {
            if (ordem_alternativas[k] != -1)
            {
-                //btnAlternativas[k].gameObject.SetActive(false);
-                btnAlternativas[k].interactable = false;
+                btnAlternativas[k].gameObject.SetActive(false);
+                //btnAlternativas[k].interactable = false;
                 alternativas[k].enabled = false;
                 qntAlternatives[k].gameObject.SetActive(false);
            }
@@ -1079,14 +1084,10 @@ public class Jogo : MonoBehaviour, IClient
         //fechaPainelAguarde();
         fundoPainel.SetActive(false);
 
-        /*btnAlternativas[0].gameObject.SetActive(true);
+        btnAlternativas[0].gameObject.SetActive(true);
         btnAlternativas[1].gameObject.SetActive(true);
         btnAlternativas[2].gameObject.SetActive(true);
-        btnAlternativas[3].gameObject.SetActive(true);*/
-        btnAlternativas[0].interactable = true;
-        btnAlternativas[1].interactable = true;
-        btnAlternativas[2].interactable = true;
-        btnAlternativas[3].interactable = true;
+        btnAlternativas[3].gameObject.SetActive(true);
         alternativas[0].enabled = true;
         alternativas[1].enabled = true;
         alternativas[2].enabled = true;
@@ -1144,15 +1145,10 @@ public class Jogo : MonoBehaviour, IClient
         if (Manager.leaderId == dadosTimes.player.id)
         {
             painelAguarde("MOMENTO GRUPO \nComo líder, converse com sua equipe e, quando estiverem prontos, começe a votação.", 0);
-            Invoke("fechaPainelAguarde", 4f);
+            Invoke("fechaPainelAguarde", 6f);
             fundoPainel.SetActive(true);
             generalCommands.EnableAllObjectsInteractions();
             btnVotar.gameObject.SetActive(true);
-            /*foreach (Button btn in btnAlternativas)        
-            {
-                btn.gameObject.SetActive(true);
-            }*/
-
         }
         // Debug.Log("ID JOGADOR: " + dadosTimes.player.id);
         // Debug.Log("ID Lider: " + Manager.leaderId);
@@ -1160,13 +1156,8 @@ public class Jogo : MonoBehaviour, IClient
         {
 
             painelAguarde("MOMENTO GRUPO \nDiscutam a solução e aguarde o líder para ir para a tela de votação.", 0);
-            Invoke("fechaPainelAguarde", 4f);
+            Invoke("fechaPainelAguarde", 6f);
             fundoPainel.SetActive(true);
-
-           /* btnAlternativas[0].gameObject.SetActive(false);
-            btnAlternativas[1].gameObject.SetActive(false);
-            btnAlternativas[2].gameObject.SetActive(false);
-            btnAlternativas[3].gameObject.SetActive(false);*/
             
             generalCommands.DisableAllObjectsInteractions();
             btnDica.interactable = true;
@@ -1181,6 +1172,12 @@ public class Jogo : MonoBehaviour, IClient
             generalCommands.EnableInteraction(btnAbrirMensagensProntas.gameObject);
             generalCommands.EnableInteraction(btnVotar.gameObject);
         }
+        Color cor;
+        ColorUtility.TryParseHtmlString("#717171", out cor);
+        letraAAlt.color = cor;
+        letraBAlt.color = cor;
+        letraCAlt.color = cor;
+        letraDAlt.color = cor;
         foreach (Button btn in btnAlternativas)        
         {
             //btn.gameObject.SetActive(false);
@@ -1197,7 +1194,7 @@ public class Jogo : MonoBehaviour, IClient
         SetAlpha();
         ajudaGasta(pulou);
         painelAguarde("MOMENTO VOTAÇÃO \nEm conjunto tentem chegar a resposta da pergunta, em caso de empate, o voto do líder tem peso maior.", 0);
-        Invoke("fechaPainelAguarde", 4f);
+        Invoke("fechaPainelAguarde", 5f);
         fundoPainel.SetActive(true);
         generalCommands.EnableAllObjectsInteractions();
         if(alternativas[0].enabled){
@@ -1220,6 +1217,12 @@ public class Jogo : MonoBehaviour, IClient
             btnAlternativas[3].interactable = true;
             generalCommands.EnableInteraction(btnAlternativas[3].gameObject);
         }
+        Color cor;
+        ColorUtility.TryParseHtmlString("#000000", out cor);
+        letraAAlt.color = cor;
+        letraBAlt.color = cor;
+        letraCAlt.color = cor;
+        letraDAlt.color = cor;
         SetQntAlternatives(0);
        /*generalCommands.DisableAllObjectsInteractions();
         btnDica.interactable = true;
@@ -1773,12 +1776,13 @@ public class Jogo : MonoBehaviour, IClient
                 chatBox.ActivateInputField ();
             }
         }
+        /*
         if(chatBox.isFocused == true){
             quadroChat.SetActive(true);
         }
         else{
             quadroChat.SetActive(false);
-        }
+        }*/
         EscondeClicandoFora(painelMensagensProntas);
         EscondeClicandoFora(painelDica);
         EscondeClicandoFora(painelConfirma);
