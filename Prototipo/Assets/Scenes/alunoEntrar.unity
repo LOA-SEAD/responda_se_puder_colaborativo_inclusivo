@@ -2482,8 +2482,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4283125069
-  m_fontColor: {r: 0.3019608, g: 0.3019608, b: 0.29411766, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2590,7 +2590,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1260887177}
+  m_TargetGraphic: {fileID: 747460258}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -5056,7 +5056,7 @@ RectTransform:
   m_GameObject: {fileID: 1530475538}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.76991177, y: 0.76991177, z: 0.76991177}
+  m_LocalScale: {x: 0.65, y: 0.65, z: 0.76991177}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1563428375}
@@ -5067,7 +5067,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 27.04004}
+  m_AnchoredPosition: {x: -0.8800049, y: 49.130005}
   m_SizeDelta: {x: -179.84009, y: -206.41003}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1530475540
