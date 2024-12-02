@@ -160,8 +160,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -59.090004}
-  m_SizeDelta: {x: 951.96, y: 624.12}
+  m_AnchoredPosition: {x: -10.36, y: -9.26}
+  m_SizeDelta: {x: 907.36, y: 638.22}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3412432
 MonoBehaviour:
@@ -605,7 +605,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4283125069
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -2475,8 +2475,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.4995117, y: -0.99975586}
-  m_SizeDelta: {x: -453.85, y: -125.02}
+  m_AnchoredPosition: {x: -10.109985, y: -10}
+  m_SizeDelta: {x: -457.81, y: -132.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &212103833
 MonoBehaviour:
@@ -2828,7 +2828,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4283125069
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -4515,7 +4515,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4283125069
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -4620,8 +4620,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.4995117, y: 21.150024}
-  m_SizeDelta: {x: -312.57, y: -219.09}
+  m_AnchoredPosition: {x: -9.02002, y: -7.9916077}
+  m_SizeDelta: {x: 143.04, y: 1.46}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &423900318
 MonoBehaviour:
@@ -4785,7 +4785,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4283125069
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -7388,7 +7388,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4283125069
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -7812,7 +7812,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4283125069
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -8773,7 +8773,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -9.777283, y: -10.321045}
+  m_AnchoredPosition: {x: -9.777344, y: -10.321045}
   m_SizeDelta: {x: -69.56, y: -97.389}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &801770875
@@ -12359,7 +12359,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1052.6199, y: 119.86147}
+  m_AnchoredPosition: {x: 1052.6199, y: 119.861496}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 0.95}
 --- !u!114 &1062279802
@@ -12596,8 +12596,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Escolha uma mensagem para enviar
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: afae0f24ac4cc52478e33ce26681c332, type: 2}
-  m_sharedMaterial: {fileID: 9017377245658397608, guid: afae0f24ac4cc52478e33ce26681c332, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -12872,7 +12872,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4283125069
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -13146,7 +13146,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2025203444}
   m_HandleRect: {fileID: 2025203443}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -15576,7 +15576,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 152, y: -96}
+  m_AnchoredPosition: {x: 152, y: -96.000015}
   m_SizeDelta: {x: -1026.1599, y: -531.9649}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1246715435
@@ -15652,7 +15652,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4283125069
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -16371,8 +16371,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.4995117, y: -7.991577}
-  m_SizeDelta: {x: -154, y: -107.43}
+  m_AnchoredPosition: {x: -10.609985, y: -9.049988}
+  m_SizeDelta: {x: -70.15, y: -98.34}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1348795847
 MonoBehaviour:
@@ -18171,7 +18171,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4283125069
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -24807,8 +24807,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -11.10498}
-  m_SizeDelta: {x: -437.59, y: -121.11}
+  m_AnchoredPosition: {x: -10.609985, y: -15.694}
+  m_SizeDelta: {x: -457.81, y: -116.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1969703396
 MonoBehaviour:
@@ -26781,7 +26781,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -145.99994, y: -96}
+  m_AnchoredPosition: {x: -145.99994, y: -96.000015}
   m_SizeDelta: {x: -1026.1599, y: -531.9649}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2075906426
