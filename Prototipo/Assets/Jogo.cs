@@ -1144,7 +1144,7 @@ public class Jogo : MonoBehaviour, IClient
 
         if (Manager.leaderId == dadosTimes.player.id)
         {
-            painelAguarde("MOMENTO GRUPO \nComo líder, converse com sua equipe e, quando estiverem prontos, começe a votação.", 0);
+            painelAguarde("MOMENTO GRUPO \nComo líder, converse com sua equipe e, quando estiverem prontos, comece a votação.", 0);
             Invoke("fechaPainelAguarde", 6f);
             fundoPainel.SetActive(true);
             generalCommands.EnableAllObjectsInteractions();
