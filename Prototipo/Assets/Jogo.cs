@@ -199,7 +199,7 @@ public class Jogo : MonoBehaviour, IClient
         SetLeaderText();
         Invoke("NextQ", sec);
         PrimeiraQuestao();
-        painelAguarde("MOMENTO INDIVIDUAL \n", 0);
+        painelAguarde("MOMENTO INDIVIDUAL \n", 1);
         Invoke("fechaPainelAguarde", 4f);
     }
 
@@ -1073,7 +1073,7 @@ public class Jogo : MonoBehaviour, IClient
     public void SetIndividual()
     {
         Manager.MOMENTO = "INDIVIDUAL";
-        painelAguarde("MOMENTO INDIVIDUAL \n", 0);
+        painelAguarde("MOMENTO INDIVIDUAL \n", 1);
         Invoke("fechaPainelAguarde", 4f);
         txt_momento.text = "Momento Individual";
         tempoQuestao.enabled = true;
@@ -1144,7 +1144,7 @@ public class Jogo : MonoBehaviour, IClient
 
         if (Manager.leaderId == dadosTimes.player.id)
         {
-            painelAguarde("MOMENTO GRUPO \nComo líder, converse com sua equipe e, quando estiverem prontos, comece a votação.", 0);
+            painelAguarde("MOMENTO GRUPO \nComo líder, converse com sua equipe e, quando estiverem prontos, comece a votação.", 1);
             Invoke("fechaPainelAguarde", 6f);
             fundoPainel.SetActive(true);
             generalCommands.EnableAllObjectsInteractions();
@@ -1155,7 +1155,7 @@ public class Jogo : MonoBehaviour, IClient
         if (dadosTimes.player.id != Manager.leaderId)
         {
 
-            painelAguarde("MOMENTO GRUPO \nDiscutam a solução e aguarde o líder para ir para a tela de votação.", 0);
+            painelAguarde("MOMENTO GRUPO \nDiscutam a solução e aguarde o líder para ir para a tela de votação.", 1);
             Invoke("fechaPainelAguarde", 6f);
             fundoPainel.SetActive(true);
             
@@ -1193,7 +1193,7 @@ public class Jogo : MonoBehaviour, IClient
         txt_pular_individual = "PULAR só pode ser usada no momento em grupo.";
         SetAlpha();
         ajudaGasta(pulou);
-        painelAguarde("MOMENTO VOTAÇÃO \nEm conjunto tentem chegar a resposta da pergunta, em caso de empate, o voto do líder tem peso maior.", 0);
+        painelAguarde("MOMENTO VOTAÇÃO \nEm conjunto tentem chegar a resposta da pergunta, em caso de empate, o voto do líder tem peso maior.", 1);
         Invoke("fechaPainelAguarde", 5f);
         fundoPainel.SetActive(true);
         generalCommands.EnableAllObjectsInteractions();
