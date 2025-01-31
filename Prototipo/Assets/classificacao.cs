@@ -40,13 +40,15 @@ public class classificacao : MonoBehaviour, IClient
     public SpriteRenderer estrela_gentil_1;
     public SpriteRenderer estrela_gentil_2;
     public SpriteRenderer estrela_gentil_3;
+    public Button btnFinal;
   
     
     // Start is called before the first frame update
     void Start()
     {
+        btnFinal.interactable = false;
         txt_aguarde.enabled = true;
-
+        
         txt_nome.text = dadosTimes.player.name + ",";
         txt_aval.text = "estamos verificando sua avaliação";
 
@@ -131,7 +133,6 @@ public class classificacao : MonoBehaviour, IClient
                 }
             }
         }
-
         txt_aguarde.enabled = false;
         Debug.Log("Fim MSG_CLASSIFICACAO_FINAL");
     }
@@ -151,8 +152,6 @@ public class classificacao : MonoBehaviour, IClient
         // var msg = new FimDeJogo("FIM_DE_JOGO", dadosTimes.player, Manager.teamId, Manager.sessionId,
         //                         Manager.gameId, Manager.grpScore, Manager.gameTime);
 
-                
-
         // cm.send(msg);   
     }
 
@@ -167,6 +166,7 @@ public class classificacao : MonoBehaviour, IClient
         setEstrelaComunicativo(elogio_comunicativo);
         setEstrelaEngajado(elogio_engajado);
         setEstrelaGentil(elogio_gentil);
+        btnFinal.interactable = true;
     }
 
     public void setEstrelaComunicativo(float n)
@@ -379,6 +379,11 @@ public class classificacao : MonoBehaviour, IClient
             image_gentil_3.sprite = estrela_cheia; 
         }
 
+    }
+
+     public void verFinal()
+    {
+        SceneManager.LoadScene("Final");
     }
 
     public void handle(string ms){

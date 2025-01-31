@@ -11,15 +11,18 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Menu Professor.unity
     guid: 63bffe3a025fffc4980510b977a0503d
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Menu.unity
     guid: 93a281367f995a54c8635a999d0fcfdb
   - enabled: 1
     path: Assets/Scenes/alunoEntrar.unity
     guid: 349a77a5ea39f884784bfc3b37dcdf9d
+  - enabled: 1
+    path: Assets/Scenes/Final.unity
+    guid: 362f1f0927af8c64dafc469610379b28
   - enabled: 1
     path: Assets/Scenes/alunoEspera.unity
     guid: 79c453eff35aa6441882fb0fd34f9fd7

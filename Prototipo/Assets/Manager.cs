@@ -70,7 +70,6 @@ public static class Manager
     public static int reset_estrelas = 0;
     public static int reset_estrelas_aux = 0;
     
-    
 
     //MODERADOR
     public static string moderatorName;
