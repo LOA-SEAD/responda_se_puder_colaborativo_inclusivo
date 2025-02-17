@@ -84,14 +84,15 @@ public class Final : MonoBehaviour
 
     void PontuacaoIntervalos(){
 
-        pontuacao_total = 0;
+        Debug.Log("quantidadeTotal é " + Manager.nQ_total);
 
-        pontuacao_total = 10*quantidadeFacil + 10*quantidadeMedio + 10*quantidadeDificil;
+        pontuacao_total = 13*Manager.nQ_total;
       
         intervalos = pontuacao_total/4;
 
         canvasGroupCarta.alpha = 1;
         Debug.Log("pontuacao é " + pontuacao);
+        Debug.Log("intervalo é " + intervalos);
         if(pontuacao <= intervalos){
             final = 0;
         }
