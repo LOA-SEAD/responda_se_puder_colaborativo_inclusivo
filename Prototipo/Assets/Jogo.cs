@@ -308,8 +308,8 @@ public class Jogo : MonoBehaviour, IClient
     {
         string t = dadosTimes.GetUser(Manager.leaderId);
 
-        txt_lider.text = "Líder da fase: " + t;
-        txt_lider_jogo.text = "Líder da fase: " + t;
+        txt_lider.text = "Ajudante da fase: " + t;
+        txt_lider_jogo.text = "Ajudante da fase: " + t;
     }
 
     public void SetQntAlternatives(int i)
@@ -857,7 +857,7 @@ public class Jogo : MonoBehaviour, IClient
                     painelAjudaPular.SetActive(true);
 
                 }else {
-                    painelAguarde("Somente o líder pode solicitar esse tipo de ajuda. Converse com ele via chat para usá-la.", 1);
+                    painelAguarde("Somente o ajudante pode solicitar esse tipo de ajuda. Converse com ele via chat para usá-la.", 1);
                 }
             }
         }
@@ -913,7 +913,7 @@ public class Jogo : MonoBehaviour, IClient
                     painelAjuda5050.SetActive(true);
 
                 } else {
-                    painelAguarde("Somente o líder pode solicitar esse tipo de ajuda. Converse com ele via chat para usá-la.", 1);
+                    painelAguarde("Somente o ajudante pode solicitar esse tipo de ajuda. Converse com ele via chat para usá-la.", 1);
 
                 }
             }
@@ -1144,7 +1144,7 @@ public class Jogo : MonoBehaviour, IClient
 
         if (Manager.leaderId == dadosTimes.player.id)
         {
-            painelAguarde("MOMENTO GRUPO \nComo líder, converse com sua equipe e, quando estiverem prontos, comece a votação.", 1);
+            painelAguarde("MOMENTO GRUPO \nComo ajudante, converse com sua equipe e, quando estiverem prontos, comece a votação.", 1);
             Invoke("fechaPainelAguarde", 6f);
             fundoPainel.SetActive(true);
             generalCommands.EnableAllObjectsInteractions();
@@ -1155,7 +1155,7 @@ public class Jogo : MonoBehaviour, IClient
         if (dadosTimes.player.id != Manager.leaderId)
         {
 
-            painelAguarde("MOMENTO GRUPO \nDiscutam a solução e aguarde o líder para ir para a tela de votação.", 1);
+            painelAguarde("MOMENTO GRUPO \nDiscutam a solução e aguarde o ajudante para ir para a tela de votação.", 1);
             Invoke("fechaPainelAguarde", 6f);
             fundoPainel.SetActive(true);
             
@@ -1193,7 +1193,7 @@ public class Jogo : MonoBehaviour, IClient
         txt_pular_individual = "PULAR só pode ser usada no momento em grupo.";
         SetAlpha();
         ajudaGasta(pulou);
-        painelAguarde("MOMENTO VOTAÇÃO \nEm conjunto tentem chegar a resposta da pergunta, em caso de empate, o voto do líder tem peso maior.", 1);
+        painelAguarde("MOMENTO VOTAÇÃO \nEm conjunto tentem chegar a resposta da pergunta, em caso de empate, o voto do ajudante tem peso maior.", 1);
         Invoke("fechaPainelAguarde", 5f);
         fundoPainel.SetActive(true);
         generalCommands.EnableAllObjectsInteractions();
@@ -1472,7 +1472,7 @@ public class Jogo : MonoBehaviour, IClient
 
         if (message.leaderId == -1)
         {
-            Debug.Log("O membro NÃO era o líder do grupo");
+            Debug.Log("O membro NÃO era o ajudante do grupo");
             
             filaDesconexao.Enqueue(message.user.id);
             dadosTimes.removeFromEquipe(message.user.id);
@@ -1480,7 +1480,7 @@ public class Jogo : MonoBehaviour, IClient
         }
         else 
         {
-            Debug.Log("O membro era o líder do grupo.\nO novo líder é o membro de ID: " + message.leaderId);
+            Debug.Log("O membro era o ajudante do grupo.\nO novo ajudante é o membro de ID: " + message.leaderId);
 
             filaDesconexao.Enqueue(message.user.id);
             dadosTimes.removeFromEquipe(message.user.id);
@@ -1491,7 +1491,7 @@ public class Jogo : MonoBehaviour, IClient
 
             if (Manager.leaderId == dadosTimes.player.id)
             {
-                painelAguarde("O líder se desconectou. Você é o novo líder da equipe.", 1);
+                painelAguarde("O ajudante se desconectou. Você é o novo ajudante da equipe.", 1);
                 fundoPainel.SetActive(false);
 
                 generalCommands.EnableAllObjectsInteractions();

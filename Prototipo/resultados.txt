@@ -1,0 +1,1 @@
+{"messageType":"CLASSIFICACAO_FINAL_MODERADOR","teams":[{"idTeam":1,"point":20,"gameTime":0,"ranking":1}],"user":[{"_id":"67b39f481903c200136bfe55","id":2,"name":"carol","teamId":1,"indScore":10,"interaction":0,"elogio1":3,"elogio2":3,"elogio3":3,"sessionId":1,"ws_id":"d1f7f928-90e8","rejectLeadership":false}],"sessionId":1,"gameId":0}

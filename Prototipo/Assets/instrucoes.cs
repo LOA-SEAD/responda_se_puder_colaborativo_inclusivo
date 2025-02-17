@@ -41,13 +41,14 @@ public class instrucoes : MonoBehaviour
 
         string inst2 = "<align=\"center\"><b>REGRAS DO JOGO</b></align>\n\n" +
                               "O jogo tem 3 níveis: fácil, médio e difícil.\n" +
-                              "O jogo possui momentos individuais e momentos em equipe.\n\n" +
+                              "O jogo possui momentos individuais, momentos em grupo e momento de votação.\n\n" +
                             "<b>Momento individual</b>\n" +
-                              "No momento individual, cada jogador deve responder à pergunta dentro do tempo disponível.\n" +
-                              "Uma Dica estará disponível para consulta, sem custo.\n\n" +
+                              "No momento individual, cada jogador deve responder à pergunta dentro do tempo disponível.\n\n" +
                             "<b>Momento em grupo</b>\n" +
                               "No momento em grupo, vamos ver as respostas de todos e discutir no chat para decidir a resposta correta.\n" +
-                              "O líder guiará a conversa e enviará a resposta escolhida pelo grupo. O líder também pode pedir ajuda, como eliminar metade das opções ou pular para outra pergunta (apenas uma vez).";
+                              "O ajudante também pode pedir ajuda, como eliminar metade das opções ou pular para outra pergunta (apenas uma vez).\n\n" +
+                              "<b>Momento de votação</b>\n" +
+                              "No momento de votação, Todos enviaram a resposta correta decidida com o grupo.";
 
         string inst3 =  "<align=\"center\"><b>PONTUAÇÃO</b></align>\n\n" +
                                 "<u>A cada questão:</u>\n" +
@@ -59,14 +60,14 @@ public class instrucoes : MonoBehaviour
                                 "Aguarde até que todas as equipes terminem para ver a classificação geral.";
         
         string inst4 = "<align=\"center\"><b>LÍDER</b></align>\n\n" +
-                            "A cada etapa, um jogador da equipe será escolhido aleatoriamente para ser o líder.\n" +
-                            "O líder é a pessoa que irá estimular a comunicação entre os jogadores para decidir a resposta da equipe.\n\n" +
+                            "A cada etapa, um jogador da equipe será escolhido aleatoriamente para ser o ajudante.\n" +
+                            "O ajudante é a pessoa que irá estimular a comunicação entre os jogadores para decidir a resposta da equipe.\n\n" +
                         "<align=\"center\"><b>MODERADOR/PROFESSOR</b></align>\n\n" +
                             "Se houver dúvida, discórdia ou comportamento inadequado, você poderá apertar o botão “PROFESSOR” para chamar o professor.";
 
         string inst5 = "<align=\"center\"><b>AVALIAÇÃO DA COLABORAÇÃO</b></align>\n\n" +
                             "Ao final de cada fase, haverá um momento de reflexão sobre a colaboração do grupo.\n" +
-                            "Cada integrante deverá avaliar os seus colegas com relação ao engajamento, comunicação e gentileza.";
+                            "Cada integrante deverá avaliar os seus colegas com relação a animação, comunicação e gentileza.";
 
 
         instrLista.Add(inst1);

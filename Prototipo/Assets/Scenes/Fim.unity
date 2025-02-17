@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 32438989}
   - component: {fileID: 32438988}
   m_Layer: 0
-  m_Name: engajado
+  m_Name: Animado
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -184,7 +184,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Engajado
+  m_text: Animado
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2037,8 +2037,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 449, y: -253}
-  m_SizeDelta: {x: 160, y: 37.2951}
+  m_AnchoredPosition: {x: 298, y: -245.06}
+  m_SizeDelta: {x: 210.51, y: 49.09}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1247232562
 MonoBehaviour:
@@ -2697,7 +2697,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8443272382784882889, guid: 154f88f7cfba5ed4f984f18511d9a21e, type: 3}
       propertyPath: m_text
-      value: Ir para o FInal
+      value: "Resultado do rob\xF4"
       objectReference: {fileID: 0}
     - target: {fileID: 8443272382784882889, guid: 154f88f7cfba5ed4f984f18511d9a21e, type: 3}
       propertyPath: m_fontSize
