@@ -11,7 +11,7 @@ public static class Manager
 
 
 //TESTES
-    public static string serverURL = "ws://localhost:5000";
+    public static string serverURL = "ws://remar.dc.ufscar.br";
     // public static int[] qEasy = {0, 4, 1};
     // public static int[] qMedium = {3, 2, 4};
     // public static int[] qHard = {2, 0};
